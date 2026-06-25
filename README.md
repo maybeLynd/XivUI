@@ -192,9 +192,11 @@ Character files (`<job>.lua`, `General.lua`, `autogen_settings_<JOB>.lua`, `layo
 <img width="985" height="445" alt="image" src="https://github.com/user-attachments/assets/1c1fceb4-5435-41f3-9780-1cac6ca609f8" />
 
 <a id="hotbar-statusbar-expbar"></a>
-## Hotbar, StatusBar, ExpBar
+## Hotbar, StatusBar, ExpBar, Hotbar Sets
 
 <img width="886" height="219" alt="image" src="https://github.com/user-attachments/assets/afde31ff-78bd-46a2-adcf-0f6bc51ac5b0" />
+
+<img width="214" height="250" alt="image" src="https://github.com/user-attachments/assets/e9b5f4c5-a012-4e26-bfe1-b91b0d8af3f3" />
 
 <a id="choice-hotbar"></a>
 ## Choice Hotbar
