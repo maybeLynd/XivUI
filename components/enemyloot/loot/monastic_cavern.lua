@@ -1,0 +1,31 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["bugaboo"]="63\0022\001",
+["chillgaze foddrud"]="69-75\0021\001Gil\00485-128\004g",
+["grimbolt onkzok"]="69-75\0021\001Gil\00485-128\004g",
+["mimic"]="60\002\001Davoi Coffer Key\004100\004d",
+["orcish bewitcher"]="139\0021\001Gil\004178-241\004g",
+["orcish bowshooter"]="42-46\0021\001Cuir Bandana\0040.5\004d\003Cuir Gloves\0040.5\004d\003Cuir Highboots\0040.5\004d\003Cuir Trousers\0040.5\004d\003Gil\00451-78\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish champion"]="64-72\0021\001Monks Testimony\00410\004d\003Davoi Coffer Key\0045\004d\003Iron Mittens\0040.5\004d\003Iron Subligar\0040.5\004d\003Leggings\0040.5\004d\003Padded Cap\0040.5\004d\003Gil\00479-123\004g\003Gold Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish dragoon"]="65-72\0021\001Dragoons Testimony\00410\004d\003Davoi Coffer Key\0045\004d\003Gil\00480-123\004g\003Gold Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish dreadnought"]="63-72\0021\001Warriors Testimony\00410\004d\003Davoi Coffer Key\0045\004d\003Mythril Cuisses\0040.1\004d\003Mythril Gauntlets\0040.1\004d\003Mythril Leggings\0040.1\004d\003Mythril Sallet\0040.1\004d\003Gil\00478-123\004g\003Gold Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish farkiller"]="62-72\0021\001Rangers Testimony\00410\004d\003Davoi Coffer Key\0045\004d\003Scroll Of Archers Prelude\0041\004d\003Gil\00476-123\004g\003Gold Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish footsoldier"]="43-47\0021\001Soiled Letter\00410\004d\003Davoi Chest Key\0045\004d\003Silver Greaves\0040.5\004d\003Silver Hose\0040.5\004d\003Silver Mask\0040.5\004d\003Silver Mittens\0040.5\004d\003Gil\00452-80\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish gladiator"]="44-48\0021\001Davoi Chest Key\0045\004d\003Iron Mittens\0040.5\004d\003Iron Subligar\0040.5\004d\003Leggings\0040.5\004d\003Padded Cap\0040.5\004d\003Gil\00453-82\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish hexspinner"]="71-73\0021\001Black Mages Testimony\00424\004d\003Scroll Of Stone Iii\00415\004d\003Scroll Of Stonega Ii\00410\004d\003Scroll Of Quake\0045\004d\003Scroll Of Stonega Iii\0045\004d\003Scroll Of Stone Iv\0041\004d\003Gil\00488-125\004g",
+["orcish overlord"]="75\0021\001Gold Orcmask\004100\004d\003Paladins Testimony\004100\004d\003Platinum Beastcoin\004100\004d\003Glorious Sword\00410\004d\003Gil\00493-128\004g\003Beastcoin\004\004s",
+["orcish predator"]="53-57\0021\001Cuir Bandana\0040.5\004d\003Cuir Gloves\0040.5\004d\003Cuir Highboots\0040.5\004d\003Cuir Trousers\0040.5\004d\003Gil\00465-97\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish protector"]="70-72\0021\001Paladins Testimony\00410\004d\003Gil\00487-123\004g\003Gold Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish trooper"]="45-49\0021\001Gold Orcmask\00410\004d\003Davoi Chest Key\0045\004d\003Scroll Of Flash\0045\004d\003Cuisses\0040.1\004d\003Gauntlets\0040.1\004d\003Plate Leggings\0040.1\004d\003Sallet\0040.1\004d\003Gil\00454-83\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish veteran"]="52-56\0021\001Mythril Cuisses\0040.1\004d\003Mythril Gauntlets\0040.1\004d\003Mythril Leggings\0040.1\004d\003Mythril Sallet\0040.1\004d\003Gil\00463-95\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish warchief"]="55-59\0021\001Scroll Of Flash\0045\004d\003Mythril Cuisses\0040.1\004d\003Mythril Gauntlets\0040.1\004d\003Mythril Leggings\0040.1\004d\003Mythril Sallet\0040.1\004d\003Gil\00467-100\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["orcish warlord"]="72-74\0021\001Dark Knights Testimony\00424\004d\003Scroll Of Stun\00415\004d\003Scroll Of Stonega Ii\0045\004d\003Scroll Of Quake\0041\004d\003Scroll Of Stone Iii\0041\004d\003Scroll Of Stone Iv\0041\004d\003Scroll Of Stonega Iii\0041\004d\003Gil\00489-126\004g\003Beastcoin\004\004s",
+["orcish zerker"]="54-58\0021\001Scroll Of Absorb-Agi\0045\004d\003Scroll Of Absorb-Int\0045\004d\003Scroll Of Absorb-Vit\0045\004d\003Scroll Of Stun\0045\004d\003Mythril Cuisses\0040.1\004d\003Mythril Gauntlets\0040.1\004d\003Mythril Leggings\0040.1\004d\003Mythril Sallet\0040.1\004d\003Gil\00466-99\004g\003Mythril Beastcoin\004\004s\003Dhalmel Steak\004\004p\003Strip Of Buffalo Jerky\004\004p\003Strip Of Meat Jerky\004\004p",
+["overlord bakgodek"]="85\0021\001Paladins Testimony\004100\004d\003Juggernaut\00424\004d\003Reraiser\0041\004d\003Vile Elixir\0041\004d\003Vile Elixir +1\0041\004d\003Gil\004106-146\004g\003Platinum Beastcoin\004\004s",
+["rictusgrin prakpok"]="69-75\0021\001Gil\00485-128\004g",
+["sevenskewer krugglug"]="69-75\0021\001Gil\00485-128\004g",
+["shatterskull mippdapp"]="69-75\0021\001Gil\00485-128\004g",
+["siegebreaker wujroj"]="69-75\0021\001Gil\00485-128\004g",
+}

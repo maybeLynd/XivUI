@@ -1,0 +1,15 @@
+
+-- { [mob]="elem\004src\004value\003..." } ; src d=damage%% (>100 weak/<100 resist/0 immune/<0 absorb),
+-- k=element rank, t=status (value = statusid*10 + state[1 weak/2 resist/3 immune]; icon = buff <id>.png).
+return {
+["ashmaker gotblut"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["grotto bats"]="Piercing\004d\004125\003Ranged\004d\004125\003Fire\004k\004-2\003Ice\004k\004-1\003Wind\004k\004-3\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-3\003Dark\004k\0046\003Paralyze\004t\004419\003Bind\004t\0041119\003Silence\004t\004617\003Slow\004t\0041318\003Poison\004t\004318\003Sleep\004t\004226\003Blind\004t\004526",
+["orcish cursemaker"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["orcish fighter"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["orcish grunt"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["orcish neckchopper"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["orcish serjeant"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["orcish stonechucker"]="Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-3\003Light\004k\004-2\003Dark\004k\004-2\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004317\003Sleep\004t\004218\003Blind\004t\004518",
+["riding lizard"]="Ice\004k\004-3\003Wind\004k\004-3\003Water\004k\004-2\003Light\004k\004-2\003Dark\004k\004-2\003Paralyze\004t\004417\003Bind\004t\0041117\003Silence\004t\004617\003Poison\004t\004318\003Sleep\004t\004218\003Blind\004t\004518",
+["stealth bat"]="Piercing\004d\004125\003Ranged\004d\004125\003Fire\004k\004-2\003Ice\004k\004-1\003Wind\004k\004-3\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-3\003Dark\004k\0046\003Paralyze\004t\004419\003Bind\004t\0041119\003Silence\004t\004617\003Slow\004t\0041318\003Poison\004t\004318\003Sleep\004t\004226\003Blind\004t\004526",
+}

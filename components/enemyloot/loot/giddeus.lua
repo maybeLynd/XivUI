@@ -1,0 +1,33 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["digger wasp"]="11-13\0023\001Beehive Chip\00415\004d\003Pot Of Honey\00410\004d\003Insect Wing\0045\004d\003Giant Stinger\0041\004d\003Pot Of Honey\004\004s\003Beehive Chip\004\004p\003Giant Stinger\004\004p\003Pot Of Honey\004\004p",
+["dirt eater"]="3-5\0024\001Flint Stone\00415\004d\003Chunk Of Copper Ore\00410\004d\003Chunk Of Zinc Ore\0045\004d\003Chunk Of Silver Ore\0041\004d\003Pebble\004\004s\003Chunk Of Copper Ore\004\004p\003Chunk Of Iron Ore\004\004p\003Chunk Of Silver Ore\004\004p\003Chunk Of Zinc Ore\004\004p",
+["earth eater"]="10-12\0024\001Flint Stone\00415\004d\003Chunk Of Copper Ore\00410\004d\003Chunk Of Zinc Ore\0045\004d\003Chunk Of Silver Ore\0041\004d\003Pebble\004\004s\003Chunk Of Copper Ore\004\004p\003Chunk Of Iron Ore\004\004p\003Chunk Of Silver Ore\004\004p\003Chunk Of Zinc Ore\004\004p",
+["eyy mon the ironbreaker"]="16\0023\001Aspir Knife\004100\004d\003Gil\00418-29\004g",
+["giant pugil"]="8-11\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["giddeus bee"]="2-5\0023\001Beehive Chip\00415\004d\003Pot Of Honey\00410\004d\003Insect Wing\0045\004d\003Giant Stinger\0041\004d\003Pot Of Honey\004\004s\003Beehive Chip\004\004p\003Giant Stinger\004\004p\003Pot Of Honey\004\004p",
+["giddeus pugil"]="2-5\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["hoo mjuu the torrent"]="16-17\0023\001Scroll Of Deodorize\00415\004d\003Zealots Mitts\00415\004d\003Monster Signa\0045\004d\003Gil\00418-30\004g",
+["juu duzu the whirlwind"]="13\0023\001Gil\00415-24\004g",
+["land pugil"]="19\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["puffer pugil"]="14\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["pug pugil"]="10\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["pugil"]="3-5\0026\001Handful Of Pugil Scales\00410\004d\003Handful Of Fish Scales\004\004s\003Handful Of Fish Scales\004\004p\003Handful Of Pugil Scales\004\004p",
+["quu xijo the illusory"]="24-25\0023\001Square Of Ephemeral Cloth\00415\004d\003Gil\00428-43\004g",
+["vaa huja the erudite"]="45\0023\001Gil\00454-77\004g",
+["vuu puqu the beguiler"]="21-22\0023\001Scroll of Mage's Ballad\00415\004d\003Gil\00424-38\004g",
+["yagudo acolyte"]="3-10\0023\001Yagudo Bead Necklace\00415\004d\003Ash Clogs\0045\004d\003Circlet\0041\004d\003Cuffs\0041\004d\003Scroll Of Barsleep\0041\004d\003Scroll Of Paralyze\0041\004d\003Scroll Of Protectra\0041\004d\003Scroll Of Sneak\0041\004d\003Slops\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo initiate"]="3-10\0023\001Yagudo Bead Necklace\00415\004d\003Bronze Cap\0041\004d\003Bronze Leggings\0041\004d\003Bronze Mittens\0041\004d\003Bronze Subligar\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo lookout"]="139\0023\001Gil\004178-241\004g",
+["yagudo mendicant"]="11-18\0023\001Yagudo Bead Necklace\00415\004d\003Silver Beastcoin\00410\004d\003Block Of Yagudo Caulk\0045\004d\003Mitts\0041\004d\003Slacks\0041\004d\003Solea\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo persecutor"]="11-18\0023\001Yagudo Bead Necklace\00415\004d\003Silver Beastcoin\00410\004d\003Block Of Yagudo Caulk\0045\004d\003Hachimaki\0041\004d\003Kyahan\0041\004d\003Sitabaki\0041\004d\003Tekko\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo piper"]="11-18\0023\001Yagudo Bead Necklace\00415\004d\003Scroll Of Foe Lullaby\00410\004d\003Block Of Yagudo Caulk\0045\004d\003Scroll Of Mages Ballad\0045\004d\003Ash Clogs\0041\004d\003Circlet\0041\004d\003Cuffs\0041\004d\003Slops\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo priest"]="21-23\0023\001Block Of Yagudo Caulk\0045\004d\003Giddeus Chest Key\0045\004d\003Scroll Of Silence\0045\004d\003Holly Clogs\0041\004d\003Linen Cuffs\0041\004d\003Linen Slops\0041\004d\003Poets Circlet\0041\004d\003Scroll Of Barpoisonra\0041\004d\003Scroll Of Deodorize\0041\004d\003Scroll Of Invisible\0041\004d\003Gil\00424-40\004g\003Silver Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo scribe"]="3-10\0023\001Yagudo Bead Necklace\00415\004d\003Scroll Of Bind\0045\004d\003Scroll Of Blind\0045\004d\003Ash Clogs\0041\004d\003Circlet\0041\004d\003Cuffs\0041\004d\003Slops\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo theologist"]="21-23\0023\001Block Of Yagudo Caulk\0045\004d\003Giddeus Chest Key\0045\004d\003Holly Clogs\0041\004d\003Linen Cuffs\0041\004d\003Linen Slops\0041\004d\003Poets Circlet\0041\004d\003Gil\00424-40\004g\003Silver Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudo votary"]="21-23\0023\001King Locust\00415\004d\003Block Of Yagudo Caulk\0045\004d\003Giddeus Chest Key\0045\004d\003Seven-Knot Quipu\0045\004d\003Cotton Hachimaki\0040.5\004d\003Cotton Kyahan\0040.5\004d\003Cotton Sitabaki\0040.5\004d\003Cotton Tekko\0040.5\004d\003Gil\00424-40\004g\003Silver Beastcoin\004\004s\003Boiled Tuna Head\004\004p\003Roast Carp\004\004p\003Roast Pipira\004\004p",
+["yagudos elemental"]="\0023\001",
+["zhuu buxu the silent"]="16\0023\001Parana Shield\004100\004d\003Gil\00418-29\004g",
+}

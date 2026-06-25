@@ -1,0 +1,31 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["apex bat"]="134-136\0023\001",
+["apex ironclad"]="134-136\0021\001",
+["apex twitherym"]="134-136\0023\001",
+["astringent acuex"]="113-116\0026\001",
+["bristlehair bat"]="113-116\0023\001",
+["debauched unseelie"]="113-116\0023\001",
+["dreadhound"]="113-116\0028\001",
+["dullahan"]="114-118\0028\001",
+["enshrouded cyhiraeth"]="113-116\0028\001",
+["fluturini"]="113-116\0023\001",
+["horrific bhoot"]="114-118\0022\001",
+["ironclad"]="120\0021\001",
+["legionless draugar"]="113-116\0024\001",
+["obfuscous obdella"]="113-116\0026\001",
+["phlegmatic byrgen"]="113-116\0028\001",
+["procrustean draugar"]="113-116\0024\001",
+["restless twitherym"]="113-116\0023\001",
+["shunned deeparrow"]="113-116\0028\001",
+["shunned elementalist"]="113-116\0028\001",
+["shunned engraver"]="113-116\0028\001",
+["shunned fluteslinger"]="113-116\0028\001",
+["shunned hexer"]="113-116\0028\001",
+["shunned nightstalker"]="113-116\0028\001",
+["shunned saboteur"]="113-116\0028\001",
+["shunned valiant"]="113-116\0028\001",
+["vengeful shunned"]="113-116\0028\001",
+}

@@ -1,0 +1,33 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["apex jagil"]="130-133\0026\001",
+["apex toad"]="130-133\0026\001",
+["bergschrund gefyrst"]="124-127\0022\001",
+["bound twitherym"]="121-123\0023\001",
+["chrysoberyl jagil"]="111\0026\001",
+["cliffclinger toad"]="124-126\0026\001",
+["cowll hippogryph"]="131-133\0023\001",
+["depthdiver bats"]="124-126\0023\001",
+["draftrider bat"]="110\0023\001",
+["drusy twitherym"]="124-127\0023\001",
+["grimfang bat"]="124-127\0023\001",
+["malodorous tarichuk"]="121-123\0021\001",
+["metalcruncher worm"]="124-127\0024\001",
+["nesting hippogryph"]="125\0023\001",
+["pestiferous acuex"]="121-124\0026\001",
+["powdery snoll"]="124-127\0022\001",
+["serac rabbit"]="124-127\0024\001",
+["slabspitter jagil"]="121-123\0026\001",
+["soundsplitter bat"]="121-124\0023\001",
+["stonesoftener acuex"]="110\0026\001",
+["talus tarichuk"]="124-127\0021\001",
+["touched gefyrst"]="121-122\0022\001",
+["velkk abyssal"]="130-133\0028\001Gil\004249-346\004g",
+["velkk junglemancer"]="130-133\0028\001Gil\004166-230\004g",
+["velkk mindmelter"]="130-133\0028\001Gil\004166-230\004g",
+["velkk tearlicker"]="130-133\0028\001Gil\004249-346\004g",
+["wayward dullahan"]="121-124\0028\001",
+["wheezing acuex"]="124-127\0026\001",
+}

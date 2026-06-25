@@ -1,0 +1,24 @@
+
+-- { [mob]="elem\004src\004value\003..." } ; src d=damage%% (>100 weak/<100 resist/0 immune/<0 absorb),
+-- k=element rank, t=status (value = statusid*10 + state[1 weak/2 resist/3 immune]; icon = buff <id>.png).
+return {
+["blacktattoo vedool ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["drakeweaver hageel ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["fistweaver mufaal ja"]="Ice\004k\004-2\003Wind\004k\004-1\003Earth\004k\004-1\003Lightning\004k\004-3\003Water\004k\0044\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004619\003Slow\004t\0041319\003Poison\004t\004324",
+["glyphweaver sikool ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["gulool ja ja"]="Fire\004k\0044\003Ice\004k\0042\003Wind\004k\0049\003Earth\004k\0049\003Lightning\004k\0044\003Water\004k\0044\003Light\004k\0044\003Dark\004k\0044\003Paralyze\004t\004422\003Bind\004t\0041122\003Silence\004t\004629\003Slow\004t\0041329\003Poison\004t\004324\003Sleep\004t\004224\003Blind\004t\004524",
+["lancelord gaheel ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja chamberlain"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja flamerearer"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja isangoma"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja palatine"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja polemicist"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja profligate"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mamool ja unseen"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["mocking colibri"]="Piercing\004d\004125\003Ranged\004d\004125\003Fire\004k\004-1\003Ice\004k\004-2\003Wind\004k\0046\003Lightning\004k\004-1\003Water\004k\004-1\003Dark\004k\004-2\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004626\003Poison\004t\004319\003Sleep\004t\004218\003Blind\004t\004518",
+["phantom puk"]="Piercing\004d\004125\003Ranged\004d\004125\003Fire\004k\004-1\003Ice\004k\004-2\003Wind\004k\00411\003Earth\004k\004-1\003Water\004k\004-1\003Light\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004631\003Slow\004t\0041319\003Poison\004t\004319\003Sleep\004t\004219\003Blind\004t\004519",
+["riftweaver pomaal ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["scorched-snout wyvern"]="Fire\004k\004-2\003Ice\004k\004-2\003Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-2\003Dark\004k\004-2\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004318\003Sleep\004t\004218\003Blind\004t\004518",
+["shadowhand kajeel ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+["whitetattoo rahool ja"]="Ice\004k\004-2\003Wind\004k\0042\003Lightning\004k\004-1\003Dark\004k\004-1\003Paralyze\004t\004418\003Bind\004t\0041118\003Silence\004t\004622\003Sleep\004t\004219\003Blind\004t\004519",
+}

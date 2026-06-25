@@ -1,0 +1,26 @@
+
+-- { [mob]="elem\004src\004value\003..." } ; src d=damage%% (>100 weak/<100 resist/0 immune/<0 absorb),
+-- k=element rank, t=status (value = statusid*10 + state[1 weak/2 resist/3 immune]; icon = buff <id>.png).
+return {
+["ancient quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["brass quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["bronze quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["cait sith ceithir"]="Fire\004k\0042\003Ice\004k\0042\003Wind\004k\0042\003Earth\004k\0042\003Lightning\004k\0042\003Water\004k\0042\003Light\004k\0048\003Dark\004k\004-1\003Paralyze\004t\004422\003Bind\004t\0041122\003Silence\004t\004622\003Slow\004t\0041322\003Poison\004t\004322\003Sleep\004t\004228\003Blind\004t\004519",
+["darksteel quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["gold quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["guivre"]="Fire\004k\0044\003Ice\004k\0041\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-2\003Dark\004k\004-3\003Paralyze\004t\004421\003Bind\004t\0041121\003Poison\004t\004318\003Sleep\004t\004218\003Blind\004t\004517",
+["iron quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["lambton worm"]="Fire\004k\0044\003Ice\004k\0044\003Wind\004k\0041\003Earth\004k\00411\003Lightning\004k\0044\003Water\004k\0044\003Light\004k\0044\003Dark\004k\0044\003Paralyze\004t\004424\003Bind\004t\0041124\003Silence\004t\004621\003Slow\004t\0041331\003Poison\004t\004324\003Sleep\004t\004224\003Blind\004t\004524",
+["magnes quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["quadav carrier"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["quadav guard"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["quadav stormer"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["quadav turret"]="Fire\004k\0044\003Ice\004k\0042\003Wind\004k\0042\003Earth\004k\0042\003Lightning\004k\0041\003Water\004k\0044\003Light\004k\0042\003Dark\004k\0042\003Paralyze\004t\004422\003Bind\004t\0041122\003Silence\004t\004622\003Slow\004t\0041322\003Poison\004t\004324\003Sleep\004t\004222\003Blind\004t\004522",
+["sapphire quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["sapphirine quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["steel quadav"]="Fire\004k\0042\003Lightning\004k\004-1\003Water\004k\0042\003Poison\004t\004322",
+["swarmspawn"]="Fire\004k\004-2\003Ice\004k\004-1\003Wind\004k\004-2\003Earth\004k\004-1\003Lightning\004k\004-3\003Water\004k\004-3\003Light\004k\004-1\003Dark\004k\004-3\003Paralyze\004t\004419\003Bind\004t\0041119\003Silence\004t\004618\003Slow\004t\0041319\003Poison\004t\004317\003Sleep\004t\004219\003Blind\004t\004517",
+["trained bat"]="Piercing\004d\004125\003Ranged\004d\004125\003Fire\004k\004-2\003Ice\004k\004-1\003Wind\004k\004-3\003Earth\004k\004-2\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-3\003Dark\004k\0046\003Paralyze\004t\004419\003Bind\004t\0041119\003Silence\004t\004617\003Slow\004t\0041318\003Poison\004t\004318\003Sleep\004t\004226\003Blind\004t\004526",
+["trained crab"]="Fire\004k\004-2\003Ice\004k\004-3\003Wind\004k\004-2\003Earth\004k\004-2\003Lightning\004k\004-3\003Water\004k\0042\003Light\004k\004-2\003Dark\004k\004-2\003Paralyze\004t\004417\003Bind\004t\0041117\003Silence\004t\004618\003Slow\004t\0041318\003Poison\004t\004322\003Sleep\004t\004218\003Blind\004t\004518",
+["trained scorpion"]="Ice\004k\004-3\003Lightning\004k\004-2\003Water\004k\004-2\003Light\004k\004-3\003Paralyze\004t\004417\003Bind\004t\0041117\003Poison\004t\004318\003Sleep\004t\004217",
+}

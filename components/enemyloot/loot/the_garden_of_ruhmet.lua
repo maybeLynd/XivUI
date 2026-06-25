@@ -1,0 +1,32 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["aerns elemental"]="\0028\001",
+["awaern blm"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern brd"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern bst"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern drg"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern drk"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern mnk"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern nin"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern pld"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern rdm"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern rng"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern sam"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern smn"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern thf"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern war"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["awaern whm"]="\002\001Aern Organ\00410\004d\003Sample Of Luminian Tissue\0045\004d\003Aern Organ\004\004p\003Sample Of Luminian Tissue\004\004p",
+["aweuvhi"]="\002\001Euvhi Organ\0045\004d\003High-Quality Euvhi Organ\0045\004d\003Sample Of Luminian Tissue\0045\004d\003Sample Of Luminian Tissue\004\004p",
+["aweuvhi closed"]="\002\001Euvhi Organ\0045\004d\003High-Quality Euvhi Organ\0045\004d\003Sample Of Luminian Tissue\0045\004d\003Sample Of Luminian Tissue\004\004p",
+["awghrah"]="\002\001Luminion Chip\00410\004d\003Ghrah M Chip\0041\004d\003Luminion Chip\004\004p",
+["awzdei"]="\002\001Luminion Chip\00410\004d",
+["awzdei fast"]="\002\001Luminion Chip\00410\004d",
+["awzdei left"]="\002\001Luminion Chip\00410\004d",
+["awzdei leftfast"]="\002\001Luminion Chip\00410\004d",
+["awzdei still"]="\002\001Luminion Chip\00410\004d",
+["ixaern drk"]="\002\001Deed Of Moderation\00485\004d\003Vice Of Avarice\00415\004d",
+["jailer of faith"]="85\002\001Faith Baghnakhs\004100\004d\003Third Virtue\004100\004d\003Faith Torque\00410\004d",
+["jailer of fortitude"]="79-80\002\001Fortitude Axe\004100\004d\003Second Virtue\004100\004d\003Fortitude Torque\00410\004d",
+}

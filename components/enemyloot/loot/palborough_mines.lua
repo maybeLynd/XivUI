@@ -1,0 +1,33 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["amber quadav"]="3-10\0026\001Quadav Fetich Arms\0041\004d\003Quadav Fetich Head\0041\004d\003Quadav Fetich Legs\0041\004d\003Quadav Fetich Torso\0041\004d\003Scroll Of Bind\0041\004d\003Scroll Of Blind\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["amethyst quadav"]="3-10\0026\001Quadav Backplate\00415\004d\003Ash Clogs\0041\004d\003Circlet\0041\004d\003Cuffs\0041\004d\003Scroll Of Barsleep\0041\004d\003Scroll Of Paralyze\0041\004d\003Scroll Of Protectra\0041\004d\003Scroll Of Sneak\0041\004d\003Slops\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["awoken ariri samariri"]="119\0026\001Gil\004151-205\004g",
+["behya hundredwall"]="\0026\001Ingot Of Quadav Silver\00415\004d",
+["brass quadav"]="21-23\0026\001Shell Bug\00415\004d\003Palborough Chest Key\0045\004d\003Quadav Backscale\0045\004d\003Brass Cap\0041\004d\003Brass Leggings\0041\004d\003Brass Mittens\0041\004d\003Brass Subligar\0041\004d\003Quadav Fetich Arms\0041\004d\003Quadav Fetich Head\0041\004d\003Quadav Fetich Legs\0041\004d\003Quadav Fetich Torso\0041\004d\003Gil\00424-40\004g\003Silver Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["bughi howlblade"]="\0026\001",
+["cave funguar"]="9-11\0028\001Sleepshroom\00410\004d\003Sleepshroom\004\004s\003Agaricus Mushroom\004\004p\003Danceshroom\004\004p\003Sleepshroom\004\004p\003Woozyshroom\004\004p",
+["copper beetle"]="9-12\0024\001Insect Wing\0045\004d\003Beetle Jaw\0041\004d\003Beetle Jaw\004\004p\003Beetle Shell\004\004p\003Insect Wing\004\004p",
+["copper quadav"]="21-23\0026\001Snapping Mole\00415\004d\003Darksteel Engraving\0045\004d\003Palborough Chest Key\0045\004d\003Quadav Backscale\0045\004d\003Brass Cap\0041\004d\003Brass Leggings\0041\004d\003Brass Mittens\0041\004d\003Brass Subligar\0041\004d\003Gil\00437-60\004g\003Silver Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["coral crab"]="9-10\0026\001Chunk Of Rock Salt\00415\004d\003Slice Of Land Crab Meat\0041\004d\003Chunk Of Rock Salt\004\004s\003Crab Shell\004\004p\003Slice Of Land Crab Meat\004\004p",
+["greater quadav"]="11-18\0026\001Silver Name Tag\00410\004d\003Quadav Backscale\0045\004d\003Quadav Fetich Arms\0041\004d\003Quadav Fetich Head\0041\004d\003Quadav Fetich Legs\0041\004d\003Quadav Fetich Torso\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s",
+["incensed pineapple"]="\0021\001",
+["mind-warped scorpion"]="139\0024\001",
+["mine crab"]="3-4\0026\001Chunk Of Rock Salt\00415\004d\003Chunk Of Rock Salt\004\004s\003Crab Shell\004\004p\003Slice Of Land Crab Meat\004\004p",
+["mine scorpion"]="14-16\0024\001Scorpion Claw\00415\004d\003Scorpion Shell\00410\004d\003Plantreaper\0045\004d\003Scorpion Claw\004\004p\003Scorpion Shell\004\004p",
+["nighu nestfender"]="\0026\001Mottled Quadav Egg\004100\004d",
+["nomho crimsonarmor"]="\0026\001",
+["old quadav"]="21-23\0026\001Snapping Mole\00415\004d\003Palborough Chest Key\0045\004d\003Quadav Backscale\0045\004d\003Brass Cap\0041\004d\003Brass Leggings\0041\004d\003Brass Mittens\0041\004d\003Brass Subligar\0041\004d\003Gil\00424-40\004g\003Silver Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["onyx quadav"]="11-18\0026\001Quadav Backscale\0045\004d\003Holly Clogs\0041\004d\003Linen Cuffs\0041\004d\003Linen Slops\0041\004d\003Poets Circlet\0041\004d\003Quadav Fetich Arms\0041\004d\003Quadav Fetich Head\0041\004d\003Quadav Fetich Legs\0041\004d\003Quadav Fetich Torso\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["pit hare"]="2-6\0024\001Slice Of Hare Meat\00415\004d\003Rabbit Hide\00410\004d\003Slice Of Hare Meat\004\004s\003Rabbit Hide\004\004p\003Slice Of Hare Meat\004\004p",
+["quvho deathhurler"]="\0026\001Guerilla Gloves\00415\004d",
+["rabid rat"]="11-13\0024\001Slice Of Hare Meat\00415\004d\003Rabbit Hide\00410\004d\003Slice Of Hare Meat\004\004s\003Rabbit Hide\004\004p\003Slice Of Hare Meat\004\004p",
+["scimitar scorpion"]="19-21\0024\001Scorpion Claw\004100\004d\003Scorpion Shell\00410\004d\003Palborough Chest Key\0045\004d\003Plantreaper\0045\004d\003Scorpion Claw\004\004p\003Scorpion Shell\004\004p",
+["snipper"]="18-20\0026\001",
+["stag crab"]="13-15\0026\001Chunk Of Rock Salt\00415\004d\003Slice Of Land Crab Meat\0045\004d\003Crab Shell\0041\004d\003Chunk Of Rock Salt\004\004s\003Crab Shell\004\004p\003Slice Of Land Crab Meat\004\004p",
+["veteran quadav"]="11-18\0026\001Quadav Backscale\0045\004d\003Faceguard\0041\004d\003Quadav Fetich Arms\0041\004d\003Quadav Fetich Head\0041\004d\003Quadav Fetich Legs\0041\004d\003Quadav Fetich Torso\0041\004d\003Scale Cuisses\0041\004d\003Scale Finger Gauntlets\0041\004d\003Scale Greaves\0041\004d\003Gil\00412-32\004g\003Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["young quadav"]="3-10\0026\001Shell Shield\00410\004d\003Bronze Cap\0041\004d\003Bronze Leggings\0041\004d\003Bronze Mittens\0041\004d\003Bronze Subligar\0041\004d\003Gil\0043-19\004g\003Beastcoin\004\004s\003Hard-Boiled Egg\004\004p\003Serving Of Herb Crawler Eggs\004\004p",
+["zighi boneeater"]="\0026\001",
+}

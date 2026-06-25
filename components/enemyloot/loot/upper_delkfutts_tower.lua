@@ -1,0 +1,30 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["alkyoneus"]="75\0022\001Gigas Socks\004100\004d\003Mahogany Shield\00424\004d\003Gigas Necklace\00410\004d\003Alkyoneuss Bracelets\0045\004d\003Gil\00493-128\004g",
+["autarch"]="83-85\0022\001Kinship Axe\00415\004d",
+["demonic doll"]="68-70\0022\001Vial Of Mercury\00410\004d\003Doll Shard\0045\004d",
+["dire bat"]="64-66\0023\001Bat Wing\00424\004d\003Bat Fang\00410\004d\003Vial Of Fiend Blood\0045\004d\003Vial Of Beastman Blood\0041\004d\003Bat Wing\004\004p",
+["enkelados"]="40\0022\001Gigas Socks\004100\004d\003Mahogany Shield\00424\004d\003Gigas Necklace\00415\004d\003Enkeladoss Bracelets\00410\004d\003Gil\00448-68\004g",
+["gigas bonecutter"]="34-35\0022\001Delkfutt Chest Key\0045\004d\003Gil\00441-60\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["gigas spirekeeper"]="34-35\0022\001Delkfutt Chest Key\0045\004d\003Gil\00441-60\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["gigas stonemason"]="34-35\0022\001Delkfutt Chest Key\0045\004d\003Gil\00441-60\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["gigas torturer"]="34-35\0022\001Delkfutt Chest Key\0045\004d\003Gil\00441-60\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["gigass bat"]="\0023\001",
+["gigass bats"]="\0023\001",
+["incubus bats"]="62-64\0023\001Bat Wing\00424\004d\003Bat Fang\00410\004d\003Vial Of Fiend Blood\0045\004d\003Vial Of Beastman Blood\0041\004d\003Bat Wing\004\004p",
+["ixtab"]="71\0022\001Revival Tree Root\00410\004d\003Square Of Cheviot Cloth\00410\004d",
+["jotunn gatekeeper"]="65-69\0022\001Gigas Socks\00410\004d\003Warriors Testimony\00410\004d\003Gigas Necklace\0041\004d\003Gil\00480-118\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["jotunn hallkeeper"]="65-69\0022\001Gigas Socks\00410\004d\003Monks Testimony\00410\004d\003Gigas Necklace\0041\004d\003Gil\00480-118\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["jotunn wallkeeper"]="65-69\0022\001Gigas Socks\00415\004d\003Rangers Testimony\00410\004d\003Gigas Necklace\0041\004d\003Scroll Of Archers Prelude\0041\004d\003Gil\00480-118\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["jotunn wildkeeper"]="65-69\0022\001Gigas Socks\00415\004d\003Beastmasters Testimony\00410\004d\003Gigas Necklace\0041\004d\003Gil\00480-118\004g\003Wool Cloth\004\004p\003Wool Thread\004\004p",
+["light elemental"]="35-36\0027\001Light Cluster\004100\004d",
+["magic pot"]="68-70\0027\001Magic Pot Shard\00415\004d\003Red Mages Testimony\00410\004d\003Vial Of Mercury\00410\004d\003Magic Pot Shard\004\004p",
+["magic urn"]="34-35\0027\001Magic Pot Shard\00415\004d\003Vial Of Mercury\00410\004d\003Delkfutt Chest Key\0045\004d\003Magic Pot Shard\004\004p",
+["mimas"]="36\0022\001Huge Moth Axe\0045\004d\003Gil\00443-61\004g",
+["pallas"]="72\0022\001Gigas Socks\004100\004d\003Mahogany Shield\00415\004d\003Gigas Necklace\00410\004d\003Pallass Bracelets\0045\004d\003Gil\00489-123\004g",
+["phasma"]="67-69\0022\001Revival Tree Root\00415\004d\003Square Of Wool Cloth\00410\004d\003Square Of Cotton Cloth\004\004p",
+["porphyrion"]="36\002\001Delkfutt Key\004100\004d",
+["thunder elemental"]="35-36\0025\001Lightning Cluster\004100\004d",
+}

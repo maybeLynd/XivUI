@@ -1,0 +1,31 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["balloon"]="8-10\0021\001Pinch Of Bomb Ash\00415\004d\003Bomb Arm\00410\004d\003Asbestos Mitts\0045\004d\003Bomb Arm\004\004s\003Pinch Of Bomb Ash\004\004s\003Pinch Of Bomb Ash\004\004p",
+["battle bat"]="17-20\0023\001Bat Wing\00415\004d\003Horutoto Chest Key\0045\004d\003Vial Of Fiend Blood\0041\004d\003Bat Wing\004\004p",
+["battue bats"]="1-3\0023\001Bat Wing\00415\004d\003Bat Wing\004\004p",
+["blade bat"]="4-6\0023\001Bat Wing\00415\004d\003Vial Of Fiend Blood\0041\004d\003Bat Wing\004\004p",
+["blob"]="15-18\0026\001Horutoto Chest Key\0041\004d\003Vial Of Slime Oil\004\004p",
+["boggart"]="22-26\0023\001Scroll Of Regen\0045\004d\003Beastcoin\004\004s",
+["covin bat"]="81-83\0023\001Bat Wing\00415\004d\003Vial Of Fiend Blood\0041\004d\003Bat Wing\004\004p",
+["deathwatch beetle"]="79-81\0024\001Insect Wing\00415\004d\003Beetle Shell\00410\004d\003Beetle Jaw\0045\004d\003Beetle Jaw\004\004p\003Beetle Shell\004\004p\003Insect Wing\004\004p",
+["goblin flesher"]="80-82\0021\001Faceguard\0041\004d\003Scale Cuisses\0041\004d\003Scale Finger Gauntlets\0041\004d\003Scale Greaves\0041\004d\003Gil\004100-140\004g\003Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin gambler"]="20-23\0021\001Bag Of Poison Flour\0045\004d\003Horutoto Chest Key\0041\004d\003Holly Clogs\0040.5\004d\003Linen Cuffs\0040.5\004d\003Linen Slops\0040.5\004d\003Poets Circlet\0040.5\004d\003Gil\00423-40\004g\003Silver Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin leecher"]="20-23\0021\001Block Of Yagudo Caulk\0045\004d\003Scroll Of Barsleep\0045\004d\003Scroll Of Paralyze\0045\004d\003Scroll Of Protectra\0045\004d\003Scroll Of Silence\0045\004d\003Scroll Of Sneak\0045\004d\003Holly Clogs\0041\004d\003Horutoto Chest Key\0041\004d\003Linen Cuffs\0041\004d\003Linen Slops\0041\004d\003Poets Circlet\0041\004d\003Scroll Of Barpoison\0041\004d\003Scroll Of Deodorize\0041\004d\003Scroll Of Invisible\0041\004d\003Gil\00423-40\004g\003Silver Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin lurcher"]="83-84\0021\001Wild Onion\00415\004d\003Bronze Cap\0041\004d\003Bronze Leggings\0041\004d\003Bronze Mittens\0041\004d\003Bronze Subligar\0041\004d\003Gil\004155-216\004g\003Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin metallurgist"]="80-82\0021\001Faceguard\0041\004d\003Scale Cuisses\0041\004d\003Scale Finger Gauntlets\0041\004d\003Scale Greaves\0041\004d\003Gil\004100-140\004g\003Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin mugger"]="20-23\0021\001Block Of Yagudo Caulk\0045\004d\003Brass Cap\0041\004d\003Brass Leggings\0041\004d\003Brass Mittens\0041\004d\003Brass Subligar\0041\004d\003Horutoto Chest Key\0041\004d\003Gil\00435-60\004g\003Silver Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin thug"]="1-6\0021\001Wild Onion\00415\004d\003Bronze Cap\0041\004d\003Bronze Leggings\0041\004d\003Bronze Mittens\0041\004d\003Bronze Subligar\0041\004d\003Gil\0042-19\004g\003Beastcoin\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin trailblazer"]="80-82\0021\001Block Of Animal Glue\00415\004d\003Leather Bandana\0041\004d\003Leather Gloves\0041\004d\003Leather Highboots\0041\004d\003Leather Trousers\0041\004d\003Gil\004100-140\004g\003Crossbow Bolt\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["goblin weaver"]="3-6\0021\001Spool Of Grass Thread\0045\004d\003Ash Clogs\0041\004d\003Circlet\0041\004d\003Cuffs\0041\004d\003Slops\0041\004d\003Spool Of Cotton Thread\0041\004d\003Square Of Cotton Cloth\0041\004d\003Square Of Grass Cloth\0041\004d\003Gil\0043-13\004g\003Spool Of Grass Thread\004\004s\003Bowl Of Goblin Stew\004\004p\003Goblin Chocolate\004\004p\003Goblin Mushpot\004\004p\003Loaf Of Goblin Bread\004\004p",
+["magicked bones"]="3-8\0024\001Bone Chip\00415\004d\003Ceremonial Dagger\0041\004d\003Bone Chip\004\004s\003Bone Chip\004\004p",
+["maltha"]="22-23\0026\001Trailers Tunica\00424\004d\003Vial Of Slime Oil\00424\004d",
+["nocuous weapon"]="25-27\0023\001Disciple Grip\00415\004d",
+["skinnymajinx"]="81-83\0024\001Bone Chip\00415\004d\003Bone Chip\004\004s\003Bone Chip\004\004p",
+["skinnymalinks"]="81-83\0024\001Bone Chip\00415\004d\003Revival Tree Root\00410\004d\003Bone Chip\004\004s\003Bone Chip\004\004p",
+["slendlix spindlethumb"]="33-34\0021\001Circes Hat\00410\004d\003Gil\00439-58\004g\003Silver Beastcoin\004\004s",
+["troika bats"]="78-80\0023\001Bat Wing\00415\004d\003Bat Wing\004\004p",
+["wendigo"]="25-28\0024\001Bone Chip\00415\004d\003Rusty Dagger\00410\004d\003Pile Of Answer Sheets\0045\004d\003Scroll Of Gravity\0041\004d\003Bone Chip\004\004s\003Bone Chip\004\004p",
+["will-o-the-wisp"]="\0021\001Pinch Of Bomb Ash\00415\004d\003Bomb Arm\00410\004d\003Pinch Of Bomb Ash\004\004p",
+}

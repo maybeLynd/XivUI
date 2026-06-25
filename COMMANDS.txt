@@ -1,0 +1,453 @@
+XivUI COMMANDS
+==============
+Addon commands: //xivui | //xui | //htb
+Each component has one command word (listed below). The hotbar also uses //htb.
+
+-------------------------------------------------------------------------------
+GLOBAL
+-------------------------------------------------------------------------------
+//xui                        Print the addon version and a command summary
+//xui enable <component>     Enable a component
+//xui disable <component>    Disable a component
+  Components: status, exp, target, party, aggro, dps, hotbar, request, notify,
+              cast, loot, weak, menu
+  Example:  //xui disable dps
+  Example:  //xui enable target
+  Note:     OFF by default: cast (castbar), dps, weak (enemy weakness), loot (enemy
+            drops). Enable any with `//xui enable <name>`.
+
+//xui menu                     Open the XivUI Menu, the easiest place to configure
+                               everything (components, theme, hotbars, HUD layout).
+//xui theme <ffxi|ffxiv>       Switch the overall UI theme (default: ffxiv). Reloads.
+
+Scroll Lock / F12              Toggle all UI visibility (also hides FFXIDB minimap if loaded)
+
+-------------------------------------------------------------------------------
+HUD LAYOUT EDITOR  (the main way to move and scale every component)
+-------------------------------------------------------------------------------
+Open the XivUI Menu (//xui menu) and use the HUD Layout editor to drag any
+component into place and scroll wheel to scale it.Exact positioning is still available 
+per component via `pos <x> <y>`, and most components can also use `scale <factor>` from chat.
+
+TIP: every command works with //xivui or the shorter //xui (the hotbar also uses //htb).
+     Each component is addressed by one word: the Prefix shown in its section below.
+     Anything in <angle brackets> is a value you supply; [square brackets] are optional.
+
+-------------------------------------------------------------------------------
+STATUSBAR  (HP / MP / TP + job / time main bar)
+Prefix: //xui status
+-------------------------------------------------------------------------------
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above)
+pos <x> <y>                    Set exact statusbar offset
+scale <0.5-2.5>                Set the bar scale
+theme <name>                   Change the bar skin: ffxi | ffxiv | ffxiv-legacy
+                               (no name = show current theme)
+compact <on|off>               Toggle the compact bar layout (no arg = toggle)
+  Example:  //xui status theme ffxiv-legacy
+  Example:  //xui status compact on
+  Example:  //xui status pos -20 4
+  Example:  //xui status scale 1.2
+
+-------------------------------------------------------------------------------
+EXPBAR  (EXP / merit bar)
+Prefix: //xui exp
+-------------------------------------------------------------------------------
+clear  (c)                     Reset the EXP/hour rate counter
+visible  (v)                   Toggle bar visibility
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above)
+pos <x> <y>                    Set exact EXP bar position
+scale <0.5-2.5>                Set the EXP bar scale
+  Example:  //xui exp pos 0 -10
+  Example:  //xui exp scale 1.1
+
+-------------------------------------------------------------------------------
+TARGETBAR  (target HP bar + buff/debuff strip + skillchain display)
+Prefix: //xui target
+-------------------------------------------------------------------------------
+sc [on|off]                    Toggle the skillchain / magic-burst display
+                               (also available directly as //xui sc [on|off])
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above)
+pos <x> <y>                    Set exact targetbar position
+scale <0.5-2.5>                Set the target bar scale. The magnifying-glass +
+                               weakness icons, the loot bag + drops panel, and the
+                               skillchain display all scale with it.
+debug                          Print the current target's spawn_type / class
+                               (diagnostic, used for bar-color tuning)
+ddebug                         Toggle action-field logging while applying a
+                               WS/JA/step/samba to an enemy (debuff tuning)
+  Example:  //xui sc on
+  Example:  //xui target scale 1.25
+
+-------------------------------------------------------------------------------
+ENEMYWEAK  (target weakness icons: the magnifying glass by the enemy's name)
+Prefix: //xui weak
+-------------------------------------------------------------------------------
+How it works: a small magnifying glass icon is to the right of an enemy target's
+              name on the target HP bar. Click it to expand that enemy's weakness
+              icons in place (weakest element first; absorbed/immune shown dimmed);
+              click again to collapse. Hovering an icon names the weakness. Sizes
+              and offset scale with the target bar (//xui target scale).
+
+always [on|off]                Always show the weakness icons expanded.
+off <dx> <dy>                  Nudge the glass / icon position
+  Example:  //xui weak always on
+  Example:  //xui weak off 2 -1
+
+-------------------------------------------------------------------------------
+ENEMYLOOT  (target drop list: the loot bag under the enemy's HP bar)
+Prefix: //xui loot
+-------------------------------------------------------------------------------
+How it works: a small bag icon is placed below an enemy target's HP bar. Click it to
+              open that enemy's possible drops, grouped into collapsible categories
+              (drops / steal / despoil / etc) with % chances where
+              known. Click a category header to collapse/expand it; scroll the
+              panel to see more. The bag + panel scale with the target bar, plus
+              the loot scale below. Drops/steals/despoils you actually see are
+              learned and fill any gaps in the wiki data.
+
+pos <x> <y>                    Set an exact bag position
+off <dx> <dy>                  Nudge the bag relative to the HP bar's end
+scale <0.5-2.5>                Extra bag/panel scale
+learned                        Print how many loot entries have been learned
+forget                         Clear the learned loot cache
+  Example:  //xui loot off 0 2
+  Example:  //xui loot scale 1.2
+  Example:  //xui loot learned
+
+-------------------------------------------------------------------------------
+AGGROLIST  (enemy aggro / claim list)
+Prefix: //xui aggro
+-------------------------------------------------------------------------------
+move / reposition / setup      use the HUD Layout editor (see HUD LAYOUT above)
+pos <x> <y>                    Set exact aggro list position
+scale <0.5-2.5>                Set the aggro list scale
+  Example:  //xui aggro pos 1500 400
+  Example:  //xui aggro scale 1.2
+
+-------------------------------------------------------------------------------
+XIVPARTY  (party list)
+Prefix: //xui party
+-------------------------------------------------------------------------------
+setup / move / reposition      use the HUD Layout editor (see HUD LAYOUT above).
+                               Each party subpanel (main / alliance 1 / alliance 2 /
+                               pets) is dragged + scaled separately there.
+pos [panel] <x> <y>            Set exact panel position (0 main, 1 alliance1, 2 alliance2, 3 pets)
+hidesolo [on|off]              Hide party list when solo
+hidealliance [on|off]          Hide the alliance panels
+hidepets [on|off]              Hide the pets panel
+hidecutscene [on|off]          Hide during cutscenes
+mousetargeting [on|off]        Click party members to target them
+swapsinglealliance [on|off]    Use full-width layout when only one alliance
+alignbottom [on|off] [panel]   Bottom-align rows (panel: party|pets|alliance1|alliance2)
+showemptyrows [on|off] [panel] Show empty rows (panel: same options as above)
+customorder [on|off]           Enable custom buff display order
+range <yalms> [<far_yalms>]    Set range indicator distance(s)
+range num                      Show numeric distance instead of indicator icon
+filter add <buffId>            Add a buff ID to the filter  (also: //xui party filters)
+filter remove <buffId>         Remove a buff ID from the filter
+filter clear                   Clear all buff filters
+filter list                    List all active buff filters
+filter mode [blacklist|whitelist]  Set the filter mode
+buffs [<PlayerName>]           Print active buffs for yourself or a party member
+layout <name>                  Switch party list layout
+job [on|off]                   Enable/disable job specific range and buff settings
+debug <savelayout|refcount|setbar|addplayer|testbuffs>
+                               Debug helpers
+  Example:  //xui party setup
+  Example:  //xui party pos 0 16 120
+  Example:  //xui party hidesolo on
+  Example:  //xui party filter add 33
+  Example:  //xui party layout default
+
+-------------------------------------------------------------------------------
+XIVHOTBAR3  (action hotbars)
+Prefix: //htb <cmd>   |   //xui <cmd>
+-------------------------------------------------------------------------------
+-- GENERAL --
+reload                         Reload the hotbar
+help                           Print full command reference in chat
+validate                       Check current job file for bad slots or unknown actions
+
+-- LAYOUT / POSITIONING --
+move                           Toggle layout mode
+reposition                     Toggle drag mode to move all hotbars together
+reposition hotbargaps          Scroll to adjust gap between hotbar rows
+reposition icongaps            Scroll to adjust gap between icons (horizontal)
+reposition icongaps vertical   Scroll to adjust gap between icons (vertical)
+reposition descsize            Scroll to adjust description tooltip size
+move custom <hotbar#>          Toggle custom slot position mode for a hotbar row
+reset custom <hotbar#>         Reset all custom slot positions for a hotbar row
+envpos <x> <y>                 Set the Main/General environment text position  (also: environmentpos)
+envhook <0-6>                  Hook environment text next to a hotbar row, 0 = fixed  (also: environmenthook)
+choiceindicator <x> <y>        Set the choice mode indicator offset  (also: choiceind)
+  Example:  //htb move
+  Example:  //htb reposition
+  Example:  //htb move custom 2
+  Example:  //htb envhook 3
+
+-- HOTBAR SETUP --
+New characters start with EMPTY hotbars. The easiest wayto set them up is 
+the XivUI Menu (//xui menu): the AUTOGEN tab fills bars from your
+learned actions per job, and the ACTIONS / MACROS / CHOICE tabs let you drag actions
+onto slots. The chat commands below do the same thing and are optional/advanced.
+
+-- HOTBAR SETUP (gen mode) --
+set gen mode                   Enable autogen (gen) mode
+setbar <category> <1-6> [b|g]  Assign a spell/ability category to a hotbar row
+  Categories: main, sub, ws, healing magic, enhancing magic, enfeebling magic,
+              dark magic, elemental magic, blue magic, ninjutsu, songs,
+              summoning, geomancy, trust
+unsetbar <category>            Remove a category assignment from its hotbar row
+setbar general list            Print the current xivhotbar_general_list entries
+autogen  (generate)            Populate all assigned hotbar rows for current job/level
+updategen                      Same as autogen but preserves manual overrides
+  Example:  //htb set gen mode
+  Example:  //htb setbar healing magic 3
+  Example:  //htb setbar ws 1 b
+  Example:  //htb autogen
+  Example:  //htb updategen
+
+-- HOTBAR SETUP (manual mode) --
+set manual mode                Enable manual mode (no autogen)
+set slot <row> <slot> <type> <action> [target] [alias]
+  Place an action on a specific slot.
+  Types:    ma (magic), ws, ja, ct (corsair roll), item, macro
+  Targets:  me, stpc, stnpc, bt, st, t (default: me)
+  (Icons come from data/action_icons.lua automatically; to use a custom icon for one
+   slot, edit its 6th field in the job .lua - see EDITING THE LUA below.)
+  Example:  //htb set slot 1 1 ma Cure stpc
+  Example:  //htb set slot 1 2 ws Savage Blade bt
+  Example:  //htb set slot 1 3 ja Provoke bt Prov
+  Example:  //htb set slot 1 4 item Hi-Potion me
+  Example:  //htb set slot 1 5 ct Chaos Roll me
+
+-- EDITING THE LUA DIRECTLY (off-game) --
+  Per-character files live in:
+    components/xivhotbar3/data/<YourName>/<job>.lua    (main + sub-job slots)
+    components/xivhotbar3/data/<YourName>/General.lua  (cross-job slots)
+  Each slot is one table line:
+    { '<env> <row> <slot>', '<type>', '<action>', '<target>', '<alias>', '<icon>' }
+      env    = battle | field
+      type   = ma | ws | ja | ct | item | macro | choice
+      action = spell/ability/item name, a macro command, or a choice group id
+      target = me | stpc | stnpc | bt | st | t
+      alias  = short label drawn on the slot
+      icon   = optional, path under images/icons/ (e.g. ffxiv/whm/cure); '' = default
+  Example (normal):  { 'battle 1 1', 'ja', 'Provoke', 'bt', 'Prov', 'ffxiv/war/provoke' }
+  Example (macro):   { 'battle 1 5', 'macro', '/ma "Cure" <me>', 'me', 'Cure', '' }
+  Run //htb reload after editing to apply the changes.
+
+-- CHOICE SLOTS (one slot that pops up a group of actions) --
+  A choice slot is just a slot whose type is "choice" and whose action is a choice
+  group id.  //htb choice list  prints the available ids (e.g. dnc_sambas, sch_stratagems).
+  Make one:
+    - In gen mode, autogen builds them for you (tiered spells, weaponskills, ...).
+    - //htb collapse weaponskills <row> <slot> [weapon]   (turns a slot into a WS choice)
+    - Or add it to the job .lua:
+        { 'battle 2 1', 'choice', 'dnc_sambas', '', 'Samba', 'ffxiv/dnc/pirouette' }
+  Unmake one:
+    - //htb resetslot <row> <slot>   (or just assign a normal action over the top of it)
+  Custom group (advanced): add an entry to choice_groups.groups in
+    components/xivhotbar3/lib/choice_groups.lua, matching the existing format.
+
+-- ICONS --
+  The FFXIV style icon for each action is mapped in
+  components/xivhotbar3/data/action_icons.lua (keyed by "type|name", e.g. "ja|provoke"),
+  with the images under components/xivhotbar3/images/icons/. Autogen assigns them
+  automatically. To change one everywhere, edit action_icons.lua; to change a single
+  slot, set its 6th .lua field (see EDITING THE LUA). Unmapped actions fall back to a
+  generic icon.
+
+-- SLOT MANAGEMENT --
+resetbar [<row#> | <env> <row#> | all [<env>]]  Clear a hotbar row or all rows
+resetslot [<row#> <slot#> | <env> <row#> <slot#>]  Clear a single slot
+resetall [<env>]               Clear all rows (optionally for one environment only)
+collapse weaponskills <row#> <slot#> [b|g] [weapon]
+                               Collapse all WS for a weapon type into one choice slot
+execute <hotbar#> <slot#>      Trigger a slot programmatically
+
+-- HOTBAR SETS (saveable per-job loadouts) --
+set visible                    Toggle the 3x3 set grid (nodes 1-9). Drag it in //htb move.
+                               If it would be offscreen it is recentered automatically.
+set save <1-9> ["name"]        Snapshot the current job's hotbar into a node: slot contents
+                               plus the layout (bar count, bar positions, custom slot
+                               offsets, hidden rows, scale). The optional name is shown in
+                               //htb set list (reuses the old name, or "Set N", if omitted).
+                               A saved node is seafoam green; empty nodes are grey.
+set load <1-9>                 Load a saved set for the current job (or click a green node).
+                               Reloads the addon so the saved layout reapplies.
+set clear <1-9>                Delete the set saved in a node
+set list                       List saved sets and names for the current job
+set pos <x> <y>                Move the grid to exact coordinates (no args = print current)
+  Example:  //htb set visible
+  Example:  //htb set save 1 "Tank set"
+  Example:  //htb set load 1
+
+-- TRUST --
+set up trust [<slot#>]         Start trust setup wizard (assigns trusts to a choice slot)
+trust setup [<slot#>]          Same as above
+  (During trust setup) trust <name>   Add a trust to the list
+  (During trust setup) done           Save and finish
+  (During trust setup) cancel         Abort without saving
+
+-- CHOICE / VARIANTS --  ("choice" can also be typed "variants" or "variant")
+choice list                    List all available choice group names
+choice on  (arm)               Arm the choice modifier for next keypress
+choice off  (cancel)           Dismiss the active choice bar
+choice toggle                  Toggle the choice modifier state
+choice status                  Show current choice modifier state
+choice <hotbar#> <slot#>       Open the variant popup for a specific slot
+choicekey <key|DIK>            Set the choice modifier key (e.g. capslock, 58)
+choicemode [toggle|hold|oneshot]  Set how the choice modifier activates  (also: modifiermode)
+modifier                       Alias for choicekey
+  Example:  //htb choicekey capslock
+  Example:  //htb choicemode hold
+  Example:  //htb choice 2 5
+
+-- DISPLAY / STYLE --
+style <args>                   Change hotbar visual style
+bars                           Print the current Main/General visible bar counts
+bars <1-6>                     Set the visible bar count for both environments
+bars main <1-6>                Set the Main (battle) bar count only
+bars gen <1-6>                 Set the General (field) bar count only
+hideempty [main|gen] <1-6>     Toggle hiding unused/empty slots on a hotbar row
+                               (no main|gen qualifier affects both environments)
+jobscale <0.25-4.0>            Set icon scale for the current job only
+jobscale reset                 Clear job-specific scale (uses global scale)
+  Example:  //htb bars 4
+  Example:  //htb bars gen 6
+  Example:  //htb hideempty gen 3
+  Example:  //htb jobscale 1.25
+
+-- PERFORMANCE --  (perf is also: performance)
+perf low                       Low performance preset (fewer recast checks)
+perf normal                    Normal / balanced preset (default)
+perf high                      High / smooth preset (most frequent updates)
+perf custom <recastFrames> <hoverFrames> [weaponPollSeconds]
+                               Custom performance settings
+perf                           Show current performance settings
+
+-- BEHAVIOUR / MISC --
+mount [<name>]                 Mount (raptor by default) or dismount if mounted
+autora <on|off|start|stop>     Start/stop auto ranged attack (no arg = show status; needs a
+                               ranged weapon + ammo; also toggled by the hotbar's auto-ra button)
+weaponpriority [auto|main|range]  Set which weapon slot drives WS display
+petrefresh [<name> | clear]    Refresh or manually set the cached pet name  (also: petset)
+bstcharge <seconds>            Set BST Ready charge time (default: 30)
+schchargebase <seconds>        Set SCH stratagem base recharge (default: 240)
+sc [props...]                  (debug) Print potential skillchains / magicburst elements
+                               for your current target (optional props attempt a skillchain)
+collapse / hotbar slot collapse weaponskills <row> <slot> [weapon]
+                               Two ways to type the same WS-collapse command (see SLOT MANAGEMENT)
+  Example:  //htb mount crab
+  Example:  //htb autora on
+  Example:  //htb weaponpriority range
+
+-------------------------------------------------------------------------------
+DPS  (real-time alliance DPS / damage parser, ACT style overlay)
+Prefix: //xui dps
+-------------------------------------------------------------------------------
+-- GENERAL --
+(no args)                      Print the command summary in chat
+visible                        Toggle the overlay on/off (starts hidden by default)
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above)
+reset                          Clear the current parse (start a fresh encounter)
+pos <x> <y>                    Move the overlay to exact coordinates
+scale <0.5-2.5>                Set the DPS panel scale
+roles                          Show the role color legend and any manual overrides
+
+-- SETTINGS:  set <flag> <value> --
+set numplayers <n>             Max number of rows shown (default: 12)
+set background <true|false>    Draw the dark backdrop panel behind the rows (default: false)
+set autoresetdelay <s>         Seconds of no combat before the parse auto-resets (default: 9)
+set autoreset <true|false>     Auto-clear the parse once the encounter ends (default: true)
+set trackhealing <true|false>  Track cure/heal amounts -> HPS column (default: true)
+set trackmagicburst <true|false>  Track magic burst damage (default: true)
+set separatesc <true|false>    false = one shared "Skillchain" row (sum of all sc closers);
+                               true  = credit skillchain damage to the closer's own row
+set separatemb <true|false>    false = one shared "Magic Burst" row (sum of all mb casters);
+                               true  = credit magic burst damage to the caster's own row
+set combinepets <true|false>   true  = fold pet damage into the owner's own row;
+                               false = each pet gets its own "Owner: Petname" row
+                               (default: false)
+
+-- ROLE COLORS:  set <slot> <role> --
+set <slot> <role>              Force the role color for whoever is in a party/alliance slot.
+                               Slots: 1-6 = your party, 7-18 = alliance. Persists per name.
+                               Roles: tank, healer, support, dps, pet, other
+                               (use "auto" to clear the override and color by job)
+  Example:  //xui dps set 2 healer
+  Example:  //xui dps set 3 auto
+  Role colors: tank=blue  healer=green  support=lavender  dps=red
+               pet=pale brown   Skillchain/Magic Burst=gold   unknown=gray
+
+-- ENEMY FILTER (limit the parse to specific mobs) --
+filter add <name> [name ...]   Only count damage against mobs matching these name patterns
+filter clear                   Remove all filters (count every mob again)
+filter show                    List the active mob filters
+
+-------------------------------------------------------------------------------
+REQUESTWINDOW  (party invite / trade request popups)
+Prefix: //xui request
+-------------------------------------------------------------------------------
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above).
+                               The pill (notify) and the Yes/No dialog are separate,
+                               independently movable + scalable boxes there.
+pos <notify|dialog> <x> <y>    Set exact position of the pill or the dialog
+scale [dialog] <0.5-2.5>       Scale the pill, or `scale dialog <f>` for the dialog
+test [party|trade]             Show a sample notification pill (click it to expand)
+  Example:  //xui request pos notify 1600 980
+  Example:  //xui request scale 1.2
+  Example:  //xui request scale dialog 1.3
+  Example:  //xui request test trade
+  
+-------------------------------------------------------------------------------
+NOTIFICATION  (loot toasts)
+Prefix: //xui notify
+-------------------------------------------------------------------------------
+move / reposition / setup      use the HUD Layout editor (see HUD LAYOUT above).
+                               The loot toast and the party join popup are separate boxes.
+pos <x> <y>                    Set exact start position (where each toast begins)
+pos join <x> <y>               Set exact position of the party join popup
+scale <0.5-2.5>                Scale the loot toast text
+scale join <0.5-2.5>           Scale the party join popup
+party [on|off]                 Also show what party members obtain (default: off = your
+                               loot only).
+test                           Queue a sample loot toast
+clear                          Drop the queue and the current toast
+  Notes: shows one loot item at a time.
+         By default only your loot shows; `party on` adds party members' drops.
+         Detection uses whichever fires first — the inventory packet (0x020, your loot),
+         the treasure-pool packet (0x0D2, supplies the item id), or the chat line
+         ("You obtain ...", "You find ... on ...", "<member> obtains ...") as a fallback and is
+         deduped so each drop shows once.
+  Example:  //xui notify move
+  Example:  //xui notify party on
+  Example:  //xui notify pos 20 300
+
+-------------------------------------------------------------------------------
+CASTBAR  (spell cast bar + auto-attack swing timer)   [OFF by default]
+Prefix: //xui cast
+-------------------------------------------------------------------------------
+Enable first:  //xui enable castbar
+move / reposition              use the HUD Layout editor (see HUD LAYOUT above).
+                               The cast bar and the auto-attack bar are separate boxes.
+pos <cast|swing|ranged> <x> <y>  Set an exact position for one bar
+scale <cast|swing|ranged|both> <f>  Set scale factor (0.4–3.0), e.g. 1.5
+cast [on|off]                  Show/hide the cast bar
+swing [on|off]                 Show/hide the melee auto-attack swing bar
+ranged [on|off]                Show/hide the cyan ranged-attack bar (its own timing; only
+                               appears while you actually shoot). Sits above the swing bar.
+swingtext [on|off]             Show/hide the xN + interval labels on the swing/ranged bars
+                               (off by default)
+test                           Show a 6-second animated preview of both bars
+reset                          Recenter both bars and reset scale
+  Notes: The pink CAST bar is hidden until you cast a spell with
+         a cast time, then shows the spell name + remaining seconds; an interrupt flashes it
+         red and blinks before it disappears. The smaller yellow SWING bar is placed above it,
+         right aligned to the same end, and fills toward your next melee swing while in combat.
+		 Swing timing is measured from the interval between attack rounds 
+		 (approximate).
+  Example:  //xui enable castbar
+  Example:  //xui cast scale both 1.4
+  Example:  //xui cast swing off

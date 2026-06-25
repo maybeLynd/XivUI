@@ -1,0 +1,32 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["alpine rabbit"]="111-113\0024\001",
+["ashen tiger"]="111-113\0025\001",
+["awoken nihhus"]="119\0024\001",
+["bedraggled lucerewe"]="111-113\0024\001",
+["calydontis"]="\0025\001",
+["cherti"]="\0024\001",
+["chilblain snoll"]="111-113\0022\001",
+["cicatricose raaz"]="111-113\0025\001",
+["contumacious ovim"]="111-113\0024\001",
+["cyanotic raptor"]="111-113\0021\001",
+["famished raaz"]="111-113\0025\001",
+["frostfang tiger"]="111-113\0025\001",
+["gnarring yztarg"]="111-113\0024\001",
+["hailstone"]="111-113\0022\001",
+["incensed lucerewe"]="111-113\0024\001",
+["kumhau"]="117-119\0025\001",
+["mirka"]="\0024\001",
+["pungent ovim"]="111-113\0024\001",
+["raptor nightstalker"]="111-113\0021\001",
+["shaggy ovim"]="111-113\0024\001",
+["sharptusk raaz"]="111-113\0025\001",
+["slobbering ruszor"]="111-113\0022\001",
+["snowpaw rabbit"]="111-113\0024\001",
+["snowpelt rabbit"]="111-113\0024\001",
+["sprightly leafkin"]="111-113\0024\001",
+["territorial lucerewe"]="111-113\0024\001",
+["umberwood tiger"]="111-113\0025\001",
+}

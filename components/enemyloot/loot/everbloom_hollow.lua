@@ -1,0 +1,33 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["arch ahriman"]="\0028\001",
+["bostillette"]="\0021\001",
+["fangmonger"]="\0021\001",
+["giddy bomb"]="\0021\001",
+["goblin reaver"]="\0021\001",
+["king arthro"]="\0026\001Avalon Breastplate\00424\004d\003Avalon Shield\00424\004d\003Magic Cuisses\0045\004d\003Square Of Damascene Cloth\0045\004d\003Velocious Belt\0045\004d",
+["knight crab"]="\0026\001",
+["lambton worm"]="\0024\001Ancient Torque\00424\004d\003Fragarach\00424\004d\003Morganas Cotehardie\00424\004d\003Oily Trousers\00424\004d\003Guivres Skull\00415\004d\003Square Of Damascene Cloth\00415\004d\003Venomous Claw\00415\004d",
+["nickel quadav"]="\0026\001",
+["one-eyed gwajboj"]="\0021\001",
+["orcish carrier"]="\0021\001",
+["orcish gladiator"]="\0021\001",
+["orcish grunt"]="\0021\001",
+["orcish guard"]="\0021\001",
+["orcish hexspinner"]="\0021\001",
+["orcish officer"]="\0021\001",
+["orcish serjeant"]="\0021\001",
+["orcish stormer"]="\0021\001",
+["orcish trooper"]="\0021\001",
+["orcish veteran"]="\0021\001",
+["ruby quadav"]="\0026\001",
+["sand pugil"]="\0026\001",
+["trained bat"]="\0023\001",
+["trained crab"]="\0026\001",
+["trained scorpion"]="\0024\001",
+["yagudo abbot"]="\0023\001",
+["yagudo missionary"]="\0023\001",
+["young behemoth"]="\0026\001",
+}

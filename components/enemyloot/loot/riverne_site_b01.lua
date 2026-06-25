@@ -1,0 +1,32 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["air elemental"]="57-61\0023\001Wind Cluster\004100\004d",
+["airi"]="78-79\0022\001",
+["bahamut"]="92\002\001Dragon Staff\00475\004d\003Siren's Hair\00475\004d\003Bahamut's Hose\00445\004d\003Bahamut's Mask\00430\004d\003Bahamut's Staff\00425\004d\003Bahamut's Zaghnal\00425\004d\003Divine Log\00425\004d\003Kunwu Iron\00424\004d\003Kunwu Ore\00424\004d\003Molybdenum Ore\00424\004d\003Wyrm Horn\00424\004d\003Cashmere Cloth\00415\004d\003Cashmere Thread\00415\004d",
+["blazedrake"]="85-86\0026\001Giant Scale\00424\004d\003Wyvern Skin\00410\004d\003Wyvern Tailskin\0045\004d\003Wyvern Wing\0045\004d\003Handful Of Wyvern Scales\004\004p",
+["book browser bokabraq"]="55\0021\001Gil\00467-94\004g",
+["boroka"]="58-60\0023\001Skulkers Cape\004100\004d\003Auditory Torque\00424\004d\003Boroka Earring\00424\004d\003Horomusha Kote\00424\004d",
+["chemical cook chemachiq"]="55\0021\001Gil\00467-94\004g",
+["earth elemental"]="74-76\0024\001Earth Cluster\004100\004d",
+["ignidrake"]="57-59\0026\001Giant Scale\00424\004d\003Wyvern Skin\0045\004d\003Wyvern Wing\0041\004d\003Giant Scale\004\004s\003Handful Of Wyvern Scales\004\004p",
+["imdugud"]="60\0023\001Knightly Earring\00415\004d\003Heavy Lance\00410\004d",
+["iruci"]="78-79\0024\001",
+["jormungand"]="88\0022\001",
+["lesser roc"]="47-51\0027\001Giant Bird Feather\00415\004d\003Giant Bird Plume\0045\004d\003Giant Bird Feather\004\004p",
+["lunantishee"]="55-58\0024\001Malboro Vine\00424\004d\003Lacquer Tree Log\0041\004d\003Malboro Vine\004\004s",
+["nimbus hippogryph"]="49-52\0023\001Hippogryph Tailfeather\00415\004d\003Hippogryph Feather\0041\004d\003Hippogryph Feather\004\004p\003Hippogryph Tailfeather\004\004p",
+["nitro cluster"]="55-57\0021\001Cluster Core\004100\004d\003Pot Of Clustered Tar\00415\004d\003Pinch Of Cluster Ash\00410\004d\003Cluster Arm\0045\004d\003Cluster Core\004\004s",
+["ouryu"]="88\0024\001",
+["pey"]="78-79\0024\001",
+["pyrodrake"]="50-53\0026\001Giant Scale\00424\004d\003Wyvern Skin\0045\004d\003Wyvern Wing\0041\004d\003Handful Of Wyvern Scales\004\004p",
+["spell spitter spilospok"]="55\0021\001Gil\00467-94\004g",
+["strato hippogryph"]="55-57\0023\001Hippogryph Tailfeather\00415\004d\003Hippogryph Feather\0041\004d\003Hippogryph Feather\004\004p\003Hippogryph Tailfeather\004\004p",
+["thunder elemental"]="57-64\0025\001Lightning Cluster\004100\004d",
+["tiamat"]="88\0021\001",
+["unstable cluster"]="56-57\0021\001Cluster Core\004100\004d\003Cluster Arm\00415\004d\003Pinch Of Cluster Ash\00415\004d\003Soboro Sukehiro\00415\004d",
+["vrtra"]="88\0021\001",
+["water elemental"]="74-76\0026\001Water Cluster\004100\004d",
+["ziryu"]="74-76\0024\001",
+}

@@ -1,0 +1,29 @@
+
+-- prefix "<lvl|min-max>\002<element>\001"; item "name\004rate\004cat\003..." ;
+-- cat d=drop g=gil s=steal p=despoil ; rate=percent (gil=range) ; element 1-8 -> crystal.
+return {
+["apocalyptic weapon"]="78-80\0023\001",
+["cannonball"]="66-70\0021\001Pinch Of Bomb Ash\00415\004d\003Bomb Arm\00410\004d\003Bomb Arm\004\004s\003Pinch Of Bomb Ash\004\004s\003Pinch Of Bomb Ash\004\004p",
+["cursed puppet"]="65-69\0022\001Bottle Of Illuminink\00415\004d\003Vial Of Mercury\00410\004d\003Doll Shard\0045\004d\003Doll Shard\004\004p",
+["darksteel golem"]="80-82\0027\001Chunk Of Mythril Ore\0045\004d\003Golem Shard\0045\004d\003Chunk Of Mythril Ore\004\004p\003Golem Shard\004\004p",
+["douma weapon"]="\0023\001",
+["eldhrimnir"]="80\0027\001",
+["fired urn"]="69\0027\001",
+["infernal weapon"]="79-81\0023\001",
+["jackpot"]="1\0027\001",
+["katashiro weapon"]="\0023\001",
+["killing weapon"]="60-64\0023\001",
+["lode golem"]="70\0022\001",
+["magic flagon"]="64-69\0027\001Bottle Of Illuminink\00415\004d\003Magic Pot Shard\00415\004d\003Red Mages Testimony\00410\004d\003Vial Of Mercury\00410\004d\003Scroll Of Enstone Ii\0045\004d\003Magic Pot Shard\004\004p",
+["martinet"]="72-74\0022\001Aptant Of Aecus\00410\004d\003Aptant Of Pera\00410\004d",
+["mokkurkalfi"]="68-70\0027\001",
+["mythril golem"]="68-70\0027\001Chunk Of Mythril Ore\0045\004d\003Golem Shard\0045\004d\003Chunk Of Mythril Ore\004\004p\003Golem Shard\004\004p",
+["nargun"]="77-79\0027\001Aptant Of Arkhe\00410\004d\003Aptant Of Pera\00410\004d",
+["nightmare vase"]="70-73\0027\001Magic Pot Shard\004100\004d\003Vial Of Mercury\004100\004d\003Philosophers Stone\00415\004d\003Shinogi\0045\004d\003Magic Pot Shard\004\004s",
+["ominous weapon"]="61-65\0023\001",
+["rogue receptacle"]="67-68\0027\001Lyricists Gonnelle\00410\004d",
+["shikigami weapon"]="77-80\0023\001Yinyang Robe\00424\004d",
+["steely weapon"]="68\0023\001",
+["thunder elemental"]="67-69\0025\001Lightning Cluster\004100\004d",
+["water elemental"]="67-69\0026\001Water Cluster\004100\004d",
+}
