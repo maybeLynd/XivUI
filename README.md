@@ -27,6 +27,7 @@
 - [Skillchain and Dps Parser](#skillchain-and-dps-parser)
 - [Additional Info](#additional-info)
 - [Hotbar Sets](#hotbar-sets)
+- [Patch Notes](#patch-notes)
 - [Credits](#credits)
 
 ---
@@ -495,6 +496,12 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 <a id="hotbar-sets"></a>
 ## Hotbar Sets
 Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and held to save your current hotbar set up then pressed on a colored slot to quickly load the hotbar set that was saved.
+
+<a id="patch-notes"></a>
+## Patch Notes
+
+### v0.1.2
+- Fixed Lua errors (`ui.lua` / `texts.lua`) that was caused when disabling the hotbar component.
 
 <a id="credits"></a>
 ## Credits

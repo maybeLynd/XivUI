@@ -1,4 +1,4 @@
--- expbar — EXP / merit-point progress bar.
+-- expbar: EXP / merit-point progress bar.
 -- XivUI component. Maintainer: maybeLynd. Version: 0.3.0.
 -- Based on "BarFiller" v0.2.5 by Morath.
 

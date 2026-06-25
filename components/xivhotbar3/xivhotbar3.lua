@@ -1,4 +1,4 @@
--- XIVHotbar2: Hotbars.
+-- XIVHotbar3 — action hotbars.
 -- XivUI component. Maintainer: maybeLynd. Version: 1.
 -- Based on "XIVHotbar2" v0.3 by Sabarjp, Fethur, Edeon, Akirane, Technyze.
 
@@ -81,6 +81,24 @@ local htb_bounds_cache    = nil
 local choice_bounds_cache = nil
 local rmbPressedInHotbar = false
 local lmbPressedInHotbar = false
+
+local htb_events = {}
+local event_ids  = {}
+local function htb_register(...)
+  htb_events[#htb_events + 1] = { n = select('#', ...), ... }
+end
+local function register_events()
+  if #event_ids > 0 then return end
+  for _, e in ipairs(htb_events) do
+    event_ids[#event_ids + 1] = windower.register_event(unpack(e, 1, e.n))
+  end
+end
+local function unregister_events()
+  for i = #event_ids, 1, -1 do
+    windower.unregister_event(event_ids[i])
+    event_ids[i] = nil
+  end
+end
 
 local function refresh_overload_state()
   local wp = windower.ffxi.get_player()
@@ -2279,7 +2297,7 @@ function xivhotbar3_component.handle_command(command, ...)
   end
 end
 
-windower.register_event('keyboard', function(dik, flags, blocked)
+htb_register('keyboard', function(dik, flags, blocked)
   if ui.hotbar.ready == false or windower.ffxi.get_info().chat_open then
     return
   end
@@ -2650,7 +2668,7 @@ end
 
 local external_drag_active = false
 
-windower.register_event('mouse', function(type, x, y, delta, blocked)
+htb_register('mouse', function(type, x, y, delta, blocked)
   return_value = nil
   if external_drag_active then return false end
   if hud_layout_open() then return false end
@@ -2845,7 +2863,7 @@ windower.register_event('mouse', function(type, x, y, delta, blocked)
     else
       if hotbar_sets:is_visible() and not (ui.hotbar and ui.hotbar.hide_hotbars) then
         local node = hotbar_sets:hit_test(x, y)
-        if type == 0 then hotbar_sets:set_hover(node) end   -- highlight the dot under the cursor
+        if type == 0 then hotbar_sets:set_hover(node) end
         if type == 1 and node then
           hotbar_sets:begin_hold(node)
           return true
@@ -2870,7 +2888,7 @@ windower.register_event('mouse', function(type, x, y, delta, blocked)
 end)
 
 local frame_counter = 0
-windower.register_event('prerender', function()
+htb_register('prerender', function()
   frame_counter = frame_counter + 1
 
   if ui.hotbar.ready == false then
@@ -2965,17 +2983,17 @@ windower.register_event('prerender', function()
   end
 end)
 
-windower.register_event('mp change', function(new, old)
+htb_register('mp change', function(new, old)
   player.vitals.mp = new
   ui:update_mp(new)
 end)
 
-windower.register_event('tp change', function(new, old)
+htb_register('tp change', function(new, old)
   player.vitals.tp = new
   ui:update_tp(new)
 end)
 
-windower.register_event('status change', function(new_status_id, old_status_id)
+htb_register('status change', function(new_status_id, old_status_id)
   if ui.hotbar.hide_hotbars == false and new_status_id == 4 then
     ui.hotbar.hide_hotbars = true
     ui:hide()
@@ -3006,7 +3024,7 @@ windower.register_event('status change', function(new_status_id, old_status_id)
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original)
+htb_register('incoming chunk', function(id, original)
   if id ~= 0x028 then return end
   local ok, act = pcall(windower.packets.parse_action, original)
   if not ok or not act then return end
@@ -3121,7 +3139,7 @@ windower.register_event('incoming chunk', function(id, original)
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   local seq = original:unpack('H', 3)
 
   if (next_sequence and seq >= next_sequence) and loaded then
@@ -3151,7 +3169,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if id == 0x050 then
     local packet = packets.parse('incoming', original)
     local slot = packet['Equipment Slot']
@@ -3291,7 +3309,7 @@ function set_weapon_type(is_ranged, bag, index)
   return false
 end
 
-windower.register_event('add item', 'remove item', function(id, bag, index, count)
+htb_register('add item', 'remove item', function(id, bag, index, count)
   if state.ready == true then
     ui:update_inventory_count()
     player:update_inventory_items()
@@ -3299,7 +3317,7 @@ windower.register_event('add item', 'remove item', function(id, bag, index, coun
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     if id == 0x0AC and changing_job == true then
       changing_job = false
@@ -3340,7 +3358,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('outgoing chunk', function(id, original, modified, injected, blocked)
+htb_register('outgoing chunk', function(id, original, modified, injected, blocked)
   if id == 0x102 then
     if player.main_job_id == 16 or player.sub_job_id == 16 then
       if ui.theme.dev_mode then log("Set blue magic. Reloading Hotbar.") end
@@ -3350,7 +3368,7 @@ windower.register_event('outgoing chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if id == 0x044 then
     if player.main_job_id == 16 or player.sub_job_id == 16 then
       local packet = packets.parse('incoming', original)
@@ -3375,7 +3393,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original)
+htb_register('incoming chunk', function(id, original)
   if id ~= 0x029 then return end
   local ok, p = pcall(packets.parse, 'incoming', original)
   if not ok or not p or p['Actor'] ~= player.id then return end
@@ -3390,7 +3408,7 @@ windower.register_event('incoming chunk', function(id, original)
   end
 end)
 
-windower.register_event('gain buff', function(id)
+htb_register('gain buff', function(id)
   if id == 143 or id == 269 then
     if ui.theme.dev_mode then log("Level Capped/Sync'd. Reloading Hotbar.") end
     reload_hotbar()
@@ -3418,7 +3436,7 @@ windower.register_event('gain buff', function(id)
   end
 end)
 
-windower.register_event('lose buff', function(id)
+htb_register('lose buff', function(id)
   if id == 45 then
     player.boost_expires = 0
   elseif id == 66 then
@@ -3451,7 +3469,7 @@ windower.register_event('lose buff', function(id)
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if id == 0x02D then
     mob_killed = true
     old_level = player.main_job_level
@@ -3470,7 +3488,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   local packet = packets.parse('incoming', original)
   if id == 0x068 then
     if packet['Owner ID'] == player.id then
@@ -3488,7 +3506,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     local packet = packets.parse('incoming', original)
     if id == 0x068 then
@@ -3515,7 +3533,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     local packet = packets.parse('incoming', original)
     if id == 0x068 then
@@ -3528,7 +3546,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming text', function(text)
+htb_register('incoming text', function(text)
   local pname = windower.ffxi.get_player().name
   if string.find(text, pname) and string.find(text, ' learns a new spell') then
     if ui.theme.dev_mode then log('Learned a new spell. Scheduling updategen.') end
@@ -3540,13 +3558,13 @@ windower.register_event('incoming text', function(text)
   end
 end)
 
-windower.register_event('level up', function()
+htb_register('level up', function()
   if addon_mode ~= 'gen' or not state.ready then return end
   if ui.theme.dev_mode then log('Level up. Scheduling updategen.') end
   request_updategen('level up', 1.5, true)
 end)
 
-windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+htb_register('incoming chunk', function(id, original, modified, injected, blocked)
   if ui.theme.dev_mode then
     if id == 0x0AC and gm_command == true then
       if ui.theme.dev_mode then log("GM Command. Reloading Hotbar.", count) end
@@ -3556,7 +3574,7 @@ windower.register_event('incoming chunk', function(id, original, modified, injec
   end
 end)
 
-windower.register_event('incoming text', function(text)
+htb_register('incoming text', function(text)
   if ui.theme.dev_mode then
     if string.find(text, "!changejob") or string.find(text, "!changesjob") then
       gm_command = true
@@ -3584,14 +3602,14 @@ windower.register_event('incoming text', function(text)
   end
 end)
 
-windower.register_event('mob spawned', function(mob)
+htb_register('mob spawned', function(mob)
   if state.ready == true and player.luopan_geo_pending and mob and mob.owner_id == player.id then
     player.luopan_id = mob.id
     player.luopan_geo_pending = false
   end
 end)
 
-windower.register_event('mob despawned', function(id)
+htb_register('mob despawned', function(id)
   if state.ready == true and player.luopan_id and id == player.luopan_id then
     player.luopan_id = nil
     if not player.luopan_geo_pending then
@@ -3658,6 +3676,7 @@ function xivhotbar3_component.init()
     theme_options = theme.apply(settings)
     player.id = windower_player.id
     initialize()
+    register_events()
     if htb_mouse_handler_id then
       windower.unregister_event(htb_mouse_handler_id)
       htb_mouse_handler_id = nil
@@ -3706,6 +3725,7 @@ function xivhotbar3_component.dispose()
     windower.unregister_event(htb_mouse_handler_id)
     htb_mouse_handler_id = nil
   end
+  unregister_events()
   rmbPressedInHotbar = false
   lmbPressedInHotbar = false
 end
@@ -4591,7 +4611,19 @@ end
 function xivhotbar3_component.hud_sets_rect()
   local x, y, w, h = hotbar_sets:grid_bounds()
   if not x then return nil end
-  return { x = x, y = y, w = w, h = h, visible = hotbar_sets:is_visible() }
+  return { x = x, y = y, w = w, h = h, scale = hotbar_sets:get_dot_scale(), visible = hotbar_sets:is_visible() }
+end
+
+function xivhotbar3_component.hud_set_sets_scale_live(f)
+  hotbar_sets:set_dot_scale(f)
+end
+
+function xivhotbar3_component.hud_set_sets_scale(f)
+  hotbar_sets:set_dot_scale(f)
+  if settings and settings.HotbarSets then
+    settings.HotbarSets.DotScale = tonumber(f) or settings.HotbarSets.DotScale
+    config.save(settings)
+  end
 end
 
 function xivhotbar3_component.hud_move_sets_live(x, y)
