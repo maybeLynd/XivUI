@@ -217,6 +217,8 @@ Character files (`<job>.lua`, `General.lua`, `autogen_settings_<JOB>.lua`, `layo
 
 <img width="742" height="157" alt="image" src="https://github.com/user-attachments/assets/70d608ea-8a44-4c98-8238-3507293bcb17" />
 
+<img width="403" height="388" alt="image" src="https://github.com/user-attachments/assets/50dd7906-4983-4d3a-8132-16a756629ac7" />
+
 <a id="skillchain-and-dps-parser"></a>
 ## Skillchain and Dps Parser
 
