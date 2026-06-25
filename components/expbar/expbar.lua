@@ -1,4 +1,4 @@
--- expbar: EXP / merit-point progress bar.
+-- expbar — EXP / merit-point progress bar.
 -- XivUI component. Maintainer: maybeLynd. Version: 0.3.0.
 -- Based on "BarFiller" v0.2.5 by Morath.
 
@@ -64,6 +64,7 @@ defaults.Texts.Exp.Text = {
     Alpha = 255, Red = 255, Green = 245, Blue = 191,
     Stroke = { Width = 2, Alpha = 255, Red = 0, Green = 0, Blue = 0 }
 }
+
 defaults.Stats = { Enable = false }
 
 local settings
@@ -130,6 +131,7 @@ local function update_strings()
     exp_text:clear()
     exp_text:append('Lv ' .. info.main_job_level)
     exp_text:append('  ' .. xp.current .. '/' .. xp.total)
+
     if settings.Stats and settings.Stats.Enable then
         local rate = xp.rate or 0
         exp_text:append('  |  ' .. rate .. '/hr')
@@ -209,11 +211,14 @@ function expbar.init()
     exp_text:bg_visible(false)
     exp_text:font((cur_theme=='ffxi') and 'Constantia' or settings.Texts.Exp.Text.Font, unpack(settings.Texts.Exp.Text.Fonts))
     exp_text:size(settings.Texts.Exp.Text.Size)
+
+
     if cur_theme == 'ffxi' then
         exp_text:color(196, 206, 222)
     else
         exp_text:color(settings.Texts.Exp.Text.Red, settings.Texts.Exp.Text.Green, settings.Texts.Exp.Text.Blue)
     end
+
     exp_text:stroke_alpha(255)
     exp_text:stroke_color(0, 0, 0)
     exp_text:stroke_width(2)
@@ -229,6 +234,9 @@ function expbar.dispose()
     ready = false
     ui_bounds.clear('expbar')
 end
+
+
+
 
 function expbar.apply_theme(id)
     if not bg_img or id == cur_theme then return end
@@ -348,8 +356,11 @@ function expbar.on_zone_change()
     mog_house_check()
 end
 
+
+
 function expbar.handle_command(args)
     local cmd = args[1] and args[1]:lower() or ''
+    if not settings then log('expbar: not loaded yet — log in first (or enable the component).'); return end
     if cmd == 'clear' or cmd == 'c' then
         xp = { registry = {}, total = xp.total, rate = 0, current = xp.current, tnl = xp.tnl }
         update_strings()

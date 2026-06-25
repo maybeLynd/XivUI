@@ -1,4 +1,4 @@
--- notification: loot toast that shows drops obtained.
+-- notification — transient loot toast that floats up and fades.
 -- XivUI component. Maintainer: maybeLynd. Version: 2.0.
 
 local config    = require('config')
@@ -101,6 +101,19 @@ local function emit_party(recipient, item, now)
     enqueue(recipient .. ' obtained ' .. item)
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 local slots = {}
 local inv_synced = false
 local pending_gains = {}
@@ -110,10 +123,19 @@ local GAIN_BURST  = 4
 
 local function trackable(item_id) return item_id and item_id ~= 0 and item_id ~= 0xFFFF end
 
+
+
 local function slot_item_id(bag, index)
     local ok, it = pcall(windower.ffxi.get_items, bag, index)
     return (ok and type(it) == 'table' and it.id and it.id ~= 0) and it.id or nil
 end
+
+
+
+
+
+
+
 
 local PRIME_BAGS = {}
 for b = 0, 16 do PRIME_BAGS[#PRIME_BAGS + 1] = b end
@@ -142,6 +164,12 @@ local function cancel_move(item_id, amount, now)
     return false
 end
 
+
+
+
+
+
+
 local function cancel_pending_at(item_id, amount)
     for i = #pending_gains, 1, -1 do
         if amount <= 0 then break end
@@ -164,6 +192,10 @@ function notification.init()
     join_txt = make_txt()
     pending_gains = {}
     recent_dec = {}
+
+
+
+
     slots = {}
     inv_synced = prime_inventory()
 end
@@ -196,6 +228,8 @@ end
 
 function notification.hud_preview(on) vis:preview(on) end
 
+
+
 function notification.hud_set_scale(v)
     settings.scale = math.max(0.5, math.min(2.5, tonumber(v) or 1)); config.save(settings)
 end
@@ -213,10 +247,13 @@ local function text_extents(t, fw, fh)
 end
 
 function notification.push_bounds()
+
     if vis:hidden() or not vis:previewing() then
         ui_bounds.clear('notification'); ui_bounds.clear('notification_join'); return
     end
     local s, js = nscale(), jscale()
+
+
     local lw, lh = text_extents(toast_pool and toast_pool[1], SETUP_W * s, SETUP_H * s)
     ui_bounds.register('notification', settings.pos.x, settings.pos.y - 2, math.floor(lw), math.floor(lh))
     local jw, jh = text_extents(join_txt, JOIN_SETUP_W * js, JOIN_SETUP_H * js)
@@ -226,6 +263,7 @@ end
 function notification.on_incoming_text(original)
     if vis:hidden() then return end
     local text = strip_codes(original or ''):gsub('^%s+', '')
+
 
     local joiner = text:match('^(%a+) joins the party')
     if joiner then
@@ -245,6 +283,7 @@ function notification.on_incoming_text(original)
     emit_party(who, item, socket.gettime())
 end
 
+
 local function candidate_gain(item_id, amount, now, key)
     if not trackable(item_id) or amount <= 0 then return end
     if not inv_synced then return end
@@ -252,6 +291,15 @@ local function candidate_gain(item_id, amount, now, key)
     if cancel_move(item_id, amount, now) then return end
     pending_gains[#pending_gains + 1] = { item = item_id, count = amount, t = now, key = key }
 end
+
+
+
+
+
+
+
+
+
 
 function notification.on_incoming_chunk(id, original)
     if id == 0x00B then
@@ -280,10 +328,15 @@ function notification.on_incoming_chunk(id, original)
     local now = socket.gettime()
     if prev == nil then
         slots[key] = { id = item_id, count = count }
+
+
+
         if inv_synced and item_id and id == 0x020 then candidate_gain(item_id, count, now, key) end
         return
     end
     slots[key] = { id = item_id, count = count }
+
+
 
     if item_id == 0xFFFF then
         local delta = count - prev.count
@@ -294,9 +347,12 @@ function notification.on_incoming_chunk(id, original)
     end
 
     if prev.id == item_id then
+
         local delta = count - prev.count
         if delta == 0 then return end
         if delta < 0 then
+
+
             local left = cancel_pending_at(item_id, -delta)
             if left > 0 and trackable(item_id) then
                 recent_dec[#recent_dec + 1] = { item = item_id, amount = left, exp = now + GAIN_SETTLE }
@@ -305,6 +361,8 @@ function notification.on_incoming_chunk(id, original)
         end
         candidate_gain(item_id, delta, now, key)
     else
+
+
         if trackable(prev.id) and prev.count > 0 then
             local left = cancel_pending_at(prev.id, prev.count)
             if left > 0 then
@@ -314,6 +372,8 @@ function notification.on_incoming_chunk(id, original)
         candidate_gain(item_id, count, now, key)
     end
 end
+
+
 
 local function flush_gains(now)
     if #pending_gains == 0 then return end
@@ -332,12 +392,16 @@ end
 function notification.on_prerender()
     if vis:skip() or not toast_pool[1] then return end
 
+
+
+
     local pnow = socket.gettime()
     if not inv_synced then
         if prime_inventory() then inv_synced = true
         elseif #pending_gains == 0 and next(slots) ~= nil then inv_synced = true end
     end
     flush_gains(pnow)
+
 
     if join_txt then
         if vis:previewing() then
@@ -380,9 +444,11 @@ function notification.on_prerender()
     end
 
     local now = socket.gettime()
+
     while #actives < TOAST_MAX and #queue > 0 do
         actives[#actives + 1] = { text = table.remove(queue, 1), start = now }
     end
+
 
     local wr = 0
     for i = 1, #actives do
@@ -406,8 +472,11 @@ function notification.on_prerender()
     for i = wr + 1, #toast_pool do toast_pool[i]:hide() end
 end
 
+
+
 function notification.handle_command(args)
     local cmd = args and args[1] and tostring(args[1]):lower() or 'help'
+    if not settings then log('notification: not loaded yet — log in first (or enable the component).'); return end
     if cmd == 'move' or cmd == 'reposition' or cmd == 'setup' then
         (_G.xivui_echo or log)('notification: use the HUD Layout editor (XivUI Menu) to move the toasts.')
     elseif cmd == 'pos' then
@@ -461,8 +530,8 @@ function notification.handle_command(args)
         log('notification: cleared.')
     else
         log('notification commands:')
-        log('  pos <x> <y> — set exact start position (pos join <x> <y> for the party join popup)')
-        log('  scale <0.5-2.5> — scale the toast text (scale join <f> for the party join popup)')
+        log('  pos <x> <y> — set exact start position (pos join <x> <y> for the party-join popup)')
+        log('  scale <0.5-2.5> — scale the toast text (scale join <f> for the party-join popup)')
         log('  party [on|off] — also show what party members obtain (default: off, you only)')
         log('  test — queue a sample loot toast')
         log('  clear — drop the queue and current toast')

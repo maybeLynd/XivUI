@@ -500,6 +500,11 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 <a id="patch-notes"></a>
 ## Patch Notes
 
+### v0.1.3
+- After noticing the last lua errors caused when hotbar component disabled, I found more issues caused by having certain things off. 
+
+TL;DR: you can now turn stuff off and mess with settings in peace without Vana'diel yelling at you. o/
+
 ### v0.1.2
 - Fixed Lua errors (`ui.lua` / `texts.lua`) that was caused when disabling the hotbar component.
 

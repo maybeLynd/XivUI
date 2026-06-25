@@ -1,12 +1,16 @@
--- requestwindow: party invite and trade request popups.
+-- requestwindow — party invite and trade request popups.
+-- A bottom-right notification pill that expands into a Yes/No dialog.
 -- XivUI component. Maintainer: maybeLynd. Version: 2.0.
 
 local ADDON_PATH = windower.addon_path
 local IMG_PATH   = ADDON_PATH .. 'assets/components/requestwindow/'
+
+
 if _G.XIVUI_THEME == 'ffxi' then
     local f = io.open(IMG_PATH .. 'themes/ffxi/dialog.png', 'rb')
     if f then f:close(); IMG_PATH = IMG_PATH .. 'themes/ffxi/' end
 end
+
 local _ffxi = (_G.XIVUI_THEME == 'ffxi')
 local TXT_MAIN   = _ffxi and { 206, 217, 240 } or { 245, 240, 230 }
 local TXT_PILL   = _ffxi and { 214, 224, 242 } or { 255, 255, 255 }
@@ -386,6 +390,7 @@ end
 function requestwindow.on_prerender()
     if vis:skip() or not dialog then return end
 
+
     if vis:previewing() then
         render_dialog('party', 'PlayerName')
         render_pills({ { kind = 'party', name = 'PlayerName' } })
@@ -446,6 +451,8 @@ local function close_hit(ux, uy)
     return (ux - cx) * (ux - cx) + (uy - cy) * (uy - cy) <= r * r
 end
 
+
+
 function requestwindow.on_mouse(mtype, x, y, delta, blocked)
     if vis:hidden() or not dialog then return false end
     local ux, uy = ui_bounds.to_ui(x, y)
@@ -502,6 +509,7 @@ end
 
 function requestwindow.handle_command(args)
     local cmd = args and args[1] and tostring(args[1]):lower() or 'help'
+    if not settings then log('requestwindow: not loaded yet — log in first (or enable the component).'); return end
     if cmd == 'move' or cmd == 'reposition' or cmd == 'setup' then
         (_G.xivui_echo or log)('requestwindow: use the HUD Layout editor (XivUI Menu) to move the pill and dialog.')
     elseif cmd == 'pos' then

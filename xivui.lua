@@ -1,6 +1,6 @@
 _addon.name = 'XivUI'
 _addon.author = 'maybeLynd'
-_addon.version = '0.1.0'
+_addon.version = '0.2.0'
 _addon.commands = {'xivui', 'xui', 'htb'}
 
 config = require('config')
@@ -13,6 +13,11 @@ require('logger')
 require('strings')
 require('lists')
 require('tables')
+
+
+
+
+
 
 do
     local real_gws = windower.get_windower_settings
@@ -28,6 +33,9 @@ local zone_state   = require('lib/zone_state')
 local player_state = require('lib/player_state')
 local ui_bounds    = require('lib/ui_bounds')
 local occlusion    = require('lib/occlusion')
+
+
+
 
 do
     local ok, ts = pcall(config.load, 'data/theme/settings.xml', { Theme = 'ffxiv' })
@@ -65,6 +73,9 @@ local components = {
 }
 for _, c in ipairs(components) do if c.enabled == nil then c.enabled = true end end
 
+
+
+
 local comp_enabled = config.load('data/xivui/components.xml', { enabled = {} })
 for _, c in ipairs(components) do
     local saved = comp_enabled.enabled and comp_enabled.enabled[c.name]
@@ -77,6 +88,11 @@ local function save_comp_enabled(name, on)
     comp_enabled.enabled[name] = on and true or false
     config.save(comp_enabled)
 end
+
+
+
+
+
 
 local dispatch_err = {}
 local function dispatch(c, ev, ...)
@@ -92,6 +108,8 @@ local function dispatch(c, ev, ...)
     return nil
 end
 
+
+
 local function dispatch_menu_err(fn, err)
     local key = 'xivuimenu.' .. fn
     if not dispatch_err[key] then
@@ -99,6 +117,11 @@ local function dispatch_menu_err(fn, err)
         windower.add_to_chat(167, ('[XivUI] xivuimenu.%s error (further suppressed): %s'):format(fn, tostring(err)))
     end
 end
+
+
+
+
+
 
 local DEBUG_FLAG = windower.addon_path .. 'data/debug_enabled'
 do
@@ -154,6 +177,9 @@ local zone_reveal_pending = false
 local SCRLK_DIK = 70
 local F12_DIK   = 88
 
+local hud_hidden    = false
+local menu_was_open = false
+
 local ffxidb_hidden_by_us = false
 local ffxidb_x            = nil
 local ffxidb_y            = nil
@@ -198,6 +224,8 @@ local function capture_ffxidb_pos()
     if x and y then ffxidb_x, ffxidb_y = x, y end
 end
 
+
+
 local function hide_external()
     if not ffxidb_hidden_by_us then
         capture_ffxidb_pos()
@@ -209,6 +237,7 @@ local function hide_external()
 end
 
 local function show_external()
+    if hud_hidden then return end
     if ffxidb_hidden_by_us and ffxidb_x then
         windower.send_command('ffxidb pos ' .. ffxidb_x .. ' ' .. ffxidb_y)
         ffxidb_hidden_by_us = false
@@ -224,7 +253,7 @@ end
 local function show_all()
     if ui_hidden then return end
     for _, c in ipairs(components) do
-        dispatch(c, 'show')
+        if not (hud_hidden and c.name == 'xivparty') then dispatch(c, 'show') end
     end
     show_external()
 end
@@ -232,6 +261,28 @@ end
 local function hide_all()
     hide_components()
     hide_external()
+end
+
+local function set_hud_hidden(hidden)
+    if hidden == hud_hidden then return end
+    hud_hidden = hidden
+    if hidden then
+        capture_ffxidb_pos()
+        if ffxidb_x then
+            windower.send_command('ffxidb pos -9999 -9999')
+            ffxidb_hidden_by_us = true
+        end
+        if comp.xivparty.enabled and xivparty.hide then xivparty.hide() end
+    else
+        if ffxidb_hidden_by_us and ffxidb_x then
+            windower.send_command('ffxidb pos ' .. ffxidb_x .. ' ' .. ffxidb_y)
+            ffxidb_hidden_by_us = false
+        end
+        if comp.xivparty.enabled and xivparty.show
+           and is_logged_in and not ui_hidden and not zone_state.hidden() and not is_cutscene then
+            xivparty.show()
+        end
+    end
 end
 
 local drag_lock_id = nil
@@ -242,6 +293,8 @@ local function release_ui_shift()
         ui_shift_held = false
     end
 end
+
+
 local hud_camera_locked = false
 local function set_hud_camera_lock(on)
     if on and not hud_camera_locked then
@@ -266,6 +319,7 @@ local function register_drag_camera_lock()
 end
 
 local function init_all()
+
     ui_shift_held = false
     windower.send_command('setkey lshift up')
     for _, c in ipairs(components) do
@@ -273,6 +327,10 @@ local function init_all()
     end
     register_drag_camera_lock()
 end
+
+
+
+
 
 local LAYOUT_FILE   = windower.addon_path .. 'components/xivuimenu/hud_layout/hud_layout.lua'
 local LAYOUT_MARKER = windower.addon_path .. 'data/hud_layout_applied'
@@ -296,12 +354,16 @@ end
 
 local function dispose_all()
     for _, c in ipairs(components) do
+
+
         if c.enabled and c.mod.dispose then pcall(c.mod.dispose) end
     end
     set_hud_camera_lock(false)
     release_ui_shift()
     if drag_lock_id then windower.unregister_event(drag_lock_id); drag_lock_id = nil end
 end
+
+
 
 local function set_component_enabled(c, on)
     if on then
@@ -321,6 +383,7 @@ local function set_component_enabled(c, on)
     end
     save_comp_enabled(c.name, on)
 end
+
 
 _G.XIVUI_STATE = {
     components  = components,
@@ -361,6 +424,8 @@ windower.register_event('logout', function()
 end)
 
 windower.register_event('unload', function()
+
+
     dispose_all()
     if ffxidb_hidden_by_us and ffxidb_x then
         windower.send_command('ffxidb pos ' .. ffxidb_x .. ' ' .. ffxidb_y)
@@ -433,8 +498,22 @@ windower.register_event('prerender', function()
         windower.send_command('lua r xivui')
     end
 
+    local info = windower.ffxi.get_info()
+    local p = windower.ffxi.get_player()
+
+
+
+
+
     _G.XIVUI_TMOB = (comp.targetbar.enabled or comp.enemyloot.enabled)
                     and windower.ffxi.get_mob_by_target('t') or nil
+    local engaged = p and p.status == 1
+    local should_hide = ((info and info.menu_open) and not engaged) and true or false
+    if should_hide ~= menu_was_open then
+        menu_was_open = should_hide
+        set_hud_hidden(should_hide)
+    end
+
     for _, c in ipairs(components) do
         dispatch(c, 'on_prerender')
     end
@@ -442,6 +521,7 @@ windower.register_event('prerender', function()
     for _, c in ipairs(components) do
         dispatch(c, 'push_bounds')
     end
+
 
     occlusion.update()
 end)
@@ -471,6 +551,10 @@ windower.register_event('tp change', function(new, old)
     player_state.tpp = math.min(new / 10, 100)
     if comp.statusbar.enabled and statusbar.on_tp_change then statusbar.on_tp_change(new) end
 end)
+
+
+
+
 
 windower.register_event('target change', function(index)
     if comp.targetbar.enabled and targetbar.on_target_change then targetbar.on_target_change(index) end
@@ -516,6 +600,10 @@ end)
 local last_click = { t = 0, x = -1, y = -1, c = -1 }
 windower.register_event('mouse', function(type, x, y, delta, blocked)
     if ui_hidden or is_cutscene or zone_state.hidden() then return end
+
+
+
+
     if type == 1 or type == 3 then
         local now = os.clock()
         if type == last_click.t and x == last_click.x and y == last_click.y and (now - last_click.c) < 0.15 then
@@ -523,6 +611,10 @@ windower.register_event('mouse', function(type, x, y, delta, blocked)
         end
         last_click.t, last_click.x, last_click.y, last_click.c = type, x, y, now
     end
+
+
+
+
     local menu = comp.xivuimenu and comp.xivuimenu.enabled and xivuimenu
     if menu and xivuimenu.is_hud_open then
         local ok, hud_open = pcall(xivuimenu.is_hud_open)
@@ -531,6 +623,10 @@ windower.register_event('mouse', function(type, x, y, delta, blocked)
             return xivuimenu.on_mouse(type, x, y, delta, blocked)
         end
     end
+
+
+
+
     if menu and xivuimenu.covers then
         local ok, covered = pcall(xivuimenu.covers, x, y)
         if not ok then dispatch_menu_err('covers', covered)
@@ -550,7 +646,8 @@ windower.register_event('addon command', function(cmd1, ...)
 
     local cname = cmd_to_comp[cmd]
     if cname then
-        comp[cname].mod.handle_command(args)
+        local ok, err = pcall(comp[cname].mod.handle_command, args)
+        if not ok then log('[XivUI] ' .. cname .. ' command error: ' .. tostring(err)) end
     elseif cmd == 'debug' then
         local arg = args[1] and tostring(args[1]):lower()
         local on = (arg == 'on') or (arg ~= 'off' and not _G.XIVUI_DEBUG)
@@ -563,6 +660,9 @@ windower.register_event('addon command', function(cmd1, ...)
         local NAMES = { ffxi = 'FFXI', ffxiv10 = 'FFXIV 1.0', ffxiv = 'FFXIV' }
         if NAMES[id] then
             _G.XIVUI_THEME = id
+
+
+
             local ok, ts = pcall(config.load, 'data/theme/settings.xml', { Theme = 'ffxiv' })
             if ok and ts then ts.Theme = id; config.save(ts) end
             log('Theme: ' .. NAMES[id] .. ' selected — reloading XivUI…')
@@ -603,6 +703,20 @@ windower.register_event('addon command', function(cmd1, ...)
             set_component_enabled(c, cmd == 'enable')
             log(word .. (cmd == 'enable' and ' enabled' or ' disabled'))
         end
+    elseif cmd == 'menudebug' then
+        local info = windower.ffxi.get_info() or {}
+        local keys = {}
+        for k, v in pairs(info) do
+            if type(v) ~= 'table' and type(v) ~= 'function' then keys[#keys + 1] = k end
+        end
+        table.sort(keys)
+        local line = ''
+        for _, k in ipairs(keys) do
+            local piece = k .. '=' .. tostring(info[k]) .. '  '
+            if #line + #piece > 100 then log(line); line = '' end
+            line = line .. piece
+        end
+        if line ~= '' then log(line) end
     elseif cmd == '' then
         log('XivUI v' .. _addon.version)
         log('  //xui status <cmd>   — HP/MP/TP + job/time bar')
@@ -621,6 +735,7 @@ windower.register_event('addon command', function(cmd1, ...)
         log('  //xui debug [on|off] — show component chat output (default: silent)')
         log('  Components: ' .. COMPONENT_WORDS)
     else
-        xivhotbar3.handle_command(cmd1, table.unpack(args))
+        local ok, err = pcall(xivhotbar3.handle_command, cmd1, table.unpack(args))
+        if not ok then log('[XivUI] xivhotbar3 command error: ' .. tostring(err)) end
     end
 end)
