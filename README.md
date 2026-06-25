@@ -45,6 +45,9 @@ I will, of course, do my best to work out any bugs that are found when I can. Pl
 
 This merges and reskins a set of classic FFXI UI addons into one addon with an in-game config menu, along with some custom additions for a few of them with a focus on recreating as much of the FFXIV placements/visuals as possible.
 
+> [!WARNING]
+> I play with DgVoodoo and the Windower Large Address Aware on so it's possible that performance can vary depending on machine.
+
 </details>
 
 ---
