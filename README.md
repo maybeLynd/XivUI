@@ -163,64 +163,66 @@ Character files (`<job>.lua`, `General.lua`, `autogen_settings_<JOB>.lua`, `layo
 <a id="xivui-menu"></a>
 ### XivUI Menu
 
-<img width="1243" height="733" alt="image" src="https://github.com/user-attachments/assets/aa7dec19-0e7d-4014-b025-83139c23f0d3" /> 
-<img width="1233" height="733" alt="image" src="https://github.com/user-attachments/assets/3a9e74ff-c92e-4556-a976-dce609fc53d8" />
+<img width="1243" height="733" alt="image" src="https://github.com/user-attachments/assets/309d05f7-4828-4851-bb18-394f1f98c79c" />
+<img width="1233" height="733" alt="image" src="https://github.com/user-attachments/assets/3ac29628-97ed-4fcf-8871-618f478a4ee7" />
 
 <a id="icon-picker"></a>
 ## Icon Picker
 
-<img width="787" height="658" alt="image" src="https://github.com/user-attachments/assets/6e2752ed-ba88-4868-9e6d-a1d1c730cb91" />
+<img width="790" height="664" alt="image" src="https://github.com/user-attachments/assets/edba11dd-9f1b-40ee-9ab1-11f045cd1a43" />
 
 <a id="xivui-menu-config"></a>
 ### XivUI Menu Config
 
-<img width="1243" height="733" alt="image" src="https://github.com/user-attachments/assets/6af54512-1f9c-4bde-90c7-d5029a4aab35" />
+<img width="1243" height="733" alt="image" src="https://github.com/user-attachments/assets/b081c61c-0309-4b27-9c38-92012c7ad28a" />
 
 <a id="xivui-hud-layout"></a>
 ### XivUI Hud Layout
 
-<img width="2557" height="1440" alt="image" src="https://github.com/user-attachments/assets/9b368fc8-406a-4aaf-b0d2-ddf98dcf574b" />
+<img width="2557" height="1440" alt="image" src="https://github.com/user-attachments/assets/8e687555-f8c7-4f62-8c9f-e40a420eafbf" />
 
 <a id="ffxi-theme"></a>
 ### FFXI Theme
 
-<img width="2560" height="1438" alt="image" src="https://github.com/user-attachments/assets/bb64ed1c-313b-4f38-af68-ee3b4ee0ade1" />
+<img width="2560" height="1438" alt="image" src="https://github.com/user-attachments/assets/a1b95988-b063-48e5-8062-2bdc03326646" />
 
 <a id="tooltip"></a>
 ## Tooltip
 
-<img width="985" height="445" alt="image" src="https://github.com/user-attachments/assets/a39cac5c-ceed-407c-8b23-8a73fc3bfc27" />
+<img width="985" height="445" alt="image" src="https://github.com/user-attachments/assets/1c1fceb4-5435-41f3-9780-1cac6ca609f8" />
 
 <a id="hotbar-statusbar-expbar"></a>
 ## Hotbar, StatusBar, ExpBar
 
-<img width="886" height="219" alt="image" src="https://github.com/user-attachments/assets/1e5fbd56-4d37-4652-b92d-5428d7b48fd4" />
+<img width="886" height="219" alt="image" src="https://github.com/user-attachments/assets/afde31ff-78bd-46a2-adcf-0f6bc51ac5b0" />
 
 <a id="choice-hotbar"></a>
 ## Choice Hotbar
 
-<img width="781" height="244" alt="image" src="https://github.com/user-attachments/assets/a939cd75-fca6-4df8-a7fc-ee4786dfdf8a" />
+<img width="781" height="244" alt="image" src="https://github.com/user-attachments/assets/7e530618-db2f-4214-9d31-71c64420bac7" />
 
 <a id="castbar"></a>
 ## Castbar
 
-<img width="220" height="61" alt="image" src="https://github.com/user-attachments/assets/abbd1007-9f3e-4947-bb0d-4400ef02f5c1" />
+<img width="220" height="61" alt="image" src="https://github.com/user-attachments/assets/4f872f13-46ca-4713-a489-165c215cdece" />
 
 <a id="targetbar-weakness-strip-buff-debuff-strip-drops"></a>
 ## TargetBar, Weakness Strip, Buff/Debuff Strip, Drops
 
-<img width="1249" height="67" alt="image" src="https://github.com/user-attachments/assets/8d7892b5-7281-4006-8016-f124dc561c44" />
+<img width="1252" height="105" alt="image" src="https://github.com/user-attachments/assets/14908ddc-231f-4969-806c-2629ccd93174" />
 
-<img width="742" height="157" alt="image" src="https://github.com/user-attachments/assets/c6ce7f71-9503-4749-84b0-5119feba57db" />
+<img width="1219" height="112" alt="image" src="https://github.com/user-attachments/assets/0b46fb4b-59f0-42bb-a4d5-14c448c96514" />
 
-<img width="742" height="157" alt="image" src="https://github.com/user-attachments/assets/84bb0d60-1750-41a4-93be-f784bc069cfd" />
+<img width="1249" height="67" alt="image" src="https://github.com/user-attachments/assets/6db0eebe-579f-4915-9f10-2274e18fcd23" />
+
+<img width="742" height="157" alt="image" src="https://github.com/user-attachments/assets/70d608ea-8a44-4c98-8238-3507293bcb17" />
 
 <a id="skillchain-and-dps-parser"></a>
 ## Skillchain and Dps Parser
 
-<img width="397" height="192" alt="image" src="https://github.com/user-attachments/assets/a5902287-b2ee-4828-8854-3958bc099fb0" />
+<img width="397" height="192" alt="image" src="https://github.com/user-attachments/assets/3679abba-0e61-48cd-accf-1458a4cb2ea2" />
 
-<img width="711" height="262" alt="image" src="https://github.com/user-attachments/assets/1929ff93-8e04-4901-991a-875fd2ff4e0d" />
+<img width="711" height="262" alt="image" src="https://github.com/user-attachments/assets/9cc8cf31-1391-4968-94d7-e472c3a88306" />
 
 <a id="additional-info"></a>
 ## Additional Info
