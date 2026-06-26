@@ -27,6 +27,7 @@
 - [Skillchain and Dps Parser](#skillchain-and-dps-parser)
 - [Additional Info](#additional-info)
 - [Hotbar Sets](#hotbar-sets)
+- [Known Issues](#known-issues)
 - [Patch Notes](#patch-notes)
 - [Credits](#credits)
 
@@ -496,6 +497,16 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 <a id="hotbar-sets"></a>
 ## Hotbar Sets
 Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and held to save your current hotbar set up then pressed on a colored slot to quickly load the hotbar set that was saved.
+
+<a id="known-issues"></a>
+## Known Issues
+
+- This addon originally started as just changes to Xivhotbar2, this caused a design flaw on my part where hotbar registered is own event handler on load and exposed a public api that I used for the XivUI menu and that the hud editor called into. These kept running even when the hotbar component was disabled causing multiple errors. The design flaw ran deeper than expected upon further review after the last patch which is why I'm including it here.
+
+- Statusbars frame not reappearing after disabling and re-enabling component. While testing the hotbar component disabling, I decided to test other components disabled to see if I had made similar mistakes else where and found that when statusbars is diabled and re-enabled, the frame does not reppear.
+
+- ALT+R is broken when addon loaded (From reddit: Haven't looked into this yet but listing it here so I don't forget)
+- The hotbars and the party bar also glitch out in Party from time to time, they would change sizes and dissapear. (From reddit: Haven't looked into this yet but listing it here so I don't forget)
 
 <a id="patch-notes"></a>
 ## Patch Notes
