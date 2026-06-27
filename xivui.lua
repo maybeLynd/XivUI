@@ -1,6 +1,6 @@
 _addon.name = 'XivUI'
 _addon.author = 'maybeLynd'
-_addon.version = '0.1.0'
+_addon.version = '0.2.0'
 _addon.commands = {'xivui', 'xui', 'htb'}
 
 config = require('config')
