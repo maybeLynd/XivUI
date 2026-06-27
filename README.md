@@ -511,7 +511,7 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 ### v0.2.1
 
 *All changes for this update revolve around*
-HUD Layout:**
+**HUD Layout:**
 - Ui elements can be moved with the directional keys without the camera moving in the background
 **Statusbar** 
 - Statusbar fill textures now scale along with their backgrounds
