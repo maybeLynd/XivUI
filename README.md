@@ -517,9 +517,6 @@ After spending most of the day tracing the issues caused by the design flaws lik
 **Statusbar** 
 - While checking other components for the same type of disable bug, I found the statusbar's frame/background wasn't being shown on re-enable.
 
-**Component commands no longer error when the component is disabled or you haven't logged in yet** 
-- They print a short hint instead of throwing.
-
 **XivUI Menu** 
 - The loot drop list (and other floating panels) used to draw over the menu and make it flicker. The menu is now layered above all components, so it stays solid on top.
 - Closing the menu while the loot bag was still open could also leave a bugged empty menu behind. 
@@ -540,6 +537,7 @@ After spending most of the day tracing the issues caused by the design flaws lik
 **Misc**
 - Mouse move events fired far faster than frames and every one was being handed to every component and a separate handler for each party member and the hotbar's slot hover. Those are now combined to about once per frame. 
 - Stopped rebuilding small tables every single frame in the shared UI bounds and the hotbar's bounds cache.
+- Component commands no longer error when the component is disabled or you haven't logged in yet they print a short hint instead of throwing.
 - Also not sure how this happened but the previous version/s were older development builds so I replaced it with my live version I use for testing so it would be more up to date and require me to cross-reference what changes the repo version was missing and started from there so if you notice anything weird, let me know.  
 
 ### v0.1.3
