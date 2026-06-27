@@ -707,20 +707,38 @@ function xivparty.hud_panels()
     for idx = 0, 3 do
         local ok, pos = pcall(function() return Settings:getUiPosition(idx) end)
         if ok and pos then
-            local sz = sizes[idx]
-            local live = view ~= nil and view.partyLists ~= nil and view.partyLists[idx] ~= nil
-            local sc = (live and view.partyLists[idx].scaleX) or 1
-            out[#out + 1] = { index = idx, label = labels[idx], x = pos.x, y = pos.y, w = sz[1], h = sz[2], visible = live, scale = sc }
+            local pl = view and view.partyLists and view.partyLists[idx]
+            local live = pl ~= nil
+            local sc = (pl and pl.scaleX) or 1
+            if sc <= 0 then sc = 1 end
+            local x, y, w, h = pos.x, pos.y, nil, nil
+            if pl and pl.get_screen_bounds then
+                local bx, by, bw, bh = pl:get_screen_bounds()
+                if bx and bw and bw > 0 and bh and bh > 0 then
+                    x, y, w, h = bx, by, bw / sc, bh / sc
+                end
+            end
+            if not w then local sz = sizes[idx]; w, h = sz[1], sz[2] end
+            out[#out + 1] = { index = idx, label = labels[idx], x = x, y = y, w = w, h = h, visible = live, scale = sc }
         end
     end
     return out
 end
 
+local function panel_align_offset_y(pl)
+    if pl and pl.boundsAlignY then
+        return pl.boundsAlignY * ((pl.absoluteScale and pl.absoluteScale.y) or 1)
+    end
+    return 0
+end
+
 function xivparty.hud_move_panel(idx, x, y)
     if not Settings then return end
-    Settings:setUiPosition(x, y, idx)
+    local pl = view and view.partyLists and view.partyLists[idx]
+    local px, py = x, y - panel_align_offset_y(pl)
+    Settings:setUiPosition(px, py, idx)
     if Settings.save then Settings:save() end
-    if view and view.partyLists and view.partyLists[idx] then view.partyLists[idx]:pos(x, y) end
+    if pl then pl:pos(px, py) end
 end
 
 function xivparty.hud_get_panel_scale(idx)

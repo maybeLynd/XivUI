@@ -510,11 +510,18 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 
 ### v0.2.1
 
+**HUD Layout:**
+**Movement**
+- Ui elements can be moved with the directional keys without the camera moving in the background
 **Statusbar** 
 - Statusbar fill textures now scale along with their backgrounds
-
+- While being resized, the statusbars no longer shift to the left
+**Expbar**
+- While being resized, the expbar no longer shifts down
 **Hotbar Sets**
 - Hotbar sets now scale with scroll and the bounds box matches the size
+**Partylist**
+- Partylist sections: Main party, Alliance Party 1&2, Pet List now have matching bounds for their main ui box
 
 ### v0.2.0
 After spending most of the day tracing the issues caused by the design flaws like having the hotbar being the main driving force in the addon and using addons that were never meant to be disabled and re-enabled outside of lua loading/reloading/unloading, I compiled a list of issues I found (which kept growing the deeper in I looked). I've tried knocking out what I could find (this was a lot of repetitive testing of the exact same things in different scenarios) and one all nighter later:

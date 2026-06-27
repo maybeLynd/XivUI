@@ -29,7 +29,7 @@ end
 
 local DESC = {
     { id = 'statusbar', label = 'Status Bars', file = 'data/statusbar/settings.xml',
-      def = { Bars = { OffsetX = 0, OffsetY = 0, Scale = 1 } }, w = 500, h = 40,
+      def = { Bars = { OffsetX = 0, OffsetY = 0, Scale = 1 } }, w = 500, h = 40, scale_keeps_pos = true,
       pos = function(s) local rx, ry = screen(); local b = s and s.Bars or {}
             return floor(rx / 2 - 250 + num(b.OffsetX, 0)), floor(ry - 60 + num(b.OffsetY, 0)) end,
       scale = function(s) return num(s and s.Bars and s.Bars.Scale, 1) end,
@@ -37,11 +37,12 @@ local DESC = {
       setscale = function(r) send('status scale ' .. string.format('%.2f', r.scale)) end },
 
     { id = 'expbar', label = 'EXP Bar', file = 'data/expbar/settings.xml',
-      def = { scale = 1, Images = { Background = { Pos = { X = 0, Y = 0 } } } }, w = 504, h = 32,
+      def = { scale = 1, Images = { Background = { Pos = { X = 0, Y = 0 } } } }, w = 504, h = 32, scale_keeps_pos = true,
       pos = function(s) local p = s and s.Images and s.Images.Background and s.Images.Background.Pos or {}
-            return floor(num(p.X, 100)), floor(num(p.Y, 100) - 14) end,
+            local sc = num(s and s.scale, 1)
+            return floor(num(p.X, 100)), floor(num(p.Y, 100) - 13.5 * sc) end,
       scale = function(s) return num(s and s.scale, 1) end,
-      setpos = function(r) send('exp pos ' .. floor(r.x) .. ' ' .. floor(r.y + 14)) end,
+      setpos = function(r) send('exp pos ' .. floor(r.x) .. ' ' .. floor(r.y + 13.5 * (r.scale or 1))) end,
       setscale = function(r) send('exp scale ' .. string.format('%.2f', r.scale)) end },
 
     { id = 'targetbar', label = 'Target Bar', file = 'data/targetbar/settings.xml',
@@ -696,7 +697,8 @@ function commit_scale(b)
         local ok, party = pcall(require, 'components/xivparty/xivparty')
         if ok and party.hud_set_panel_scale then pcall(party.hud_set_panel_scale, b.pi, b.scale) end
     elseif b.d and b.d.setscale then
-        pcall(b.d.setscale, b); pcall(b.d.setpos, b)
+        pcall(b.d.setscale, b)
+        if not b.d.scale_keeps_pos then pcall(b.d.setpos, b) end
     end
 end
 

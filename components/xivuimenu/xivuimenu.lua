@@ -1710,7 +1710,7 @@ function xivuimenu.on_mouse(mtype, x, y, delta, blocked)
 
     if mtype == 1 and hovered_rail then
         if hovered_rail == 'hudlayout' then
-            hud.open_editor(); set_open(false); return true
+            set_open(false); hud.open_editor(); return true
         end
         if selected_rail ~= hovered_rail then dd.open = false end
         if hovered_rail == 'actions' then cat_sig = nil end
