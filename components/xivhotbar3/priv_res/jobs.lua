@@ -1,4 +1,3 @@
-
 return {
     [0] = {id=0,en="None",ja="なし",ens="NON",jas=""},
     [1] = {id=1,en="Warrior",ja="戦士",ens="WAR",jas="戦"},

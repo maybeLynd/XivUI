@@ -1,4 +1,4 @@
--- XIVHotbar3 — action hotbars.
+-- XIVHotbar2: Hotbars.
 -- XivUI component. Maintainer: maybeLynd. Version: 1.
 -- Based on "XIVHotbar2" v0.3 by Sabarjp, Fethur, Edeon, Akirane, Technyze.
 
@@ -7,7 +7,6 @@ HTB_ART  = windower.addon_path .. 'assets/components/hotbar/'
 
 file = require('files')
 require('luau')
-
 
 local defaults = require('components/xivhotbar3/defaults')
 
@@ -83,26 +82,6 @@ local choice_bounds_cache = nil
 local rmbPressedInHotbar = false
 local lmbPressedInHotbar = false
 
-
-local htb_events = {}
-local event_ids  = {}
-local function htb_register(...)
-  htb_events[#htb_events + 1] = { n = select('#', ...), ... }
-end
-local function register_events()
-  if #event_ids > 0 then return end
-  for _, e in ipairs(htb_events) do
-    event_ids[#event_ids + 1] = windower.register_event(unpack(e, 1, e.n))
-  end
-end
-local function unregister_events()
-  for i = #event_ids, 1, -1 do
-    windower.unregister_event(event_ids[i])
-    event_ids[i] = nil
-  end
-end
-
-
 local function refresh_overload_state()
   local wp = windower.ffxi.get_player()
   if not wp or not wp.buffs then return end
@@ -117,15 +96,8 @@ local function refresh_overload_state()
   player.has_overload = found
 end
 
-
-
-
-
-
 local last_ammo_id, last_ammo_skill = nil, 0
 local last_ammo_equip_at = 0
-
-
 local AMMO_BAG_FIELD = {
   inventory = 'inventory',
   wardrobe1 = 'wardrobe',  wardrobe2 = 'wardrobe2', wardrobe3 = 'wardrobe3', wardrobe4 = 'wardrobe4',
@@ -142,8 +114,6 @@ local function maybe_auto_equip_ammo(has_ammo)
   local items = windower.ffxi.get_items()
   local eqp = items and items.equipment
   if not eqp then return end
-
-
   local rw_skill = 0
   if eqp.range_bag and eqp.range and not (eqp.range_bag == 0 and eqp.range == 0) then
     local ritem = windower.ffxi.get_items(eqp.range_bag, eqp.range)
@@ -152,8 +122,6 @@ local function maybe_auto_equip_ammo(has_ammo)
   end
   local is_thrown = (last_ammo_skill or 0) == 27
   if rw_skill ~= 25 and rw_skill ~= 26 and not is_thrown then return end
-
-
 
   local src  = (theme_options and theme_options.ammo_source) or 'any'
   local bags = (src == 'any') and AMMO_ANY_BAGS or { AMMO_BAG_FIELD[src] or 'inventory' }
@@ -318,17 +286,11 @@ local function autora_queue(delay)
   player.autora_last_fire = nil
 end
 
-
-
-
 local function autora_in_melee_range(t)
   if not (t and t.distance) then return false end
   local mr = tonumber(theme_options and theme_options.autora_melee_range) or 5.0
   return t.distance <= mr * mr
 end
-
-
-
 
 local function autora_resync_ranged()
   local items = windower.ffxi.get_items()
@@ -348,7 +310,6 @@ end
 
 local function autora_try_fire(now)
   now = now or os.clock()
-
   local wp = windower.ffxi.get_player()
   local engaged = (wp and wp.status == 1) or player.combat_status == 1
   if not engaged then
@@ -370,11 +331,6 @@ local function autora_try_fire(now)
     player.autora_last_fire = nil
     return false
   end
-
-
-
-
-
   if autora_in_melee_range(t) then
     local mode = (theme_options and theme_options.autora_melee_mode) or 'distance'
     local hold = true
@@ -461,15 +417,12 @@ local function process_deferred_work()
     local wp = windower.ffxi.get_player()
     local engaged = (wp and wp.status == 1) or player.combat_status == 1
     if not engaged then
-
       player.autora_pending_at = nil
       player.autora_last_fire = nil
     else
       if player.autora_pending_at == nil and player.autora_last_fire == nil then
         autora_queue(0.1)
       elseif player.autora_pending_at == nil and player.autora_last_fire ~= nil then
-
-
         local recover = (tonumber(theme_options and theme_options.autora_delay) or 1.5) + 2.0
         if now - player.autora_last_fire > recover then autora_queue(0.1) end
       end
@@ -574,21 +527,12 @@ local function refresh_move_boxes()
   move_box:enable()
 end
 
-
-
-
-
-
 local function capture_environment_layout(env)
   theme_options.env_offsets = theme_options.env_offsets or {}
   theme_options.env_offsets[env] = copy_offsets(theme_options.offsets)
   theme_options.env_slot_offsets = theme_options.env_slot_offsets or {}
   theme_options.env_slot_offsets[env] = copy_slot_offsets(ui and ui.slot_custom_offsets)
 end
-
-
-
-
 
 local function global_layout_path()
   if not player or not player.name or player.name == '' then return nil end
@@ -811,8 +755,6 @@ end
 local function apply_job_layout(layout)
   theme_options.job_override = false
   theme_options.hidden_bars = { battle = {}, field = {} }
-
-
   theme_options.visible_hotbar_count = theme_options.hotbar_number or 6
   theme_options.field_visible_hotbar_count = nil
   if ui.theme then ui.theme.visible_hotbar_count = theme_options.hotbar_number or 6; ui.theme.field_visible_hotbar_count = nil end
@@ -829,8 +771,6 @@ local function apply_job_layout(layout)
         theme_options.hidden_bars = { battle = parse_set(hb.battle), field = parse_set(hb.field) }
       end
     end
-
-
     if type(layout.hidden_bars) ~= 'table' then
       local nb = theme_options.hotbar_number or 6
       local vb = layout.visible_bars or nb
@@ -840,7 +780,6 @@ local function apply_job_layout(layout)
       for i = fb + 1, nb do mig.field[i] = true end
       theme_options.hidden_bars = mig
     end
-
 
     theme_options.env_offsets = { battle = copy_offsets(theme_options.offsets), field = copy_offsets(theme_options.offsets) }
     local function overlay_offsets(dest, src)
@@ -901,7 +840,6 @@ local function apply_job_layout(layout)
       theme_options.hide_empty_rows = nil
       if ui.theme then ui.theme.hide_empty_rows = nil end
     end
-
 
     theme_options.env_slot_offsets = { battle = {}, field = {} }
     if type(layout.env_slot_offsets) == 'table' then
@@ -971,6 +909,7 @@ function initialize()
   ui.hotbar.ready = true
   ui.hotbar.initialized = true
   state.ready = true
+  state.dirty_show = true
 
   hotbar_sets:setup(theme_options)
   hotbar_sets:set_player(player)
@@ -1097,17 +1036,10 @@ set_choice_modifier_state = function(active, announce)
   end
 end
 
-
-
-
-
 local function hud_layout_open()
   local ok, hud = pcall(require, 'components/xivuimenu/hud')
   return ok and type(hud) == 'table' and hud.open == true
 end
-
-
-
 
 local function menu_covers(x, y)
   local ok, menu = pcall(require, 'components/xivuimenu/xivuimenu')
@@ -1199,8 +1131,6 @@ local function open_slot_variants_for_active_hotbar(slot)
 end
 
 function trigger_action(slot)
-
-
   if hud_layout_open() then return end
 
   local active_hotbar = player:get_active_hotbar()
@@ -1217,24 +1147,33 @@ function trigger_action(slot)
   end
 
   local action = player:get_action(slot)
-  if action ~= nil and tostring(action.type or ''):lower() == 'choice' then
+  if action == nil then return end
+  local act_name, act_type = tostring(action.action), tostring(action.type or ''):lower()
+  if act_type == 'choice' then
     if ui.disabled_slots and (
         (ui.disabled_slots.on_cooldown and ui.disabled_slots.on_cooldown[action.action] == true) or
         (ui.disabled_slots.actions and ui.disabled_slots.actions[action.action] == true)
       ) then
       return
     end
-    local choices, err = choice_groups:resolve(player, action.action)
-    if choices ~= nil and #choices > 0 then
-      ui:open_choice_bar(action.action, choice_groups:get_label(action.action, player), choices, active_hotbar)
+    local ok, choices, err = pcall(choice_groups.resolve, choice_groups, player, action.action)
+    if not ok then
+      (_G.xivui_echo or print)('[XivUI] hotbar slot ' .. tostring(slot) .. ' choice "' .. act_name .. '" error: ' .. tostring(choices))
+    elseif choices ~= nil and #choices > 0 then
+      pcall(ui.open_choice_bar, ui, action.action, choice_groups:get_label(action.action, player), choices, active_hotbar)
     else
-      print('XIVHOTBAR2: No available choices for ' .. tostring(action.action) .. (err and (': ' .. err) or '.'))
+      print('XIVHOTBAR2: No available choices for ' .. act_name .. (err and (': ' .. err) or '.'))
     end
     return
   end
 
-  player:execute_action(slot)
-  ui:trigger_feedback(active_hotbar, slot)
+  local ok, err = pcall(function()
+    player:execute_action(slot)
+    ui:trigger_feedback(active_hotbar, slot)
+  end)
+  if not ok then
+    (_G.xivui_echo or print)('[XivUI] hotbar slot ' .. tostring(slot) .. ' action "' .. act_name .. '" (type ' .. act_type .. ') error: ' .. tostring(err))
+  end
 end
 
 function toggle_environment()
@@ -1439,6 +1378,11 @@ function xivhotbar3_component.handle_command(command, ...)
   command = command and command:lower() or 'help'
   local args = raw_args
 
+  if not state.ready then
+    if command == 'help' then print_help() end
+    return
+  end
+
   if trust_setup_state and trust_setup_state.active and command ~= 'execute' then
     if command == 'done' or command == 'finish' or command == 'end' then
       hotbar_tools:finish_trust_setup(player, trust_setup_state, false)
@@ -1596,7 +1540,6 @@ function xivhotbar3_component.handle_command(command, ...)
       log("To save the changes, type '//htb move' then hit enter.")
       log("You can also drag the Main/General environment text while layout mode is enabled.")
       print('XIVHOTBAR2: Layout mode enabled')
-
 
       refresh_move_boxes()
       if ui.get_environment_text_position then
@@ -1837,7 +1780,6 @@ function xivhotbar3_component.handle_command(command, ...)
       print('XIVHOTBAR2: Usage: //htb set save <1-9> ["name"]')
     else
       hotbar_sets:set_player(player)
-
 
       save_job_layout()
       local name = nil
@@ -2352,7 +2294,7 @@ function xivhotbar3_component.handle_command(command, ...)
   end
 end
 
-htb_register('keyboard', function(dik, flags, blocked)
+windower.register_event('keyboard', function(dik, flags, blocked)
   if ui.hotbar.ready == false or windower.ffxi.get_info().chat_open then
     return
   end
@@ -2418,10 +2360,6 @@ end)
 local current_hotbar = -1
 local current_action = -1
 
-
-
-
-
 local slot_drag = { pressed = false, dragging = false, h = 0, i = 0, sx = 0, sy = 0,
                     icon_path = nil, ghost = nil, ghost_cur = nil }
 local SLOT_DRAG_THRESHOLD = 6
@@ -2456,11 +2394,9 @@ local function slotdrag_move(x, y)
         if math.abs(x - slot_drag.sx) + math.abs(y - slot_drag.sy) < SLOT_DRAG_THRESHOLD then return false end
         slot_drag.dragging = true
     end
-
     local hb = ui.hotbars and ui.hotbars[slot_drag.h]
     local ic = hb and hb.slot_icons and hb.slot_icons[slot_drag.i]
     if ic then pcall(ic.hide, ic) end
-
     local g = slotdrag_ghost()
     if slot_drag.icon_path and slot_drag.icon_path ~= '' and slot_drag.ghost_cur ~= slot_drag.icon_path then
         pcall(function() g:path(slot_drag.icon_path); g:fit(true) end); slot_drag.ghost_cur = slot_drag.icon_path
@@ -2473,10 +2409,6 @@ local function slotdrag_move(x, y)
     return true
 end
 
-
-
-
-
 local SLOTDRAG_MERGE_TYPES = { ma = true, ja = true, ws = true, item = true }
 
 local function slotdrag_merge_entry(a)
@@ -2485,18 +2417,11 @@ local function slotdrag_merge_entry(a)
              alias = a.alias or a.action, icon = a.icon }
 end
 
-
-
-
 local function merge_decline(reason)
     local say = _G.xivui_echo or print
     say('XIVHOTBAR2: drag merge fell back to swap (' .. reason .. ').')
     return false
 end
-
-
-
-
 
 local function merge_entry_into_slot(dst, dest_h, dest_i, environment, src_entry)
     local pl = windower.ffxi.get_player()
@@ -2559,8 +2484,6 @@ local function slotdrag_drop(x, y)
         local r, c = xivhotbar3_component.slot_box_at(x, y)
         dest_h, dest_i = r, c
     end
-
-
     if hotbar_tools:overlay_owns_bar(player, environment, h)
             or (dest_h and hotbar_tools:overlay_owns_bar(player, environment, dest_h)) then
         local say = _G.xivui_echo or print
@@ -2742,8 +2665,14 @@ end
 
 local external_drag_active = false
 
-htb_register('mouse', function(type, x, y, delta, blocked)
+local htb_last_move_t = 0
+windower.register_event('mouse', function(type, x, y, delta, blocked)
   return_value = nil
+  if type == 0 then
+    local now = os.clock()
+    if now - htb_last_move_t < 0.015 then return false end
+    htb_last_move_t = now
+  end
   if external_drag_active then return false end
   if hud_layout_open() then return false end
   if menu_covers(x, y) then return false end
@@ -2935,8 +2864,6 @@ htb_register('mouse', function(type, x, y, delta, blocked)
         ui:maybe_page_category_arrow_hover(x, y)
       end
     else
-
-
       if hotbar_sets:is_visible() and not (ui.hotbar and ui.hotbar.hide_hotbars) then
         local node = hotbar_sets:hit_test(x, y)
         if type == 0 then hotbar_sets:set_hover(node) end
@@ -2963,15 +2890,74 @@ htb_register('mouse', function(type, x, y, delta, blocked)
   return return_value
 end)
 
+HTB_RTEST_PARTS = {
+  text    = { 'slot_texts', 'slot_cost', 'slot_recast_texts', 'slot_keys' },
+  img     = { 'slot_backgrounds', 'slot_icons', 'slot_overlay', 'slot_recasts', 'slot_frames', 'slot_outline' },
+  icons   = { 'slot_icons' },
+  bg      = { 'slot_backgrounds' },
+  frames  = { 'slot_frames' },
+  outline = { 'slot_outline' },
+  overlay = { 'slot_overlay' },
+  recasts = { 'slot_recasts', 'slot_recast_texts' },
+  keys    = { 'slot_keys' },
+  names   = { 'slot_texts' },
+  cost    = { 'slot_cost' },
+  all     = { 'slot_backgrounds', 'slot_icons', 'slot_overlay', 'slot_recasts', 'slot_frames',
+              'slot_outline', 'slot_texts', 'slot_cost', 'slot_recast_texts', 'slot_keys' },
+}
+
+function xivhotbar3_component.htbtest(mode)
+  local echo = _G.xivui_echo or print
+  mode = mode and tostring(mode):lower() or ''
+  if mode == '' or mode == 'status' then
+    echo('htbtest: current = ' .. tostring(_G.XIVUI_HTB_RTEST or 'off'))
+    echo('modes: off base all img text icons bg frames outline overlay recasts keys names cost')
+    if ui and ui.hotbars then
+      local vis = {}
+      for _, part in ipairs(HTB_RTEST_PARTS.all) do
+        local n = 0
+        for h = 1, #ui.hotbars do
+          local hb = ui.hotbars[h]; local t = hb and hb[part]
+          if t then for i = 1, #t do
+            local o = t[i]; local ok, v = pcall(function() return o and o:visible() end)
+            if ok and v then n = n + 1 end
+          end end
+        end
+        vis[#vis + 1] = part:gsub('slot_', '') .. '=' .. n
+      end
+      echo('visible prims: ' .. table.concat(vis, '  '))
+    end
+    return
+  end
+  _G.XIVUI_HTB_RTEST = nil
+  if reload_hotbar then pcall(reload_hotbar) end
+  if mode == 'disabled' then
+    pcall(xivhotbar3_component.deactivate)
+    echo('htbtest: hotbar DEACTIVATED (handler off + keys unbound, like //xui disable hotbar).')
+    return
+  end
+  if not state.ready then pcall(xivhotbar3_component.show) end
+  if mode == 'off' or mode == 'base' or mode == 'none' then
+    echo('htbtest: ' .. (mode == 'off' and 'OFF — all hotbar prims restored.' or 'baseline — nothing hidden.'))
+    return
+  end
+  if not HTB_RTEST_PARTS[mode] then
+    echo('htbtest: unknown mode "' .. mode .. '". Try: off base disabled img text icons bg frames outline overlay recasts keys names cost')
+    return
+  end
+  _G.XIVUI_HTB_RTEST = mode
+end
+
 local frame_counter = 0
-htb_register('prerender', function()
+local function htb_prerender_perf()
   frame_counter = frame_counter + 1
 
   if ui.hotbar.ready == false then
     return
   end
 
-
+  local P = _G.XIVUI_PERF
+  local pon = P and P.on
 
   if hotbar_sets:hold_node() and not hotbar_sets:hold_saved() then
     local p = hotbar_sets:tick_hold()
@@ -2988,18 +2974,19 @@ htb_register('prerender', function()
     end
   end
 
-
-
   if slot_drag.dragging then
     local hb = ui.hotbars and ui.hotbars[slot_drag.h]
     local ic = hb and hb.slot_icons and hb.slot_icons[slot_drag.i]
     if ic then pcall(ic.hide, ic) end
   end
 
-  process_deferred_work()
+  do local t0 = pon and P.clock(); process_deferred_work()
+    if pon then P.t['htb:deferred'] = (P.t['htb:deferred'] or 0) + (P.clock() - t0) end end
 
   if frame_counter % 6 == 0 then
+    local t0 = pon and P.clock()
     recast_cache.observe_live(windower.ffxi.get_ability_recasts())
+    if pon then P.t['htb:recastobs'] = (P.t['htb:recastobs'] or 0) + (P.clock() - t0) end
   end
 
   if ui.feedback.is_active then
@@ -3007,14 +2994,15 @@ htb_register('prerender', function()
   end
 
   if ui.is_setup and ui.hotbar.hide_hotbars == false then
+    local _mt0 = pon and P.clock()
     moved_row_info = move_box:get_move_box_info()
+    if pon then P.t['htb:movebox'] = (P.t['htb:movebox'] or 0) + (P.clock() - _mt0) end
     if (moved_row_info.swapped_slots.active == true) then
       moved_row_info.swapped_slots.active = false
       if moved_row_info.source_actual_slot ~= nil then
         moved_row_info.swapped_slots.source.actual_slot = moved_row_info.source_actual_slot
       end
       moved_row_info.source_actual_slot = nil
-
       local st = moved_row_info.swapped_slots
       local _, menv = player:get_hotbar_info_without_vitals()
       if slotdrag_merge(st.source.row, st.source.slot, st.source.actual_slot, st.dest.row, st.dest.slot, menv or 'battle') then
@@ -3045,40 +3033,71 @@ htb_register('prerender', function()
     local recast_interval = tonumber(theme_options.recast_check_interval_frames) or 10
     if recast_interval < 1 then recast_interval = 1 end
     if frame_counter % recast_interval == 0 then
+      local t0 = pon and P.clock()
       ui:check_recasts(player:get_hotbar_info())
+      if pon then P.t['htb:recasts'] = (P.t['htb:recasts'] or 0) + (P.clock() - t0) end
     end
 
     local hover_interval = tonumber(theme_options.hover_check_interval_frames) or 3
     if hover_interval < 1 then hover_interval = 1 end
     if hover_interval == 1 or frame_counter % hover_interval == 0 then
+      local t0 = pon and P.clock()
       ui:check_hover()
+      if pon then P.t['htb:hover'] = (P.t['htb:hover'] or 0) + (P.clock() - t0) end
     end
 
-
-
-    if ui.update_hover_tooltip then ui:update_hover_tooltip() end
+    if ui.update_hover_tooltip then
+      local t0 = pon and P.clock()
+      ui:update_hover_tooltip()
+      if pon then P.t['htb:tooltip'] = (P.t['htb:tooltip'] or 0) + (P.clock() - t0) end
+    end
   end
-
-
 
   if slot_drag.dragging then
     local hb = ui.hotbars and ui.hotbars[slot_drag.h]
     local ic = hb and hb.slot_icons and hb.slot_icons[slot_drag.i]
     if ic then pcall(ic.hide, ic) end
   end
+
+  local rt = _G.XIVUI_HTB_RTEST
+  if rt and HTB_RTEST_PARTS[rt] and ui and ui.hotbars then
+    local parts = HTB_RTEST_PARTS[rt]
+    local hide_num = rt == 'text' or rt == 'all'
+    for h = 1, #ui.hotbars do
+      local hb = ui.hotbars[h]
+      if hb then
+        if hide_num and hb.number then hb.number:hide() end
+        for _, part in ipairs(parts) do
+          local t = hb[part]
+          if t then for i = 1, #t do if t[i] then t[i]:hide() end end end
+        end
+      end
+    end
+  end
+end
+windower.register_event('prerender', function()
+  local P = _G.XIVUI_PERF
+  if not (P and P.on) then return htb_prerender_perf() end
+  local t0 = P.clock()
+  local r = htb_prerender_perf()
+  P.t.xivhotbar3 = (P.t.xivhotbar3 or 0) + (P.clock() - t0)
+  return r
 end)
 
-htb_register('mp change', function(new, old)
+windower.register_event('mp change', function(new, old)
+  if not state.ready then return end
   player.vitals.mp = new
   ui:update_mp(new)
 end)
 
-htb_register('tp change', function(new, old)
+windower.register_event('tp change', function(new, old)
+  if not state.ready then return end
   player.vitals.tp = new
   ui:update_tp(new)
 end)
 
-htb_register('status change', function(new_status_id, old_status_id)
+windower.register_event('status change', function(new_status_id, old_status_id)
+  if not state.ready then return end
   if ui.hotbar.hide_hotbars == false and new_status_id == 4 then
     ui.hotbar.hide_hotbars = true
     ui:hide()
@@ -3098,7 +3117,6 @@ htb_register('status change', function(new_status_id, old_status_id)
   player.combat_status = new_status_id
 
   if new_status_id == 1 then
-
     player.autora_melee_landed = false
     player.autora_last_hit = nil
     if player.autora_active then autora_queue(0.1) end
@@ -3110,14 +3128,11 @@ htb_register('status change', function(new_status_id, old_status_id)
   end
 end)
 
-
-
-htb_register('incoming chunk', function(id, original)
+windower.register_event('incoming chunk', function(id, original)
   if id ~= 0x028 then return end
   local ok, act = pcall(windower.packets.parse_action, original)
   if not ok or not act then return end
   if state.ready == true then
-
     if act.actor_id == player.id and act.category == 0x01 then
       player.autora_melee_landed = true
       player.autora_last_hit = 'melee'
@@ -3228,7 +3243,8 @@ htb_register('incoming chunk', function(id, original)
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   local seq = original:unpack('H', 3)
 
   if (next_sequence and seq >= next_sequence) and loaded then
@@ -3258,7 +3274,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   if id == 0x050 then
     local packet = packets.parse('incoming', original)
     local slot = packet['Equipment Slot']
@@ -3398,7 +3415,7 @@ function set_weapon_type(is_ranged, bag, index)
   return false
 end
 
-htb_register('add item', 'remove item', function(id, bag, index, count)
+windower.register_event('add item', 'remove item', function(id, bag, index, count)
   if state.ready == true then
     ui:update_inventory_count()
     player:update_inventory_items()
@@ -3406,7 +3423,7 @@ htb_register('add item', 'remove item', function(id, bag, index, count)
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     if id == 0x0AC and changing_job == true then
       changing_job = false
@@ -3447,7 +3464,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('outgoing chunk', function(id, original, modified, injected, blocked)
+windower.register_event('outgoing chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   if id == 0x102 then
     if player.main_job_id == 16 or player.sub_job_id == 16 then
       if ui.theme.dev_mode then log("Set blue magic. Reloading Hotbar.") end
@@ -3457,7 +3475,8 @@ htb_register('outgoing chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   if id == 0x044 then
     if player.main_job_id == 16 or player.sub_job_id == 16 then
       local packet = packets.parse('incoming', original)
@@ -3482,9 +3501,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-
-
-htb_register('incoming chunk', function(id, original)
+windower.register_event('incoming chunk', function(id, original)
+  if not state.ready then return end
   if id ~= 0x029 then return end
   local ok, p = pcall(packets.parse, 'incoming', original)
   if not ok or not p or p['Actor'] ~= player.id then return end
@@ -3499,7 +3517,8 @@ htb_register('incoming chunk', function(id, original)
   end
 end)
 
-htb_register('gain buff', function(id)
+windower.register_event('gain buff', function(id)
+  if not state.ready then return end
   if id == 143 or id == 269 then
     if ui.theme.dev_mode then log("Level Capped/Sync'd. Reloading Hotbar.") end
     reload_hotbar()
@@ -3527,7 +3546,8 @@ htb_register('gain buff', function(id)
   end
 end)
 
-htb_register('lose buff', function(id)
+windower.register_event('lose buff', function(id)
+  if not state.ready then return end
   if id == 45 then
     player.boost_expires = 0
   elseif id == 66 then
@@ -3560,7 +3580,8 @@ htb_register('lose buff', function(id)
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   if id == 0x02D then
     mob_killed = true
     old_level = player.main_job_level
@@ -3579,7 +3600,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   local packet = packets.parse('incoming', original)
   if id == 0x068 then
     if packet['Owner ID'] == player.id then
@@ -3597,7 +3619,7 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     local packet = packets.parse('incoming', original)
     if id == 0x068 then
@@ -3624,7 +3646,7 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
   if state.ready == true then
     local packet = packets.parse('incoming', original)
     if id == 0x068 then
@@ -3637,7 +3659,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming text', function(text)
+windower.register_event('incoming text', function(text)
+  if not state.ready then return end
   local pname = windower.ffxi.get_player().name
   if string.find(text, pname) and string.find(text, ' learns a new spell') then
     if ui.theme.dev_mode then log('Learned a new spell. Scheduling updategen.') end
@@ -3649,13 +3672,14 @@ htb_register('incoming text', function(text)
   end
 end)
 
-htb_register('level up', function()
+windower.register_event('level up', function()
   if addon_mode ~= 'gen' or not state.ready then return end
   if ui.theme.dev_mode then log('Level up. Scheduling updategen.') end
   request_updategen('level up', 1.5, true)
 end)
 
-htb_register('incoming chunk', function(id, original, modified, injected, blocked)
+windower.register_event('incoming chunk', function(id, original, modified, injected, blocked)
+  if not state.ready then return end
   if ui.theme.dev_mode then
     if id == 0x0AC and gm_command == true then
       if ui.theme.dev_mode then log("GM Command. Reloading Hotbar.", count) end
@@ -3665,7 +3689,8 @@ htb_register('incoming chunk', function(id, original, modified, injected, blocke
   end
 end)
 
-htb_register('incoming text', function(text)
+windower.register_event('incoming text', function(text)
+  if not state.ready then return end
   if ui.theme.dev_mode then
     if string.find(text, "!changejob") or string.find(text, "!changesjob") then
       gm_command = true
@@ -3693,14 +3718,14 @@ htb_register('incoming text', function(text)
   end
 end)
 
-htb_register('mob spawned', function(mob)
+windower.register_event('mob spawned', function(mob)
   if state.ready == true and player.luopan_geo_pending and mob and mob.owner_id == player.id then
     player.luopan_id = mob.id
     player.luopan_geo_pending = false
   end
 end)
 
-htb_register('mob despawned', function(id)
+windower.register_event('mob despawned', function(id)
   if state.ready == true and player.luopan_id and id == player.luopan_id then
     player.luopan_id = nil
     if not player.luopan_geo_pending then
@@ -3754,10 +3779,12 @@ function shorten_ability_name(name)
   return shortenedName:sub(1, 6)
 end
 
-
 function xivhotbar3_component.init()
   recast_cache.load()
   local windower_player = windower.ffxi.get_player()
+  if _G.xivui_dbg then _G.xivui_dbg('life', ('hotbar.init: player=%s state.ready=%s -> body %s'):format(
+    tostring(windower_player ~= nil), tostring(state.ready),
+    (windower_player ~= nil and not state.ready) and 'RUNS' or 'SKIPPED')) end
   if windower_player ~= nil and not state.ready then
     defaults = require('components/xivhotbar3/defaults')
     defaults.Keybinds = keyboard.default_keybinds
@@ -3768,7 +3795,6 @@ function xivhotbar3_component.init()
     theme_options = theme.apply(settings)
     player.id = windower_player.id
     initialize()
-    register_events()
     if htb_mouse_handler_id then
       windower.unregister_event(htb_mouse_handler_id)
       htb_mouse_handler_id = nil
@@ -3777,13 +3803,15 @@ function xivhotbar3_component.init()
       if not state.ready then return end
       if hud_layout_open() then return false end
       if type ~= 0 and type ~= 1 and type ~= 2 and type ~= 3 and type ~= 4 then return end
+      if type == 0 then
+        local now = os.clock()
+        if now - htb_last_move_t < 0.015 then return false end
+      end
       if (hotbar_blocker and hotbar_blocker:hover(x, y))
       or (choice_blocker  and choice_blocker:hover(x, y)) then
         return true
       end
     end)
-
-
     require('components/xivhotbar3/lib/action_manager').post_load_overlay = function(am)
       if not (player and theme_options) then return end
       local okp, prefs = pcall(hotbar_tools.load_preferences, hotbar_tools, player)
@@ -3792,14 +3820,57 @@ function xivhotbar3_component.init()
       if okb and placements then am:apply_overlay(placements, bars) end
     end
     schedule_weapon_refresh('post-init delayed', 10, 1)
+    if _G.xivui_dbg then _G.xivui_dbg('life', ('hotbar.init done: state.ready=%s ui.is_setup=%s bars=%s ui.hotbar.ready=%s'):format(
+      tostring(state.ready), tostring(ui.is_setup), tostring(ui.hotbars and #ui.hotbars), tostring(ui.hotbar and ui.hotbar.ready))) end
+  end
+end
+
+function xivhotbar3_component.deactivate()
+  if not state.ready then return end
+  if _G.xivui_dbg then _G.xivui_dbg('life', 'hotbar.deactivate (halt: keys unbound, automation off)') end
+  state.ready = false
+  if ui and ui.hotbar then ui.hotbar.ready = false end
+  player.autora_active = false
+  player.autora_pending_at = nil
+  player.autora_last_fire = nil
+  if theme_options and keyboard and keyboard.unbind_keys then
+    pcall(function() keyboard:unbind_keys(theme_options.rows, theme_options.columns) end)
+  end
+end
+
+function xivhotbar3_component.activate()
+  local dbgf = _G.xivui_dbg or function() end
+  dbgf('life', ('hotbar.activate ENTER: state.ready=%s ui=%s ui.is_setup=%s'):format(
+    tostring(state.ready), tostring(ui ~= nil), tostring(ui and ui.is_setup)))
+  if state.ready then dbgf('life', 'hotbar.activate skip (already active)'); return end
+  if not (ui and ui.is_setup) then dbgf('life', 'hotbar.activate skip (ui not setup)'); return end
+  state.ready = true
+  if ui and ui.hotbar then ui.hotbar.ready = true end
+  state.ext_hidden = false
+  if ui and ui.hotbar then ui.hotbar.hide_hotbars = false end
+  if theme_options and keyboard and keyboard.bind_keys then
+    local bok, berr = pcall(function() keyboard:bind_keys(theme_options.rows, theme_options.columns) end)
+    dbgf('life', 'hotbar.activate bind_keys ok=' .. tostring(bok) .. (bok and '' or (' err=' .. tostring(berr))))
+  end
+  if reload_hotbar then
+    local rok, rerr = pcall(reload_hotbar)
+    dbgf('life', 'hotbar.activate reload_hotbar ok=' .. tostring(rok) .. (rok and '' or (' err=' .. tostring(rerr))))
+    if not rok then (_G.xivui_echo or print)('[XivUI] hotbar re-enable reload error: ' .. tostring(rerr)) end
+  end
+  if ui and ui.show and player and player.get_hotbar_info then
+    local sok, serr = pcall(function() ui:show(player:get_hotbar_info()) end)
+    dbgf('life', 'hotbar.activate ui:show ok=' .. tostring(sok) .. (sok and '' or (' err=' .. tostring(serr))))
   end
 end
 
 function xivhotbar3_component.dispose()
-  if not state.ready then return end
+  if not (ui and ui.is_setup) then return end
   player.autora_active = false
   player.autora_pending_at = nil
   player.autora_last_fire = nil
+  if theme_options and keyboard and keyboard.unbind_keys then
+    pcall(function() keyboard:unbind_keys(theme_options.rows, theme_options.columns) end)
+  end
   settings = nil
   theme = nil
   theme_options = nil
@@ -3819,21 +3890,38 @@ function xivhotbar3_component.dispose()
     windower.unregister_event(htb_mouse_handler_id)
     htb_mouse_handler_id = nil
   end
-  unregister_events()
   rmbPressedInHotbar = false
   lmbPressedInHotbar = false
 end
 
 function xivhotbar3_component.show()
   state.ext_hidden = false
-  if state.ready and ui then
-    ui.hotbar.hide_hotbars = false
-    ui:show(player:get_hotbar_info())
-    if is_choice_modifier_active and is_choice_modifier_active() and ui.set_choice_modifier_indicator then
-      ui:set_choice_modifier_indicator(true)
+  if _G.xivui_dbg then _G.xivui_dbg('life', ('hotbar.show: state.ready=%s ui=%s ui.is_setup=%s'):format(
+    tostring(state.ready), tostring(ui ~= nil), tostring(ui and ui.is_setup))) end
+  if not (ui and ui.is_setup) then return end
+  if not state.ready then
+    if _G.xivui_dbg then _G.xivui_dbg('life', 'hotbar.show: reactivating (was halted)') end
+    state.ready = true
+    if ui.hotbar then ui.hotbar.ready = true end
+    state.dirty_show = true
+    if theme_options and keyboard and keyboard.bind_keys then
+      local bok, berr = pcall(function() keyboard:bind_keys(theme_options.rows, theme_options.columns) end)
+      if _G.xivui_dbg then _G.xivui_dbg('life', 'hotbar.show: rebind ok=' .. tostring(bok) .. (bok and '' or (' err=' .. tostring(berr)))) end
     end
-    hotbar_sets:show()
   end
+  ui.hotbar.hide_hotbars = false
+  if state.dirty_show and reload_hotbar then
+    local rok, rerr = pcall(reload_hotbar)
+    if _G.xivui_dbg then _G.xivui_dbg('life', 'hotbar.show: reload ok=' .. tostring(rok) .. (rok and '' or (' err=' .. tostring(rerr)))) end
+    if not rok then (_G.xivui_echo or print)('[XivUI] hotbar show reload error: ' .. tostring(rerr)) end
+    state.dirty_show = nil
+  end
+  ui:show(player:get_hotbar_info())
+  if ui.reposition_all_bars and ui.hotbars and ui.hotbars[1] then ui:reposition_all_bars() end
+  if is_choice_modifier_active and is_choice_modifier_active() and ui.set_choice_modifier_indicator then
+    ui:set_choice_modifier_indicator(true)
+  end
+  hotbar_sets:show()
 end
 
 function xivhotbar3_component.hide()
@@ -3882,8 +3970,6 @@ local function push_hotbar_bounds()
                 local frame = hb.slot_frames and hb.slot_frames[i]
                 if frame and frame:visible() then
                     local sx, sy = ui:get_slot_xy(h, i)
-
-
                     local biw = ui.bar_image_width and ui:bar_image_width(h) or ui.image_width
                     local bih = ui.bar_image_height and ui:bar_image_height(h) or ui.image_height
                     min_x = math.min(min_x, sx)
@@ -3903,7 +3989,11 @@ local function push_hotbar_bounds()
         local bw = (max_x - min_x) + arrow_w + right_ext
         local bh = max_y - min_y
         ui_bounds.register('xivhotbar3', bx, by, bw, bh)
-        htb_bounds_cache = { x=bx, y=by, w=bw, h=bh }
+        if htb_bounds_cache then
+            htb_bounds_cache.x, htb_bounds_cache.y, htb_bounds_cache.w, htb_bounds_cache.h = bx, by, bw, bh
+        else
+            htb_bounds_cache = { x=bx, y=by, w=bw, h=bh }
+        end
         if hotbar_blocker then
             hotbar_blocker:pos(bx, by)
             hotbar_blocker:size(bw, bh)
@@ -3951,7 +4041,11 @@ local function push_hotbar_bounds()
             local cbw = (cb_max_x - cb_min_x) + arrow_w * 2
             local cbh = (cb_max_y - cb_min_y) + indicator_above
             ui_bounds.register('xivhotbar3_choice', cbx, cby, cbw, cbh)
-            choice_bounds_cache = { x=cbx, y=cby, w=cbw, h=cbh }
+            if choice_bounds_cache then
+                choice_bounds_cache.x, choice_bounds_cache.y, choice_bounds_cache.w, choice_bounds_cache.h = cbx, cby, cbw, cbh
+            else
+                choice_bounds_cache = { x=cbx, y=cby, w=cbw, h=cbh }
+            end
             if choice_blocker then
                 choice_blocker:pos(cbx, cby)
                 choice_blocker:size(cbw, cbh)
@@ -3975,14 +4069,9 @@ function xivhotbar3_component.push_bounds()
     push_hotbar_bounds()
 end
 
-
-
 function xivhotbar3_component.set_drag_block(v)
     external_drag_active = v and true or false
 end
-
-
-
 
 function xivhotbar3_component.slot_box_at(x, y)
     if not state.ready or not ui or not ui.hotbars or not ui.theme then return nil end
@@ -4005,15 +4094,6 @@ function xivhotbar3_component.slot_box_at(x, y)
     return nil
 end
 
-
-
-
-
-
-
-
-
-
 function xivhotbar3_component.assign_action(x, y, entry)
     if not entry or not entry.type or not entry.action or entry.action == '' then return false end
     local row, col = xivhotbar3_component.slot_box_at(x, y)
@@ -4021,14 +4101,12 @@ function xivhotbar3_component.assign_action(x, y, entry)
 
     local _, environment = player:get_hotbar_info_without_vitals()
     environment = environment or 'battle'
-
     if hotbar_tools:overlay_owns_bar(player, environment, row) then
         local say = _G.xivui_echo or print
         say('XIVHOTBAR2: that bar is auto-generated — add or reorder actions in the AUTOGEN panel.')
         return false
     end
     local vis_slot = player:get_visible_slot_index(row, col, environment) or col
-
     local am = require('components/xivhotbar3/lib/action_manager')
     local slot   = (am.visible_to_file_slot and am:visible_to_file_slot(row, vis_slot, environment)) or vis_slot
     local prio   = (environment == 'field') and 'g' or 'm'
@@ -4036,8 +4114,6 @@ function xivhotbar3_component.assign_action(x, y, entry)
     local alias  = entry.alias or entry.action
 
     local existing = player.get_visible_action and player:get_visible_action(environment, row, col)
-
-
     if existing and theme_options and theme_options.choice_drag_merge
             and not existing.is_dynamic
             and SLOTDRAG_MERGE_TYPES[tostring(entry.type or ''):lower()] then
@@ -4052,12 +4128,10 @@ function xivhotbar3_component.assign_action(x, y, entry)
         hotbar_tools:reset_slot(player, environment, row, slot)
     end
     player:insert_action({ prio, tostring(row), tostring(slot), entry.type, entry.action, target, alias, entry.icon })
-
     local am = require('components/xivhotbar3/lib/action_manager')
     local hidden_reason = am.req_check_reason
         and am:req_check_reason({ environment .. ' ' .. row .. ' ' .. slot, entry.type, entry.action })
     if hidden_reason then
-
         local say = _G.xivui_echo or print
         say(string.format('XIVHOTBAR2: "%s" saved to %s slot %d-%d, but it will stay HIDDEN for now: %s.',
             tostring(entry.action), environment, row, slot, hidden_reason))
@@ -4069,10 +4143,8 @@ function xivhotbar3_component.assign_action(x, y, entry)
     return true, row, slot
 end
 
-
 function xivhotbar3_component.hud_env() return get_active_env() end
 function xivhotbar3_component.hud_bar_count() return (theme_options and theme_options.hotbar_number) or 6 end
-
 
 function xivhotbar3_component.hud_bars()
   local env = get_active_env()
@@ -4088,7 +4160,11 @@ function xivhotbar3_component.hud_bars()
   return out
 end
 
-
+local hud_default_apply = false
+function xivhotbar3_component.hud_default_apply(on) hud_default_apply = on == true end
+local function hud_layout_target_envs()
+  return hud_default_apply and LAYOUT_ENVS or { get_active_env() }
+end
 
 function xivhotbar3_component.hud_move_bar_live(h, x, y)
   local key = tostring(h)
@@ -4096,7 +4172,7 @@ function xivhotbar3_component.hud_move_bar_live(h, x, y)
   local vertical = existing and existing.Vertical == true
   local ox = math.floor(x - (ui.pos_x or 0))
   local oy = math.floor(y)
-  theme_options.offsets[key] = { OffsetX = ox, OffsetY = oy, Vertical = vertical }
+  theme_options.offsets[key] = { OffsetX = ox, OffsetY = oy, Vertical = vertical, Scale = existing and existing.Scale }
   if ui.hotbars and ui.hotbars[1] then
     if ui.reposition_bar then ui:reposition_bar(h)
     elseif ui.reposition_all_bars then ui:reposition_all_bars() end
@@ -4104,19 +4180,23 @@ function xivhotbar3_component.hud_move_bar_live(h, x, y)
   return ox, oy, vertical
 end
 
-
-
 function xivhotbar3_component.hud_move_bar(h, x, y)
   local key = tostring(h)
   local ox, oy, vertical = xivhotbar3_component.hud_move_bar_live(h, x, y)
   if ui.reposition_all_bars and ui.hotbars and ui.hotbars[1] then ui:reposition_all_bars() end
-  local env = get_active_env()
+  local sc = theme_options.offsets[key] and theme_options.offsets[key].Scale
   if theme_options.job_override then
-    capture_environment_layout(env); save_job_layout()
+    for _, env in ipairs(hud_layout_target_envs()) do capture_environment_layout(env) end
+    save_job_layout()
   else
     local g = load_global_layout()
-    g.offsets[env] = g.offsets[env] or {}
-    g.offsets[env][key] = { OffsetX = ox, OffsetY = oy, Vertical = vertical }
+    for _, env in ipairs(hud_layout_target_envs()) do
+      g.offsets[env] = g.offsets[env] or {}
+      local rec = g.offsets[env][key] or {}
+      rec.OffsetX, rec.OffsetY, rec.Vertical = ox, oy, vertical
+      if sc then rec.Scale = sc end
+      g.offsets[env][key] = rec
+    end
     save_global_layout()
   end
 end
@@ -4126,7 +4206,6 @@ function xivhotbar3_component.hud_bar_hidden(env, h)
 end
 
 function xivhotbar3_component.hud_set_hidden(env, h, val)
-  if not theme_options then return end
   ensure_hidden_bars()
   theme_options.hidden_bars[env][h] = val and true or nil
   save_job_layout()
@@ -4135,9 +4214,7 @@ function xivhotbar3_component.hud_set_hidden(env, h, val)
   end
 end
 
-
 function xivhotbar3_component.hud_get_scale() return (theme_options and theme_options.slot_icon_scale) or 1 end
-
 function xivhotbar3_component.hud_set_scale_live(f)
   f = math.max(0.5, math.min(2.5, tonumber(f) or 1))
   theme_options.slot_icon_scale = f
@@ -4156,7 +4233,6 @@ function xivhotbar3_component.hud_set_scale(f)
     config.save(settings)
   end
 end
-
 
 function xivhotbar3_component.hud_action_tip_rect()
   local x = (theme_options and theme_options.description_box_x) or 675
@@ -4185,8 +4261,6 @@ function xivhotbar3_component.hud_set_action_tip_scale(s)
   end
 end
 
-
-
 function xivhotbar3_component.hud_get_bar_scale(h)
   local off = theme_options and theme_options.offsets and theme_options.offsets[tostring(h)]
   local s = off and tonumber(off.Scale) or 1
@@ -4202,42 +4276,29 @@ function xivhotbar3_component.hud_set_bar_scale(h, scale)
   theme_options.offsets[key] = cur
   if ui.rescale and ui.hotbars and ui.hotbars[1] then ui:rescale(theme_options.slot_icon_scale or 1) end
   if ui.reposition_all_bars and ui.hotbars and ui.hotbars[1] then ui:reposition_all_bars() end
-  local env = get_active_env()
   if theme_options.job_override then
-    capture_environment_layout(env); save_job_layout()
+    for _, env in ipairs(hud_layout_target_envs()) do capture_environment_layout(env) end
+    save_job_layout()
   else
     local g = load_global_layout()
-    g.offsets[env] = g.offsets[env] or {}
-    g.offsets[env][key] = g.offsets[env][key] or {}
-    g.offsets[env][key].OffsetX  = cur.OffsetX
-    g.offsets[env][key].OffsetY  = cur.OffsetY
-    g.offsets[env][key].Vertical = cur.Vertical
-    g.offsets[env][key].Scale    = scale
+    for _, env in ipairs(hud_layout_target_envs()) do
+      g.offsets[env] = g.offsets[env] or {}
+      local rec = g.offsets[env][key] or {}
+      rec.OffsetX, rec.OffsetY, rec.Vertical, rec.Scale = cur.OffsetX, cur.OffsetY, cur.Vertical, scale
+      g.offsets[env][key] = rec
+    end
     save_global_layout()
   end
 end
 
-
-
-
-
 function xivhotbar3_component.hud_preview(on)
   if ui.theme then ui.theme.hud_show_all_bars = false end
-
-
-
   if not on and player and player.get_hotbar_info and ui.load_player_hotbar then
     ui:load_player_hotbar(player:get_hotbar_info())
   end
   hotbar_sets:set_force_shown(on == true)
   if ui.choice_hud_preview then pcall(function() ui:choice_hud_preview(on == true) end) end
 end
-
-
-
-
-
-
 
 local function save_choice_bar()
   if not (ui.theme and ui.theme.choice_bar) then return end
@@ -4272,7 +4333,6 @@ function xivhotbar3_component.hud_move_choice_ind_live(x, y) if ui.set_choice_in
 function xivhotbar3_component.hud_move_choice_ind(x, y) if ui.set_choice_indicator_pos then ui:set_choice_indicator_pos(x, y); save_choice_bar() end end
 function xivhotbar3_component.hud_get_choice_ind_scale() return (ui.choice_indicator_scale and ui:choice_indicator_scale()) or 1 end
 function xivhotbar3_component.hud_set_choice_ind_scale(s) if ui.set_choice_indicator_scale then ui:set_choice_indicator_scale(s); save_choice_bar() end end
-
 
 function xivhotbar3_component.hud_env_text()
   if not ui.get_environment_text_rect then return nil end
@@ -4362,12 +4422,9 @@ end
 
 function xivhotbar3_component.hud_auto_battle() return theme_options ~= nil and theme_options.auto_battle_mode == true end
 function xivhotbar3_component.hud_set_auto_battle(val)
-  if not theme_options then return end
   theme_options.auto_battle_mode = val and true or false
   if settings and settings.General then settings.General.AutoBattleMode = theme_options.auto_battle_mode; config.save(settings) end
 end
-
-
 
 local function hud_apply_slot_text()
   if ui.theme then
@@ -4376,30 +4433,23 @@ local function hud_apply_slot_text()
   end
   if player and player.get_hotbar_info and ui.show then ui:show(player:get_hotbar_info()) end
 end
-function xivhotbar3_component.hud_get_show_costs() return theme_options ~= nil and theme_options.hide_action_cost ~= true end
+function xivhotbar3_component.hud_get_show_costs() return not theme_options or theme_options.hide_action_cost ~= true end
 function xivhotbar3_component.hud_set_show_costs(val)
-  if not theme_options then return end
   theme_options.hide_action_cost = not val
   if settings and settings.Hotbar then settings.Hotbar.HideActionCost = not val; config.save(settings) end
   hud_apply_slot_text()
 end
-function xivhotbar3_component.hud_get_show_names() return theme_options ~= nil and theme_options.hide_action_names ~= true end
+function xivhotbar3_component.hud_get_show_names() return not theme_options or theme_options.hide_action_names ~= true end
 function xivhotbar3_component.hud_set_show_names(val)
-  if not theme_options then return end
   theme_options.hide_action_names = not val
   if settings and settings.Hotbar then settings.Hotbar.HideActionName = not val; config.save(settings) end
   hud_apply_slot_text()
 end
 
-
-
-
-
 function xivhotbar3_component.hud_get_empty_frames()
-  return theme_options ~= nil and (theme_options.hide_empty_slots ~= true or theme_options.show_empty_slot_frames == true)
+  return not theme_options or theme_options.hide_empty_slots ~= true or theme_options.show_empty_slot_frames == true
 end
 function xivhotbar3_component.hud_set_empty_frames(val)
-  if not theme_options then return end
   val = val and true or false
   theme_options.hide_empty_slots = not val
   theme_options.show_empty_slot_frames = val
@@ -4413,8 +4463,6 @@ function xivhotbar3_component.hud_set_empty_frames(val)
   if xivhotbar3_component.apply_style_relayout then xivhotbar3_component.apply_style_relayout() end
 end
 
-
-
 local function hb_behavior_settings()
   if not (settings and settings.Hotbar) then return nil end
   settings.Hotbar.Behavior = settings.Hotbar.Behavior or {}
@@ -4427,15 +4475,12 @@ function xivhotbar3_component.hud_get_ranged_mode()
   return m
 end
 function xivhotbar3_component.hud_set_ranged_mode(mode)
-  if not theme_options then return end
   mode = tostring(mode or 'auto'):lower()
   if mode ~= 'auto' and mode ~= 'press' then mode = 'auto' end
   if theme_options then theme_options.ranged_mode = mode end
   local b = hb_behavior_settings(); if b then b.RangedMode = mode; config.save(settings) end
   if reload_hotbar then reload_hotbar() end
 end
-
-
 
 function xivhotbar3_component.hud_get_autora_melee_mode()
   local m = theme_options and theme_options.autora_melee_mode
@@ -4455,22 +4500,18 @@ function xivhotbar3_component.hud_set_autora_melee_mode(mode)
   end
 end
 
-
 function xivhotbar3_component.hud_get_ranged_autopin() return not (theme_options and theme_options.ranged_autopin == false) end
 function xivhotbar3_component.hud_set_ranged_autopin(val)
-  if not theme_options then return end
-  theme_options.ranged_autopin = val and true or false
+  if theme_options then theme_options.ranged_autopin = val and true or false end
   local b = hb_behavior_settings(); if b then b.RangedAutoPin = val and true or false; config.save(settings) end
   if reload_hotbar then reload_hotbar() end
 end
-
 
 function xivhotbar3_component.hud_get_auto_equip_ammo() return theme_options and theme_options.auto_equip_ammo == true end
 function xivhotbar3_component.hud_set_auto_equip_ammo(val)
   if theme_options then theme_options.auto_equip_ammo = val and true or false end
   local b = hb_behavior_settings(); if b then b.AutoEquipAmmo = val and true or false; config.save(settings) end
 end
-
 
 function xivhotbar3_component.hud_get_ammo_source() return (theme_options and theme_options.ammo_source) or 'any' end
 function xivhotbar3_component.hud_set_ammo_source(val)
@@ -4479,26 +4520,19 @@ function xivhotbar3_component.hud_set_ammo_source(val)
   local b = hb_behavior_settings(); if b then b.AmmoSource = val; config.save(settings) end
 end
 
-
 function xivhotbar3_component.hud_get_collapse_gaps() return not (theme_options and theme_options.collapse_gaps == false) end
 function xivhotbar3_component.hud_set_collapse_gaps(val)
-  if not theme_options then return end
-  theme_options.collapse_gaps = val and true or false
+  if theme_options then theme_options.collapse_gaps = val and true or false end
   local b = hb_behavior_settings(); if b then b.CollapseGaps = val and true or false; config.save(settings) end
   if reload_hotbar then reload_hotbar() end
 end
 
-
 function xivhotbar3_component.hud_get_autohide() return theme_options and theme_options.auto_hide_unusable == true end
 function xivhotbar3_component.hud_set_autohide(val)
-  if not theme_options then return end
-  theme_options.auto_hide_unusable = val and true or false
+  if theme_options then theme_options.auto_hide_unusable = val and true or false end
   local b = hb_behavior_settings(); if b then b.AutoHideUnusable = val and true or false; config.save(settings) end
   if reload_hotbar then reload_hotbar() end
 end
-
-
-
 
 function xivhotbar3_component.choice_autogen_list()
   if not player then return {} end
@@ -4507,7 +4541,6 @@ function xivhotbar3_component.choice_autogen_list()
   if not ok or type(raw) ~= 'table' then return {} end
   local out = {}
   for _, e in ipairs(raw) do
-
     local rt, ra
     local ok2, acts = pcall(function() return (select(1, cg:resolve(player, e.action))) end)
     if ok2 and type(acts) == 'table' and acts[1] then rt, ra = acts[1].type, acts[1].action end
@@ -4516,7 +4549,6 @@ function xivhotbar3_component.choice_autogen_list()
   end
   return out
 end
-
 
 function xivhotbar3_component.choice_preview(group_id)
   if not player then return {} end
@@ -4530,14 +4562,7 @@ function xivhotbar3_component.choice_preview(group_id)
   return out
 end
 
-
-
-
-
 local GENERIC_PET_SECTIONS = { SMN = 'Avatar', DRG = 'Wyvern', PUP = 'Automaton', BST = 'Beast' }
-
-
-
 
 local expand_section_exclusions = nil
 local function get_expand_exclusions()
@@ -4582,7 +4607,6 @@ function xivhotbar3_component.expand_triggers()
   return out
 end
 
-
 function xivhotbar3_component.expand_section_entries(section)
   local am = require('components/xivhotbar3/lib/action_manager')
   local sections = (am.get_job_sections and am:get_job_sections()) or {}
@@ -4601,9 +4625,6 @@ function xivhotbar3_component.expand_section_entries(section)
   return out
 end
 
-
-
-
 function xivhotbar3_component.assign_expand_action(x, y, section, entry)
   if not entry or not entry.type or not entry.action or entry.action == '' then return false end
   section = tostring(section or '')
@@ -4613,7 +4634,6 @@ function xivhotbar3_component.assign_expand_action(x, y, section, entry)
   local _, environment = player:get_hotbar_info_without_vitals()
   environment = environment or 'battle'
   local vis_slot = player:get_visible_slot_index(row, col, environment) or col
-
   local am = require('components/xivhotbar3/lib/action_manager')
   local slot = (am.visible_to_file_slot and am:visible_to_file_slot(row, vis_slot, environment)) or vis_slot
   local fm = require('components/xivhotbar3/lib/file_manager')
@@ -4635,8 +4655,6 @@ function xivhotbar3_component.remove_expand_action(section, e)
   if ok then reload_hotbar() end
   return ok
 end
-
-
 
 function xivhotbar3_component.remove_choice_slots(group_id)
   if not player or not player.name or player.name == '' then return 0 end
@@ -4660,9 +4678,6 @@ function xivhotbar3_component.remove_choice_slots(group_id)
   return removed
 end
 
-
-
-
 local CHOICE_MOD_KEYS = { capslock = 58, tab = 15, grave = 41, tilde = 41, lalt = 56, lctrl = 29 }
 
 function xivhotbar3_component.hud_get_choice_key()
@@ -4674,8 +4689,6 @@ function xivhotbar3_component.hud_get_choice_key()
   end
   return 'dik' .. tostring(dik)
 end
-
-
 
 function xivhotbar3_component.hud_set_choice_key_dik(dik, shift_required)
   dik = tonumber(dik)
@@ -4717,8 +4730,6 @@ function xivhotbar3_component.hud_set_choice_mode(mode)
   if theme_options then theme_options.controls_choice_modifier_mode = mode end
 end
 
-
-
 function xivhotbar3_component.hud_slot_rects(h)
   if not (ui and ui.hotbars and ui.hotbars[h]) then return nil end
   local out = {}
@@ -4735,7 +4746,6 @@ function xivhotbar3_component.hud_slot_rects(h)
   return out
 end
 
-
 function xivhotbar3_component.hud_reset_slot(h, i)
   h, i = tonumber(h), tonumber(i)
   if not (h and i and ui and ui.slot_custom_offsets) then return false end
@@ -4748,7 +4758,6 @@ function xivhotbar3_component.hud_reset_slot(h, i)
   return true
 end
 
-
 function xivhotbar3_component.hud_reset_slots(h)
   h = tonumber(h)
   if not h or not (ui and ui.clear_slot_custom_offsets_for_row) then return false end
@@ -4760,11 +4769,9 @@ function xivhotbar3_component.hud_reset_slots(h)
   return true
 end
 
-
 function xivhotbar3_component.hud_set_slot_scale_live(h, i, scale)
   h, i = tonumber(h), tonumber(i)
   if not (h and i and ui and ui.set_slot_scale) then return end
-
   local bs = (ui.bar_scale and ui:bar_scale(h)) or 1
   if bs <= 0 then bs = 1 end
   ui:set_slot_scale(h, i, (tonumber(scale) or bs) / bs)
@@ -4793,11 +4800,9 @@ function xivhotbar3_component.hud_move_slot(h, i, x, y)
   save_job_layout()
 end
 
-
 function xivhotbar3_component.hud_get_sets_visible() return hotbar_sets:is_visible() end
 
 function xivhotbar3_component.hud_set_sets_visible(v)
-  if not theme_options then return end
   hotbar_sets:set_visible(v and true or false)
   if settings and settings.HotbarSets then
     settings.HotbarSets.Visible = hotbar_sets:is_visible()
@@ -4808,19 +4813,7 @@ end
 function xivhotbar3_component.hud_sets_rect()
   local x, y, w, h = hotbar_sets:grid_bounds()
   if not x then return nil end
-  return { x = x, y = y, w = w, h = h, scale = hotbar_sets:get_dot_scale(), visible = hotbar_sets:is_visible() }
-end
-
-function xivhotbar3_component.hud_set_sets_scale_live(f)
-  hotbar_sets:set_dot_scale(f)
-end
-
-function xivhotbar3_component.hud_set_sets_scale(f)
-  hotbar_sets:set_dot_scale(f)
-  if settings and settings.HotbarSets then
-    settings.HotbarSets.DotScale = tonumber(f) or settings.HotbarSets.DotScale
-    config.save(settings)
-  end
+  return { x = x, y = y, w = w, h = h, visible = hotbar_sets:is_visible() }
 end
 
 function xivhotbar3_component.hud_move_sets_live(x, y)
@@ -4835,8 +4828,6 @@ function xivhotbar3_component.hud_move_sets(x, y)
     config.save(settings)
   end
 end
-
-
 
 function xivhotbar3_component.autogen_panel()
   if not (player and theme_options) then return nil end
@@ -4877,7 +4868,6 @@ function xivhotbar3_component.autogen_set_bar(category, bar)
   if bar and bar >= 1 and bar <= 6 then
     hotbar_tools:set_category_bar(player, category, bar, 'battle')
   else
-
     local resolved = hotbar_tools:resolve_category(category) or category
     local prefs = hotbar_tools:load_preferences(player)
     if prefs.magic and prefs.magic[resolved] then prefs.magic[resolved] = nil
@@ -4895,8 +4885,6 @@ function xivhotbar3_component.autogen_set_bar(category, bar)
   end
   reload_hotbar()
 end
-
-
 
 function xivhotbar3_component.autogen_set_order(category, keys)
   if not player or not category then return end
@@ -4920,7 +4908,6 @@ function xivhotbar3_component.autogen_toggle_exclude(key)
   reload_hotbar()
 end
 
-
 function xivhotbar3_component.get_choice_drag_merge()
   return theme_options ~= nil and theme_options.choice_drag_merge == true
 end
@@ -4934,12 +4921,6 @@ function xivhotbar3_component.set_choice_drag_merge(val)
     config.save(settings)
   end
 end
-
-
-
-
-
-
 
 function xivhotbar3_component.apply_style_relayout()
   if not (theme and settings and theme_options and ui) then return end
@@ -4958,10 +4939,6 @@ function xivhotbar3_component.apply_style_relayout()
     if ui.show then ui:show(player:get_hotbar_info()) end
   end
 end
-
-
-
-
 
 function xivhotbar3_component.apply_theme(id)
   if not (theme and settings and theme_options and ui) then return end
@@ -4988,10 +4965,25 @@ end
 function xivhotbar3_component.hud_job_override() return theme_options ~= nil and theme_options.job_override == true end
 
 function xivhotbar3_component.hud_set_job_override(val)
-  if not theme_options then return end
   theme_options.job_override = val and true or false
   save_job_layout()
   apply_environment_layout(get_active_env())
+end
+
+do
+  local LIFECYCLE = {
+    init = true, dispose = true, show = true, hide = true,
+    push_bounds = true, handle_command = true,
+  }
+  local function hb_api_ready() return state.ready and theme_options ~= nil end
+  for k, fn in pairs(xivhotbar3_component) do
+    if type(fn) == 'function' and not LIFECYCLE[k] then
+      xivhotbar3_component[k] = function(...)
+        if not hb_api_ready() then return nil end
+        return fn(...)
+      end
+    end
+  end
 end
 
 return xivhotbar3_component

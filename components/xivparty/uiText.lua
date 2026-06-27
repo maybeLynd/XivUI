@@ -1,4 +1,3 @@
-
 local texts = require('texts')
 require('strings')
 

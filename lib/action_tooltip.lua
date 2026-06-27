@@ -84,7 +84,7 @@ function M.new()
     local self = setmetatable({}, AT)
     M._n = (M._n or 0) + 1
     self._occ = 'tooltip' .. M._n
-    occlusion.push(2)
+    occlusion.push(7)
     self.bg    = img(BG)
     self.icon  = img(BG)
     self.div   = img(DIV)
@@ -211,7 +211,7 @@ function AT:show(info, x, y)
     if by < 0 then by = 0 end
 
     self.bg:size(W, total_h); self.bg:pos(bx, by); self.bg:show()
-    occlusion.set(self._occ, bx, by, W, total_h, 2)
+    occlusion.set(self._occ, bx, by, W, total_h, 7, true)
     self.icon:size(ICON, ICON); self.icon:pos(bx + PAD, by + PAD); self.icon:show()
     put(self.name, WHT .. (info.name or '') .. CR); self.name:pos(bx + HX, by + oy_name)
 

@@ -1,4 +1,3 @@
-
 local const = {
     barTypeHp = 'barTypeHp',
     barTypeMp = 'barTypeMp',

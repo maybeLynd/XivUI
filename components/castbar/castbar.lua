@@ -28,7 +28,7 @@ local player_id = nil
 local test_end  = 0
 
 local cast = { hold = true }
-local swing = { last = nil, est = nil, hits = 1 }
+local swing = { last = nil, est = nil, hits = 1, landed = false }
 local ranged = { last = nil, est = nil, hits = 1 }
 local SWING_MIN = 0.3
 local SWING_FLOOR, SWING_CEIL = 0.8, 10.0
@@ -42,24 +42,24 @@ local ranged_visible = false
 local CAST_FILL = IMG .. 'cast_fill.png'
 local CAST_RED  = IMG .. 'cast_fill_red.png'
 
-local img_setup  = { draggable = false }
-local text_setup = { flags = { draggable = false } }
+local function img_setup()  return { draggable = false } end
+local function text_setup() return { flags = { draggable = false } } end
 
-local cast_bg     = images.new(img_setup)
-local cast_fill   = images.new(img_setup)
-local cast_frame  = images.new(img_setup)
-local swing_bg    = images.new(img_setup)
-local swing_fill  = images.new(img_setup)
-local swing_frame = images.new(img_setup)
-local ranged_bg    = images.new(img_setup)
-local ranged_fill  = images.new(img_setup)
-local ranged_frame = images.new(img_setup)
-local cast_name   = texts.new(text_setup)
-local cast_time   = texts.new(text_setup)
-local swing_mult  = texts.new(text_setup)
-local swing_int   = texts.new(text_setup)
-local ranged_mult = texts.new(text_setup)
-local ranged_int  = texts.new(text_setup)
+local cast_bg     = images.new(img_setup())
+local cast_fill   = images.new(img_setup())
+local cast_frame  = images.new(img_setup())
+local swing_bg    = images.new(img_setup())
+local swing_fill  = images.new(img_setup())
+local swing_frame = images.new(img_setup())
+local ranged_bg    = images.new(img_setup())
+local ranged_fill  = images.new(img_setup())
+local ranged_frame = images.new(img_setup())
+local cast_name   = texts.new(text_setup())
+local cast_time   = texts.new(text_setup())
+local swing_mult  = texts.new(text_setup())
+local swing_int   = texts.new(text_setup())
+local ranged_mult = texts.new(text_setup())
+local ranged_int  = texts.new(text_setup())
 
 local function set_cast_fill(path) imgcache.set_path(cast_fill, path) end
 
@@ -160,8 +160,8 @@ local function engaged()
 end
 
 local function swing_progress()
-    if not engaged() then return nil end
-    if not swing.last then return nil end
+    if not engaged() then swing.landed = false; return nil end
+    if not swing.last or not swing.landed then return nil end
     local now = socket.gettime()
     if now - swing.last > 30 then return nil end
     return math.max(0, math.min(1, (now - swing.last) / (swing.est or 3.0)))
@@ -386,6 +386,7 @@ function castbar.on_incoming_chunk(id, original)
             end
         end
         swing.hits = math.max(1, hits)
+        swing.landed = true
     elseif cat == 2 then
         local now = socket.gettime()
         if ranged.last and (now - ranged.last) < RANGED_MIN then return end

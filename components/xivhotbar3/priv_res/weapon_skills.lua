@@ -1,4 +1,3 @@
-
 return {
   [1] = { id = 1, en = "Combo", ja = "コンボ", element = 6, icon_id = 590, prefix = "/weaponskill", range = 2, skill = 1, skillchain_a = "Impaction", skillchain_b = "", skillchain_c = "", targets = 32 },
   [2] = { id = 2, en = "Shoulder Tackle", ja = "タックル", element = 4, icon_id = 591, prefix = "/weaponskill", range = 2, skill = 1, skillchain_a = "Impaction", skillchain_b = "Reverberation", skillchain_c = "", targets = 32 },
@@ -63,7 +62,7 @@ return {
   [61] = { id = 61, en = "Dimidiation", ja = "デミディエーション", element = 6, icon_id = 602, prefix = "/weaponskill", range = 2, skill = 4, skillchain_a = "Light", skillchain_b = "Fragmentation", skillchain_c = "", targets = 32 },
   [62] = { id = 62, en = "Fimbulvetr", ja = "フィンブルヴェト", element = 6, icon_id = 602, prefix = "/weaponskill", range = 2, skill = 4, skillchain_a = "Detonation", skillchain_b = "Compression", skillchain_c = "Distortion", targets = 32 },
   [64] = { id = 64, en = "Raging Axe", ja = "レイジングアクス", element = 6, icon_id = 605, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Detonation", skillchain_b = "Impaction", skillchain_c = "", targets = 32 },
-  [65] = { id = 65, en = "Smash Axe", ja = "スマッシュ", element = 4, icon_id = 606, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Impaction", skillchain_b = "Reverberation", skillchain_c = "", targets = 32 },
+  [65] = { id = 65, en = "Smash Axe", ja = "スマッシュ", element = 4, icon_id = 606, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Induration", skillchain_b = "Reverberation", skillchain_c = "", targets = 32 },
   [66] = { id = 66, en = "Gale Axe", ja = "ラファールアクス", element = 2, icon_id = 607, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Detonation", skillchain_b = "", skillchain_c = "", targets = 32 },
   [67] = { id = 67, en = "Avalanche Axe", ja = "アバランチアクス", element = 6, icon_id = 605, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Scission", skillchain_b = "Impaction", skillchain_c = "", targets = 32 },
   [68] = { id = 68, en = "Spinning Axe", ja = "スピニングアクス", element = 6, icon_id = 605, prefix = "/weaponskill", range = 2, skill = 5, skillchain_a = "Liquefaction", skillchain_b = "Scission", skillchain_c = "Impaction", targets = 32 },
@@ -88,7 +87,7 @@ return {
   [88] = { id = 88, en = "Steel Cyclone", ja = "スチールサイクロン", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Distortion", skillchain_b = "Detonation", skillchain_c = "", targets = 32 },
   [89] = { id = 89, en = "Metatron Torment", ja = "メタトロントーメント", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Light", skillchain_b = "Fusion", skillchain_c = "", targets = 32 },
   [90] = { id = 90, en = "King's Justice", ja = "キングズジャスティス", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Fragmentation", skillchain_b = "Scission", skillchain_c = "", targets = 32 },
-  [91] = { id = 91, en = "Fell Cleave", ja = "フェルクリーヴ", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Scission", skillchain_b = "Detonation", skillchain_c = "", targets = 32 },
+  [91] = { id = 91, en = "Fell Cleave", ja = "フェルクリーヴ", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Scission", skillchain_b = "Detonation", skillchain_c = "Impaction", targets = 32 },
   [92] = { id = 92, en = "Ukko's Fury", ja = "ウッコフューリー", element = 3, icon_id = 610, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Light", skillchain_b = "Fragmentation", skillchain_c = "", targets = 32 },
   [93] = { id = 93, en = "Upheaval", ja = "アップヒーバル", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Fusion", skillchain_b = "Compression", skillchain_c = "", targets = 32 },
   [94] = { id = 94, en = "Disaster", ja = "ディザスター", element = 6, icon_id = 609, prefix = "/weaponskill", range = 2, skill = 6, skillchain_a = "Transfixion", skillchain_b = "Scission", skillchain_c = "Gravitation", targets = 32 },
@@ -197,7 +196,7 @@ return {
   [202] = { id = 202, en = "Jishnu's Radiance", ja = "ジシュヌの光輝", element = 6, icon_id = 637, prefix = "/weaponskill", range = 12, skill = 25, skillchain_a = "Light", skillchain_b = "Fusion", skillchain_c = "", targets = 32 },
   [203] = { id = 203, en = "Apex Arrow", ja = "エイペクスアロー", element = 6, icon_id = 637, prefix = "/weaponskill", range = 12, skill = 25, skillchain_a = "Fragmentation", skillchain_b = "Transfixion", skillchain_c = "", targets = 32 },
   [204] = { id = 204, en = "Sarv", ja = "シャルヴ", element = 6, icon_id = 637, prefix = "/weaponskill", range = 12, skill = 25, skillchain_a = "Transfixion", skillchain_b = "Scission", skillchain_c = "Gravitation", targets = 32 },
-  [208] = { id = 208, en = "Hot Shot", ja = "ホットショット", element = 0, icon_id = 638, prefix = "/weaponskill", range = 12, skill = 26, skillchain_a = "Reverberation", skillchain_b = "Transfixion", skillchain_c = "", targets = 32 },
+  [208] = { id = 208, en = "Hot Shot", ja = "ホットショット", element = 0, icon_id = 638, prefix = "/weaponskill", range = 12, skill = 26, skillchain_a = "Liquefaction", skillchain_b = "Transfixion", skillchain_c = "", targets = 32 },
   [209] = { id = 209, en = "Split Shot", ja = "スプリットショット", element = 2, icon_id = 639, prefix = "/weaponskill", range = 12, skill = 26, skillchain_a = "Reverberation", skillchain_b = "Transfixion", skillchain_c = "", targets = 32 },
   [210] = { id = 210, en = "Sniper Shot", ja = "スナイパーショット", element = 0, icon_id = 638, prefix = "/weaponskill", range = 12, skill = 26, skillchain_a = "Liquefaction", skillchain_b = "Transfixion", skillchain_c = "", targets = 32 },
   [212] = { id = 212, en = "Slug Shot", ja = "スラッグショット", element = 6, icon_id = 640, prefix = "/weaponskill", range = 12, skill = 26, skillchain_a = "Reverberation", skillchain_b = "Transfixion", skillchain_c = "Detonation", targets = 32 },

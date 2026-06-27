@@ -1,4 +1,3 @@
-
 require('tables')
 
 local classes = require('components/xivparty/classes')

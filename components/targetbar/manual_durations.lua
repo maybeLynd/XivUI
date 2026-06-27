@@ -1,4 +1,3 @@
-
 -- Per-ACTION debuff base duration (seconds) by action id under ws/ja/sp. Seed only; the
 -- targetbar learned-duration cache refines it from observed wear-offs. Do not edit by hand.
 return {

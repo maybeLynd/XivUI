@@ -1,4 +1,3 @@
-
 local classes = {}
 
 classes.Object = {}

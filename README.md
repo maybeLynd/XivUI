@@ -501,15 +501,45 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 <a id="known-issues"></a>
 ## Known Issues
 
-- This addon originally started as just changes to Xivhotbar2, this caused a design flaw on my part where hotbar registered is own event handler on load and exposed a public api that I used for the XivUI menu and that the hud editor called into. These kept running even when the hotbar component was disabled causing multiple errors. The design flaw ran deeper than expected upon further review after the last patch which is why I'm including it here.
-
-- Statusbars frame not reappearing after disabling and re-enabling component. While testing the hotbar component disabling, I decided to test other components disabled to see if I had made similar mistakes else where and found that when statusbars is diabled and re-enabled, the frame does not reppear.
-
-- ALT+R is broken when addon loaded (From reddit: Haven't looked into this yet but listing it here so I don't forget)
-- The hotbars and the party bar also glitch out in Party from time to time, they would change sizes and dissapear. (From reddit: Haven't looked into this yet but listing it here so I don't forget)
+- ALT+R is broken when addon loaded (I looked into it but couldn't find the origin of the problem, ALT+R worked in every scenario on both my main pc and laptop)
+- The hotbars and the party bar also glitch out in Party from time to time, they would change sizes and dissapear. (I wasn't able to reproduce this but hopefully the latest patch solves the issue)
 
 <a id="patch-notes"></a>
 ## Patch Notes
+
+### v0.2.0
+After spending most of the day tracing the issues caused by the design flaws like having the hotbar being the main driving force in the addon and using addons that were never meant to be disabled and re-enabled outside of lua loading/reloading/unloading, I compiled a list of issues I found (which kept growing the deeper in I looked). I've tried knocking out what I could find (this was a lot of repetitive testing of the exact same things in different scenarios) and one all nighter later:
+
+**Hotbar** 
+- XivUI grew out of XIVHotbar2, so the hotbar registered its own event handlers on load and exposed a public API that the XivUI Menu and HUD editor called into. Those kept running even when the hotbar component was disabled, throwing errors. After v0.1.3 this turned out to go deeper than I first thought, so disabling the hotbar now properly halts it.
+- The slot cooldown/skillchain check was rebuilding throwaway strings every few frames so those lookups are now cached.
+
+**Statusbar** 
+- While checking other components for the same type of disable bug, I found the statusbar's frame/background wasn't being shown on re-enable.
+
+**Component commands no longer error when the component is disabled or you haven't logged in yet** 
+- They print a short hint instead of throwing.
+
+**XivUI Menu** 
+- The loot drop list (and other floating panels) used to draw over the menu and make it flicker. The menu is now layered above all components, so it stays solid on top.
+- Closing the menu while the loot bag was still open could also leave a bugged empty menu behind. 
+- Holding the mouse over the menu now locks the camera for the whole interaction.
+- Disabling a component while part of it is hidden behind the menu no longer leaves it stuck or popping back. The occlusion now remembers what each component actually wants shown, so it never shows something the component has hidden or disabled.
+- The cursor flickering over the icon picker.
+- XivUI Menu now hides its panels in a single pass when closed instead of every frame improving idle framerate by a bit also a first run check was querying player info 50 times a second now it's around 3 times a second.
+- Toggling a component off and back on used to run its full setup each time which made it create its UI objects without freeing the old ones. So repeatedly enabling/disabling slowly leaked memory (and could eventually crash). Components now init once and just hide/show when toggled so you can flip them on and off.
+
+**Castbar**
+- The cast / auto-attack / ranged bars were sharing a single settings table across all their pieces which could mix up their positions and sizes. Each bar now gets its own.
+- The melee auto-attack bar now appears after your first swing of a fight (and resets when you disengage) so it doesn't pop up with a stale timer when you initiate combat.
+- Added a Swing/ranged text toggle to the config menu (this is the auto-attack interval + multi-hit count on the auto-attack bars).
+
+**Party list** 
+- It was fetching the same game data several times per update. `updatePlayers`, `updatePets`, and the solo check each independently grabbed the party + target tables every tick. Now one snapshot is fetched and shared cutting a big chunk of memory churn.
+
+**Misc**
+-  Mouse move events fired far faster than frames and every one was being handed to every component and a separate handler for each party member and the hotbar's slot hover. Those are now combined to about once per frame. 
+- Stopped rebuilding small tables every single frame in the shared UI bounds and the hotbar's bounds cache.
 
 ### v0.1.3
 - After noticing the last lua errors caused when hotbar component disabled, I found more issues caused by having certain things off. 

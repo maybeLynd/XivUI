@@ -1,11 +1,12 @@
--- targetbar/skillchain: the skillchain / magicburst display shown under the target HP bar. 
--- Reads resonating properties from the hotbar's skillchains lib. 
+-- targetbar/skillchain: the skillchain / magicburst display shown under the target HP bar.
+-- Reads resonating properties from the hotbar's skillchains lib.
 -- Based on "SkillChains" v2.20.08.25 by Ivaar.
 
 local texts  = require('texts')
 local socket = require('socket')
 
 local _priv = require('lib/priv_res')
+local priv_ws = (function() local ok, t = pcall(require, 'components/xivhotbar3/priv_res/weapon_skills') return ok and t or {} end)()
 local htb_skillchains = (function() local ok, t = pcall(require, 'components/xivhotbar3/lib/skillchains') return ok and t or nil end)()
 
 local SC_GAP    = 6
@@ -85,8 +86,10 @@ local function compute_sc(target_id)
     for _, ws_id in ipairs(ws_ids) do
         local ws = _priv.weapon_skill(ws_id)
         if ws then
+            local sc = priv_ws[ws_id]
+            if not (sc and (sc.skillchain_a or '') ~= '') then sc = ws end
             local best
-            for _, p in ipairs({ ws.skillchain_a, ws.skillchain_b, ws.skillchain_c }) do
+            for _, p in ipairs({ sc.skillchain_a, sc.skillchain_b, sc.skillchain_c }) do
                 if p and p ~= 'None' and p ~= '' then
                     local opt = disp.options[p]
                     if opt then best = opt; break end

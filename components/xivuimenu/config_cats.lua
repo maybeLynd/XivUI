@@ -1,4 +1,4 @@
--- config_cats.lua: builds the Config tab's category data (cfg.cats). 
+-- config_cats.lua: builds the Config tab's category data (cfg.cats).
 local config = require('config')
 local MD = require('components/xivuimenu/menudata')
 
@@ -210,6 +210,7 @@ return function(cfg, cfg_settings)
         { name = 'Cast Bar', desc = 'Spell cast + auto-attack bars.', items = {
             toggle('Cast bar', 'Spell cast bar', CB, { 'ShowCast' }, 'xui cast cast'),
             toggle('Swing timer', 'Melee auto-attack bar', CB, { 'ShowSwing' }, 'xui cast swing'),
+            toggle('Swing/ranged text', 'Interval + multi-hit count on the auto-attack bars', CB, { 'ShowSwingText' }, 'xui cast swingtext'),
             toggle('Ranged timer', 'Ranged-attack bar', CB, { 'ShowRanged' }, 'xui cast ranged') } },
         { name = 'EXP Bar', desc = 'Experience bar readout.', items = {
             toggle('EXP/hr stats', 'Show EXP per hour', 'data/expbar/settings.xml', { 'Stats', 'Enable' }, 'xui exp stats') } },

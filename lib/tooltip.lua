@@ -40,7 +40,7 @@ function M.new(opts)
     local self = setmetatable({}, Tooltip)
     M._n = (M._n or 0) + 1
     self._occ = 'btip' .. M._n
-    occlusion.push(2)
+    occlusion.push(7)
     self.bg = make_bg()
     self.icon = images.new({
         pos        = { x = 0, y = 0 }, visible = false,
@@ -127,7 +127,7 @@ function Tooltip:show(icon_path, text_str, x, y)
         self.icon:hide()
     end
     self.txt:pos(bx + pad + iconw, by + pad); self.txt:show()
-    occlusion.set(self._occ, bx, by, bw, bh, 2)
+    occlusion.set(self._occ, bx, by, bw, bh, 7, true)
 end
 
 function Tooltip:hide()

@@ -6,6 +6,11 @@ if not ok_priv_spells_db then priv_spells_db = {} end
 
 local ok_horizon_spells_db, horizon_spells_db = pcall(require, 'components/xivhotbar3/priv_res/horizon_spells')
 if not ok_horizon_spells_db then horizon_spells_db = {} end
+
+local ok_priv_ws_db, priv_ws_db = pcall(require, 'components/xivhotbar3/priv_res/weapon_skills')
+if not ok_priv_ws_db then priv_ws_db = {} end
+local ok_priv_ja_db, priv_ja_db = pcall(require, 'components/xivhotbar3/priv_res/job_abilities')
+if not ok_priv_ja_db then priv_ja_db = {} end
 local ranges               = {
   [0] = 255,
   [2] = 3.40,
@@ -124,9 +129,12 @@ function database:parse_ws_lua()
       if sc_info == "" then return nil else return sc_info end
     end
 
-    new_weapon_skill.sc_a                    = change_sc_string(contents[key].skillchain_a)
-    new_weapon_skill.sc_b                    = change_sc_string(contents[key].skillchain_b)
-    new_weapon_skill.sc_c                    = change_sc_string(contents[key].skillchain_c)
+    local sc_src = contents[key]
+    local pw = priv_ws_db[contents[key].id]
+    if pw and (pw.skillchain_a or "") ~= "" then sc_src = pw end
+    new_weapon_skill.sc_a                    = change_sc_string(sc_src.skillchain_a)
+    new_weapon_skill.sc_b                    = change_sc_string(sc_src.skillchain_b)
+    new_weapon_skill.sc_c                    = change_sc_string(sc_src.skillchain_c)
 
     self.ws[(new_weapon_skill.name):lower()] = new_weapon_skill
   end
@@ -188,9 +196,12 @@ function database:parse_abilities_lua()
       if sc_info == "" then return nil else return sc_info end
     end
 
-    new_abil.sc_a                    = change_sc_string(contents[key].skillchain_a or "")
-    new_abil.sc_b                    = change_sc_string(contents[key].skillchain_b or "")
-    new_abil.sc_c                    = change_sc_string(contents[key].skillchain_c or "")
+    local ja_sc = contents[key]
+    local pj = priv_ja_db[contents[key].id]
+    if pj and (pj.skillchain_a or "") ~= "" then ja_sc = pj end
+    new_abil.sc_a                    = change_sc_string(ja_sc.skillchain_a or "")
+    new_abil.sc_b                    = change_sc_string(ja_sc.skillchain_b or "")
+    new_abil.sc_c                    = change_sc_string(ja_sc.skillchain_c or "")
 
     self.ja[(new_abil.name):lower()] = new_abil
   end

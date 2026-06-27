@@ -1,3 +1,10 @@
+-- priv_res skillchain data overrides Windower res for weaponskills / job abilities
+-- (kept correct + complete here); res is the fallback for anything priv_res lacks.
+local ok_priv_ws, priv_ws_sc = pcall(require, 'components/xivhotbar3/priv_res/weapon_skills')
+if not ok_priv_ws then priv_ws_sc = {} end
+local ok_priv_ja, priv_ja_sc = pcall(require, 'components/xivhotbar3/priv_res/job_abilities')
+if not ok_priv_ja then priv_ja_sc = {} end
+
 skillchains = {
   is_initialized = false,
 
@@ -201,8 +208,8 @@ function skillchains:attempt_skillchain(target_id, incoming_properties, source_n
     local sc_formed = false
     local new_chain_property = nil
 
-    for _, oldprop in ipairs(data.props) do
-      for _, incprop in ipairs(incoming_properties) do
+    for _, incprop in ipairs(incoming_properties) do
+      for _, oldprop in ipairs(data.props) do
         local combo = self.sc_combos[oldprop] and self.sc_combos[oldprop][incprop]
         if combo then
           sc_formed = true
@@ -255,7 +262,7 @@ function skillchains:get_potential_skillchains(target_id)
     local combos_for_old = self.sc_combos[oldprop]
     if combos_for_old then
       for incprop, combo_result in pairs(combos_for_old) do
-        info[incprop] = combo_result
+        if not info[incprop] then info[incprop] = combo_result end
       end
     end
   end
@@ -336,7 +343,8 @@ function skillchains:load_skillchain_properties(type, ability_id)
   if type == 'WEAPONSKILL' then
     local ws = nil
     if ability_id < 256 then
-      ws = resources.weapon_skills[ability_id]
+      local pw = priv_ws_sc[ability_id]
+      ws = (pw and (pw.skillchain_a or "") ~= "" and pw) or resources.weapon_skills[ability_id]
     else
       ws = resources.monster_abilities[ability_id]
     end
@@ -354,7 +362,8 @@ function skillchains:load_skillchain_properties(type, ability_id)
       add_valid_property(properties, blu_data.skillchain_c)
     end
   elseif type == 'JOBABILITY' then
-    local ja = resources.job_abilities[ability_id]
+    local pj = priv_ja_sc[ability_id]
+    local ja = (pj and (pj.skillchain_a or "") ~= "" and pj) or resources.job_abilities[ability_id]
     if ja then
       add_valid_property(properties, ja.skillchain_a)
       add_valid_property(properties, ja.skillchain_b)

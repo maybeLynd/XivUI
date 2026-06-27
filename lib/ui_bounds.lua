@@ -17,7 +17,12 @@ end
 
 function M.register(id, x, y, w, h)
     if w > 0 and h > 0 then
-        _rects[id] = { x = x, y = y, w = w, h = h }
+        local r = _rects[id]
+        if r then
+            r.x, r.y, r.w, r.h = x, y, w, h
+        else
+            _rects[id] = { x = x, y = y, w = w, h = h }
+        end
         local ex, ey = w * 0.01, h * 0.01
         local img = ensure_img(id)
         img:pos(x - ex, y - ey)

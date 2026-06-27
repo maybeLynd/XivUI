@@ -1,4 +1,4 @@
--- hotbar_sets: the 3x3 saved-set grid: save/load a job's full hotbar layout per slot, plus save interaction. 
+-- hotbar_sets: the 3x3 saved-set grid: save/load a job's full hotbar layout per slot, plus save interaction.
 -- XivUI hotbar lib. Maintainer: maybeLynd.
 local hotbar_sets = {}
 

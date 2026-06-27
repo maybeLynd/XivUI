@@ -1,4 +1,3 @@
-
 local res     = require('resources')
 local socket  = require('socket')
 local packets = require('packets')
@@ -9,7 +8,7 @@ local uiJobIcon = require('components/xivparty/uijobicon')
 local uiStatusBar = require('components/xivparty/uistatusbar')
 local uiLeader= require('components/xivparty/uileader')
 local uiRange = require('components/xivparty/uirange')
-local uiBuffIcons = require('components/xivparty/uibufficons')
+local uiBuffIcons = require('components/xivparty/uiBuffIcons')
 local uiText = require('components/xivparty/uitext')
 local uiImage = require('components/xivparty/uiimage')
 local uiCastBar = require('components/xivparty/uicastbar')
@@ -313,6 +312,11 @@ function uiListItem:updateCastBar()
 end
 
 function uiListItem:handleWindowerMouse(type, x, y, delta, blocked)
+    if type == 0 then
+        local now = os.clock()
+        if self._lastMoveT and now - self._lastMoveT < 0.015 then return false end
+        self._lastMoveT = now
+    end
     if self.isUiLocked and Settings.mouseTargeting then
         if self.imgMouse:hover(x, y) and not self.player.isOutsideZone and self.player.isInTargetingRange then
 

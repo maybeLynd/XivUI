@@ -135,8 +135,13 @@ local cursor_img
 local grab_img
 local mouse_down = false
 
-local drag = { active = false, entry = nil, row = nil, slot = nil,
+local drag = { active = false, entry = nil, row = nil, slot = nil, holding = false,
                bar = { vis = false, dragging = false } }
+drag.cam = function(on)
+    if _G.XIVUI_STATE and _G.XIVUI_STATE.hud_camera_lock then
+        _G.XIVUI_STATE.hud_camera_lock(on and true or false)
+    end
+end
 local drag_icon
 
 local picker = { open = false, key = nil, entry = nil, scroll = 0, total = 0, collapsed = {} }
@@ -238,7 +243,7 @@ end
 
 local function build_ui()
     if panel_bg then return end
-    occlusion.push(1)
+    occlusion.push(5)
     panel_bg     = img(ART .. 'window.png')
     banner_bg    = img(ART .. 'banner.png')
     scroll_thumb = img(ART .. 'scroll_thumb.png')
@@ -282,7 +287,7 @@ local function build_ui()
     macro_icon_img = img(ART .. 'icon_placeholder.png')
     macro_out_img  = img(ART .. 'icon_placeholder.png')
     macro_body_thumb = img(ART .. 'scroll_thumb.png')
-    occlusion.push(2)
+    occlusion.push(6)
     pick_bg      = img(ART .. 'pick_window.png')
     pick_hl      = img(ART .. 'row_hover.png'); pick_hl:alpha(150)
     pick_title_t = txt(14, true)
@@ -301,9 +306,11 @@ local function build_ui()
 
     tip = action_tooltip.new()
     if tip.set_scale then tip:set_scale(D._ms) end
+    occlusion.push(8)
     cursor_img = img(ART .. 'cursor.png')
     grab_img   = img(ART .. 'cursor_grab.png')
     drag_icon  = img(ART .. 'icon_placeholder.png')
+    occlusion.pop()
     occlusion.pop()
 end
 
@@ -924,7 +931,7 @@ local function render_apick()
         end
     end
     for i = ri + 1, #dd_rows do dd_rows[i].bg:hide(); dd_rows[i].text:hide(); dd_rows[i].sym:hide() end
-    occlusion.set('xivuimenu_dd', px, py, AW, AH, 2)
+    occlusion.set('xivuimenu_dd', px, py, AW, AH, 6)
 end
 
 local function apick_mouse(mtype, ux, uy, delta)
@@ -1063,7 +1070,7 @@ local function render_picker()
     if hovered_thumb then pick_hl:size(THUMB, THUMB); pick_hl:pos(hovered_thumb.x - mf(ms), hovered_thumb.y - mf(ms)); pick_hl:show()
     else pick_hl:hide() end
 
-    occlusion.set('xivuimenu_pick', px, py, PICK_W, PICK_H, 2)
+    occlusion.set('xivuimenu_pick', px, py, PICK_W, PICK_H, 6)
     ui_bounds.register('xivuimenu_pick', px, py, PICK_W, PICK_H)
 end
 
@@ -1213,7 +1220,11 @@ end
 
 local function redraw()
     drag.bar.vis = false
-    if not (ready and open and shown and settings) then hide_all(); return end
+    if not (ready and open and shown and settings) then
+        if not drag.menu_hidden then hide_all(); drag.menu_hidden = true end
+        return
+    end
+    drag.menu_hidden = false
 
     if picker.open or dd.open then redraw_modal(); return end
 
@@ -1297,13 +1308,14 @@ local function redraw()
 end
 
 local function set_open(v)
+    if _G.xivui_dbg and (open ~= v) then _G.xivui_dbg('menu', 'menu ' .. (v and 'opened' or 'closed')) end
     open = v
     cfg.capturing = false; cfg.shift_held = false
     drag.bar.dragging = false
     if open then
         if settings then apply_scale(settings.Scale) end
         ensure_position()
-    else dd.open = false; hide_all(); set_alt(false); hide_tip(); close_picker() end
+    else dd.open = false; hide_all(); set_alt(false); hide_tip(); close_picker(); drag.cam(false); drag.holding = false end
 end
 
 function xivuimenu.is_hud_open()
@@ -1484,6 +1496,9 @@ local function update_tooltip(hov_icon, ux, uy)
     tip_entry = hov_icon
     tip_info = nil
     if hov_icon and tip then
+        if database.ma and next(database.ma) == nil and database.import then
+            pcall(database.import, database)
+        end
         local info = formatter.build_action_info(database, { type = hov_icon.type, action = hov_icon.name })
         if info then
             info.icon_path = hov_icon.icon or (ART .. 'icon_placeholder.png')
@@ -1503,7 +1518,6 @@ local function update_tooltip(hov_icon, ux, uy)
     elseif tip then
         tip:hide()
     end
-    occlusion.update()
 end
 
 function xivuimenu.on_mouse(mtype, x, y, delta, blocked)
@@ -1518,9 +1532,13 @@ function xivuimenu.on_mouse(mtype, x, y, delta, blocked)
         if grab_img then grab_img:hide() end
         if drag_icon then drag_icon:hide() end
         mouse_down = false
+        drag.cam(false); drag.holding = false
         return false
     end
     local ux, uy = ui_bounds.to_ui(x, y)
+
+    if mtype == 1 then drag.cam(true); drag.holding = true
+    elseif mtype == 2 then drag.cam(false); drag.holding = false end
 
     if picker.open then return picker_mouse(mtype, ux, uy, delta) end
     if dd.open then return apick_mouse(mtype, ux, uy, delta) end
@@ -1532,6 +1550,7 @@ function xivuimenu.on_mouse(mtype, x, y, delta, blocked)
         if grab_img then grab_img:hide() end
         if drag_icon then drag_icon:hide() end
         mouse_down = false
+        drag.cam(false); drag.holding = false
         return false
     end
 
@@ -2386,6 +2405,7 @@ function xivuimenu.covers(x, y)
     if picker.open or dd.open then return true end
     if drag.active then return true end
     if drag.panel_drag then return true end
+    if drag.holding then return true end
     if open and panel_rect and in_rect(x, y, panel_rect) then return true end
     return false
 end
@@ -2393,7 +2413,7 @@ end
 function xivuimenu.push_bounds()
     if ready and open and shown and settings then
         ui_bounds.register('xivuimenu', settings.Pos.X, settings.Pos.Y, W, H)
-        occlusion.set('xivuimenu', settings.Pos.X, settings.Pos.Y, W, H, 1)
+        occlusion.set('xivuimenu', settings.Pos.X, settings.Pos.Y, W, H, 5)
     else
         ui_bounds.clear('xivuimenu')
         occlusion.clear('xivuimenu')
@@ -2415,6 +2435,7 @@ function xivuimenu.dispose()
     open = false
     dd.open = false
     drag.active = false; hotbar.set_drag_block(false)
+    drag.cam(false); drag.holding = false
     close_picker()
     hide_all()
     set_alt(false)

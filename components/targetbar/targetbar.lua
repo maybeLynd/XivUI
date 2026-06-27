@@ -1,18 +1,13 @@
--- targetbar — target HP bar, buff/debuff strip, and skillchain display.
+-- targetbar: target HP bar, buff/debuff strip, and skillchain display.
 -- XivUI component. Maintainer: maybeLynd. Version: 2.0.0.
--- Based on "enemybar" v1.0.2 by mmckee. Incorporates "Debuffed" v3.0.0 by
--- Xathe (Asura) and the skillchain display from "SkillChains" v2.20.08.25 by Ivaar.
+-- Based on "enemybar" v1.0.2 by mmckee. Incorporates "Debuffed" v3.0.0 by Xathe (Asura) and the skillchain display from "SkillChains" v2.20.08.25 by Ivaar.
 
 local SELF_PATH         = windower.addon_path .. 'assets/components/targetbar/'
-
-
 local BAR_DIR = SELF_PATH
 if _G.XIVUI_THEME == 'ffxi' then
     local f = io.open(SELF_PATH .. 'themes/ffxi/bar_track.png', 'rb')
     if f then f:close(); BAR_DIR = SELF_PATH .. 'themes/ffxi/' end
 end
-
-
 local ICONS_PATH        = windower.addon_path .. 'assets/components/targetbar/buffs/'
 local DEBUFF_ICONS_PATH = windower.addon_path .. 'assets/components/targetbar/debuff_icons/'
 local DEBUFF_ICON_BG    = windower.addon_path .. 'assets/components/targetbar/debuff_icons/icon_bg.png'
@@ -31,10 +26,7 @@ local skillchain = require('components/targetbar/skillchain')
 local _priv = require('lib/priv_res')
 local _priv_spells, _priv_ja = _priv.spells, _priv.job_abilities
 
-
 if not _G.resources then _G.resources = res end
-
-
 
 local BUFF_STATUS_DURATION = {}
 local function _index_durations(tbl)
@@ -110,11 +102,8 @@ local function save_learned()
     f:close()
 end
 
-
 local B_TARGET_W, B_TARGET_H = 598, 8
 local B_MOB_W,    B_MOB_H    = 160, 8
-
-
 local B_BAR_PAD              = (_G.XIVUI_THEME == 'ffxi') and 1 or 2
 local B_BUFF_ICON_SIZE       = 18
 local B_BUFF_ICON_GAP        = 2
@@ -124,9 +113,6 @@ local B_FONT_SIZE            = 10
 local BUFF_MAX_SLOTS   = 32
 local CAST_FLASH_SECS  = 1.5
 local CLICK_PAD        = 10
-
-
-
 
 local SCALE = 1
 local TARGET_W, TARGET_H, TARGET_IW, TARGET_IH
@@ -158,7 +144,6 @@ local function compute_geom(s)
 end
 compute_geom(1)
 
-
 local defaults = {
     font = 'Constantia',
     font_size = 10,
@@ -183,17 +168,8 @@ local visible = false
 local hud_preview_on = false
 local ready   = false
 
-
-
-
-
-
-
 local cast_actor_id = nil
 local cast = { hold = true }
-
-
-
 
 local BUFF_MSGS   = {[166]=true, [186]=true, [194]=true, [205]=true, [230]=true, [266]=true, [280]=true, [319]=true}
 local DEBUFF_MSGS = {[2]=true, [252]=true}
@@ -389,8 +365,6 @@ local debuff_icons = {
 }
 
 local json              = require('json')
-
-
 local _descs            = require('lib/status_descs').load()
 local debuff_buff_descs = _descs.debuffs or {}
 
@@ -489,14 +463,6 @@ local PALETTE = {
     npc    = { bg = {70, 52, 10},  fg = {255, 238, 170}, fgg = {150, 118, 38},  border = {250, 208, 90},  text = {255, 238, 170} },
     object = { bg = {42, 42, 46},  fg = {214, 214, 220}, fgg = {108, 108, 114}, border = {172, 172, 180}, text = {214, 214, 220} },
 }
-
-
-
-
-
-
-
-
 if _G.XIVUI_THEME == 'ffxi' then
     PALETTE.enemy  = { bg = {255, 255, 255}, fg = {250, 132, 130}, fgg = {150, 56, 58},   border = {255, 255, 255}, text = {250, 158, 158} }
     PALETTE.pc     = { bg = {255, 255, 255}, fg = {140, 172, 238}, fgg = {54, 92, 152},   border = {255, 255, 255}, text = {160, 188, 242} }
@@ -645,10 +611,6 @@ local function apply_position(nx, ny)
     last_bar_y = ny
 end
 
-
-
-
-
 local function apply_scale(s)
     compute_geom(s)
     if _G.XIVUI_TARGET then _G.XIVUI_TARGET.scale = SCALE end
@@ -719,7 +681,6 @@ local function apply_enemy_debuff(target_id, effect_id, spell_id, actor_id, cate
         spell = _priv.weapon_skill(spell_id)
     end
 
-
     if category == 4 and spell then
         local overwrites = spell.overwrites or {}
         for eff_id, existing in pairs(enemy_debuffs[target_id]) do
@@ -739,7 +700,6 @@ local function apply_enemy_debuff(target_id, effect_id, spell_id, actor_id, cate
             end
         end
     end
-
 
     local status_info  = res.buffs and res.buffs[effect_id]
     local display_name = name_override
@@ -982,7 +942,6 @@ end
 
 local fill_path  = BAR_DIR .. 'fill_white.png'
 
-
 local function render_target()
     local te = XIVUI_TARGET
     if visible ~= prev_visible then
@@ -1095,22 +1054,12 @@ local function render_target()
 
     te.visible = true
     te.enemy   = is_enemy
-
-
-
     te.monster = is_enemy and target.spawn_type == 16
     te.x, te.y = bx, by
     te.w, te.h = TARGET_W, TARGET_H
     te.name = target.name
     te.font = (settings.font_size or 10) * (te.scale or 1)
     te.fontname = settings.font or 'Constantia'
-
-
-
-
-
-
-
     if te._ext_name ~= target.name then
         te._ext_name = target.name
         te._ext_w = math.ceil((#tostring(target.name) + 6) * (te.font or 10) * 0.55)
@@ -1119,8 +1068,6 @@ local function render_target()
     local nw = t_text:extents()
     if nw and nw > 0 then te._ext_w = nw; te._ext_exact = true end
     te.name_right = bx + 4 + (te._ext_w or 0)
-
-
     te.name_right_exact = te._ext_exact and true or false
 
     if target.hpp == 0 then
@@ -1247,8 +1194,6 @@ local targetbar = {}
 function targetbar.init()
     settings = config.load('data/targetbar/settings.xml', defaults)
     compute_geom(settings.scale or 1)
-
-
     _G.XIVUI_TARGET = { visible = false, enemy = false, monster = false, x = 0, y = 0, w = 0, h = 0,
                         name = '', font = 10, fontname = 'Constantia', name_right_exact = false, scale = SCALE }
     load_object_patterns()
@@ -1257,8 +1202,6 @@ function targetbar.init()
     player_id = p and p.id or 0
 
     center_x = settings.pos.x >= 0 and settings.pos.x
-
-
                or (((windower.get_windower_settings() or {}).ui_x_res or 1920) / 2 - TARGET_W / 2)
     local ny = settings.pos.y
 
@@ -1304,13 +1247,13 @@ function targetbar.init()
 
     skillchain.init(settings)
 
-    local icon_cfg = {
+    local function icon_cfg() return {
         pos = { x = -300, y = -300 }, visible = false,
         color = { alpha = 255, red = 255, green = 255, blue = 255 },
         size = { width = BUFF_ICON_SIZE, height = BUFF_ICON_SIZE },
         texture = { path = ICONS_PATH .. '0.png', fit = false },
         repeatable = { x = 1, y = 1 }, draggable = false,
-    }
+    } end
     local tooltip_cfg = {
         pos = { x = -300, y = -300 },
         text = { size = 9, font = 'Constantia', stroke = { width = 2, alpha = 220, red = 0, green = 0, blue = 0 } },
@@ -1326,7 +1269,7 @@ function targetbar.init()
     }
     buff_slots = {}
     for i = 1, BUFF_MAX_SLOTS do
-        local icon = images.new(icon_cfg)
+        local icon = images.new(icon_cfg())
         icon:size(BUFF_ICON_SIZE, BUFF_ICON_SIZE)
         icon:color(255, 255, 255)
         icon:hide()
@@ -1381,9 +1324,6 @@ end
 
 function targetbar.push_bounds()
     if ready and visible and last_bar_x and last_bar_y then
-
-
-
         local x = last_bar_x
         local y = last_bar_y
         local w = TARGET_W + ARROW_GAP + ARROW_W + ARROW_GAP + MOB_W
@@ -1407,9 +1347,6 @@ function targetbar.hud_preview(on)
     else
         visible = false
         last_target_id = nil
-
-
-
         local function h(o) if o then pcall(function() o:hide() end) end end
         h(tbg_body); h(tfg_body); h(tfgg_body); h(tbar_border); h(t_text)
         h(mt_arrow); h(mtbg_body); h(mtfg_body); h(mtbar_border); h(mt_text)
@@ -1421,9 +1358,6 @@ end
 
 function targetbar.on_prerender()
     if not ready then return end
-
-
-
     hud_preview_on = (_G.XIVUI_HUD_PREVIEW == true)
     _G.XIVUI_HUD_PREVIEW = false
     if hud_preview_on then visible = true end
@@ -1448,7 +1382,6 @@ function targetbar.on_incoming_chunk(id, original)
         if not ok or not act then return end
         local cat = act.category
 
-
         local first_t = act.targets and act.targets[1]
         if act.actor_id and first_t and first_t.id and first_t.id > 0 then
             eb_mob_targets[act.actor_id] = first_t.id
@@ -1468,8 +1401,6 @@ function targetbar.on_incoming_chunk(id, original)
                     local msg    = target_entry.actions[1].message
                     local eparam = target_entry.actions[1].param
                     _debuff_applied = false
-
-
 
                     for _, sa in ipairs(target_entry.actions) do
                         if sa.message and shadow_tracker.ABSORB_MSGS[sa.message] then
@@ -1500,7 +1431,6 @@ function targetbar.on_incoming_chunk(id, original)
                         end
                     end
 
-
                     if cat == 6 and ja_entry and ja_entry.status and ja_entry.status > 0 then
                         local dur = ja_entry.duration or BUFF_STATUS_DURATION[ja_entry.status]
                         local expires = dur and dur > 0 and (os.clock() + dur) or nil
@@ -1515,8 +1445,6 @@ function targetbar.on_incoming_chunk(id, original)
                             end
                         end
                     end
-
-
 
                     for _, tact in ipairs(target_entry.actions) do
                         local tmsg    = tact.message
@@ -1630,7 +1558,6 @@ function targetbar.on_incoming_chunk(id, original)
             end
         end
 
-
         local target = windower.ffxi.get_mob_by_target('t')
         if not target or target.id == 0 then return end
         if act.actor_id ~= target.id then return end
@@ -1719,7 +1646,6 @@ end
 function targetbar.on_mouse(type, x, y, delta, blocked)
     if not ready then return false end
     local ux, uy = ui_bounds.to_ui(x, y)
-
 
     local wr = XIVUI_WEAK_RECT
     if wr and wr.active and ux >= wr.x and ux <= wr.x + wr.w and uy >= wr.y and uy <= wr.y + wr.h then
@@ -1830,9 +1756,8 @@ function targetbar.on_mouse(type, x, y, delta, blocked)
     return false
 end
 
-
 function targetbar.handle_sc_command(args)
-    if not settings then log('targetbar: not loaded yet — log in first (or enable the component).'); return end
+    if not settings then log('targetbar: not loaded — log in / enable it first.'); return end
     local a = args and args[1] and tostring(args[1]):lower() or 'toggle'
     if a == 'on' or a == 'show' then
         settings.sc_visible = true
@@ -1847,8 +1772,8 @@ function targetbar.handle_sc_command(args)
 end
 
 function targetbar.handle_command(args)
+    if not settings then log('targetbar: not loaded — log in / enable it first.'); return end
     local cmd = args and args[1] and tostring(args[1]):lower() or ''
-    if not settings then log('targetbar: not loaded yet — log in first (or enable the component).'); return end
     if cmd == 'sc' then
         return targetbar.handle_sc_command({ table.unpack(args, 2) })
     elseif cmd == 'move' or cmd == 'reposition' then
@@ -1904,6 +1829,5 @@ function targetbar.handle_command(args)
         log('  debug — print the current target\'s spawn_type / class (for color tuning)')
     end
 end
-
 
 return targetbar

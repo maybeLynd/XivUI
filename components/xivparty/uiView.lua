@@ -1,4 +1,3 @@
-
 local config = require('config')
 
 local classes = require('components/xivparty/classes')
@@ -40,9 +39,6 @@ local function loadLayout(layoutName)
         layoutAlliance = layout
     end
 
-    -- Optional user override of the alliance grid (works with either theme — applied after the layout
-    -- loads). Only the columns x rows arrangement changes; the per-member item layout/width stays the
-    -- theme's. 0 = leave the layout's own values. Skipped when there's no dedicated alliance layout.
     local oc, orow = tonumber(Settings.allianceColumns) or 0, tonumber(Settings.allianceRows) or 0
     if hasAllianceFile and (oc > 0 or orow > 0) and layoutAlliance.partyList then
         if oc > 0 then layoutAlliance.partyList.columns = oc end

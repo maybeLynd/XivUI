@@ -1,4 +1,3 @@
-
 local classes = require('components/xivparty/classes')
 local uiContainer = require('components/xivparty/uicontainer')
 local uiBackground = require('components/xivparty/uibackground')

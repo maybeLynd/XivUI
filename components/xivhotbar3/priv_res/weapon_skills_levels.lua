@@ -1,4 +1,3 @@
-
 return {
 
   [1] = { id = 1, en = "Combo", skill = 1, min_skill = 5 },

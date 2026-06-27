@@ -1,4 +1,3 @@
-
 local const = require('components/xivparty/const')
 
 local defaults = {

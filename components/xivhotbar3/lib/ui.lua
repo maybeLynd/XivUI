@@ -12,6 +12,26 @@ local ACTION_TYPE_FOLDER = { ['ma'] = 'spells', ['ja'] = 'abilities', ['ws'] = '
 
 local count_color = { 255, 255, 255 }
 
+local lower_cache = {}
+local function lc(s)
+  if s == nil then return nil end
+  local v = lower_cache[s]
+  if v == nil then v = tostring(s):lower(); lower_cache[s] = v end
+  return v
+end
+
+local hotbar_key_cache, slot_key_cache = {}, {}
+local function hb_key(n)
+  local k = hotbar_key_cache[n]
+  if not k then k = 'hotbar_' .. n; hotbar_key_cache[n] = k end
+  return k
+end
+local function slot_key(n)
+  local k = slot_key_cache[n]
+  if not k then k = 'slot_' .. n; slot_key_cache[n] = k end
+  return k
+end
+
 local CHAIN_PROP_OUTLINE = {
   ['Transfixion']     = 'transfixion',
   ['Compression']     = 'compression',
@@ -1885,6 +1905,7 @@ function ui:destroy()
   if self.action_tip then pcall(self.action_tip.dispose, self.action_tip); self.action_tip = nil end
   self.tip_visible = false
   if self.active_environment then kill(self.active_environment.battle); kill(self.active_environment.field) end
+  if self.choice_page_arrows then kill(self.choice_page_arrows.prev); kill(self.choice_page_arrows.next); self.choice_page_arrows = nil end
   if self.category_page_arrows then
     for _, a in pairs(self.category_page_arrows) do
       if type(a) == 'table' then kill(a.prev); kill(a.next); kill(a.label) end
@@ -3014,12 +3035,12 @@ end
 function ui:get_action_cooldown_info(action, recast_tables)
   if action == nil then return false, 0, nil end
 
-  local action_type = tostring(action.type or ''):lower()
+  local action_type = lc(action.type or '')
   if action_type ~= 'ja' and action_type ~= 'ma' then
     return false, 0, nil
   end
 
-  local skill = database[action_type] and database[action_type][tostring(action.action or ''):lower()] or nil
+  local skill = database[action_type] and database[action_type][lc(action.action or '')] or nil
   if skill == nil then return false, 0, nil end
 
   local recasts = recast_tables or self.recasts or {}
@@ -3313,8 +3334,8 @@ function ui:check_and_set_disable(action, already_resolved, player_vitals)
     self.disabled_slots.actions[action.action] = true
     return true
   elseif action ~= nil then
-    local action_type = tostring(action.type or ''):lower()
-    local action_key = tostring(action.action or ''):lower()
+    local action_type = lc(action.type or '')
+    local action_key = lc(action.action or '')
 
     if action_type == 'ma' then
       if is_spell_learned(action.action) ~= true then
@@ -3448,7 +3469,7 @@ function ui:check_if_burstable(action)
     return false
   end
 
-  local action_key = action.action and (action.action):lower() or nil
+  local action_key = action.action and lc(action.action) or nil
   if not action_key or not database[action.type] then
     return false
   end
@@ -3498,7 +3519,7 @@ function ui:check_if_chainable(action)
     return false
   end
 
-  local action_key = action.action and (action.action):lower() or nil
+  local action_key = action.action and lc(action.action) or nil
   if not action_key or not database[action.type] then
     return false
   end
@@ -3713,13 +3734,13 @@ end
 
 function ui:inner_check_recasts(player_hotbar, environment, player_vitals, row, slot)
   local env_table = player_hotbar and environment and player_hotbar[environment] or nil
-  local row_table = env_table and env_table['hotbar_' .. row] or nil
+  local row_table = env_table and env_table[hb_key(row)] or nil
   if row_table == nil then return end
   local action = nil
   if self.player ~= nil and self.player.get_visible_action ~= nil then
     action = self.player:get_visible_action(environment, row, slot)
   else
-    action = row_table['slot_' .. slot]
+    action = row_table[slot_key(slot)]
   end
   if action ~= nil and self.player ~= nil and self.player.resolve_action_for_resources ~= nil then
     action = self.player:resolve_action_for_resources(action)
@@ -3743,7 +3764,7 @@ function ui:inner_check_recasts(player_hotbar, environment, player_vitals, row, 
     local recast_time = 0
 
     if (action.type == 'ja' or action.type == 'ma') then
-      skill = database[action.type] and database[action.type][tostring(action.action or ''):lower()] or nil
+      skill = database[action.type] and database[action.type][lc(action.action or '')] or nil
       action_recasts = self.recasts[action.type] or {}
     end
 

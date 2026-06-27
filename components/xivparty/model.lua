@@ -1,4 +1,3 @@
-
 local res    = require('resources')
 local socket = require('socket')
 
@@ -222,10 +221,12 @@ function model:petFlashMobAbility(mobId, actionId)
     state.castClearTimeSec = nil; state.castSpellId     = nil
 end
 
-function model:updatePlayers()
-    local members = T(windower.ffxi.get_party())
-    local target = windower.ffxi.get_mob_by_target('t')
-    local subtarget = windower.ffxi.get_mob_by_target('st') or windower.ffxi.get_mob_by_target('stpt') or windower.ffxi.get_mob_by_target('stal')
+function model:updatePlayers(members, target, subtarget)
+    members = T(members or windower.ffxi.get_party())
+    if target == nil then target = windower.ffxi.get_mob_by_target('t') end
+    if subtarget == nil then
+        subtarget = windower.ffxi.get_mob_by_target('st') or windower.ffxi.get_mob_by_target('stpt') or windower.ffxi.get_mob_by_target('stal')
+    end
 
     for i = 0, 17 do
         local idx = (i / 6):floor()
@@ -317,11 +318,11 @@ function model:findPartyLeader(partyIndex)
     return nil
 end
 
-function model:updatePets()
+function model:updatePets(partyData, target)
     self.parties[3] = T{}
 
-    local target = windower.ffxi.get_mob_by_target('t')
-    local partyData = windower.ffxi.get_party()
+    if target == nil then target = windower.ffxi.get_mob_by_target('t') end
+    partyData = partyData or windower.ffxi.get_party()
     local slotIdx = 0
 
     for i = 0, 5 do

@@ -1,4 +1,3 @@
-
 local jobDefaults = {
     jobEnabled = false,
 

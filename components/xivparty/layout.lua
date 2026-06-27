@@ -1,4 +1,3 @@
-
 require('tables')
 
 local XIV   = 'assets/components/xivparty/'

@@ -1,9 +1,7 @@
--- aggrolist — enemy aggro / claim list.
+-- aggrolist: enemy aggro / claim list.
 -- XivUI component. Maintainer: maybeLynd. Version: 1.0.
 
 local ADDON_PATH      = windower.addon_path
-
-
 local XIV             = ADDON_PATH .. 'assets/components/aggrolist/'
 local AGGRO           = XIV
 local BG_TOP_PATH     = XIV .. 'BgTop.png'
@@ -20,9 +18,6 @@ local CURSOR_PATH     = XIV .. 'Cursor.png'
 local config     = require('config')
 local socket     = require('socket')
 local ui_bounds  = require('lib/ui_bounds')
-
-
-
 
 local MAX_ROWS    = 10
 local ROW_H       = 26
@@ -73,8 +68,6 @@ local pending_tab_count    = 0
 local pending_fired_from   = {}
 local pending_last_fired   = -1
 
-
-
 local function make_img(path, w, h, r, g, b, a)
     local img = images.new({
         pos        = { x = 0, y = 0 }, visible = false,
@@ -116,8 +109,6 @@ local function panel_height(count)
     return math.floor((BG_TOP_H + count * ROW_H + math.max(0, count - 1) * ROW_GAP + BG_BOT_H) * s)
 end
 
-
-
 local function get_member_ids()
     local ids = {}
     local player = windower.ffxi.get_player()
@@ -141,8 +132,6 @@ local function get_member_ids()
     end
     return ids
 end
-
-
 
 local function build_aggro_list()
     local now     = socket.gettime()
@@ -177,8 +166,6 @@ local function build_aggro_list()
 
     aggro_list = new_list
 end
-
-
 
 local function hide_row(i)
     local r = rows[i]
@@ -284,9 +271,6 @@ local function render_panel(display_list)
     for i = count + 1, MAX_ROWS do hide_row(i) end
 end
 
-
-
-
 local aggrolist = {}
 
 function aggrolist.init()
@@ -295,7 +279,6 @@ function aggrolist.init()
     bg_top = make_img(BG_TOP_PATH, PANEL_W, BG_TOP_H, 255, 255, 255, 221)
     bg_mid = make_img(BG_MID_PATH, PANEL_W, BG_TOP_H, 255, 255, 255, 221)
     bg_bot = make_img(BG_BOT_PATH, PANEL_W, BG_BOT_H, 255, 255, 255, 221)
-
 
     for i = 1, MAX_ROWS do
         rows[i] = {
@@ -401,13 +384,11 @@ function aggrolist.on_prerender()
 
         local ci = cur and cur.index or 0
 
-
         if ci == pending_target_id then
             pending_target_id = nil; pending_tab_count = 0
             pending_fired_from = {}; pending_last_fired = -1
             return
         end
-
 
         local want = windower.ffxi.get_mob_by_index(pending_target_id)
         if not want or not want.hpp or want.hpp <= 0 then
@@ -416,13 +397,11 @@ function aggrolist.on_prerender()
             return
         end
 
-
         if now - pending_search_start > 5.0 then
             pending_target_id = nil; pending_tab_count = 0
             pending_fired_from = {}; pending_last_fired = -1
             return
         end
-
 
         if now >= pending_next_tab and ci ~= pending_last_fired then
 
@@ -507,10 +486,9 @@ function aggrolist.on_mouse(type, x, y, delta, blocked)
     return true
 end
 
-
 function aggrolist.handle_command(args)
+    if not settings then log('aggrolist: not loaded — log in / enable it first.'); return end
     local cmd = args and args[1] and tostring(args[1]):lower() or 'help'
-    if not settings then log('aggrolist: not loaded yet — log in first (or enable the component).'); return end
     if cmd == 'move' or cmd == 'reposition' or cmd == 'setup' then
         (_G.xivui_echo or log)('aggrolist: use the HUD Layout editor (XivUI Menu) to move the aggro list.')
     elseif cmd == 'scale' then

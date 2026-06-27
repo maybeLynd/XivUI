@@ -1,4 +1,3 @@
-
 return {
 
   [16] = { id = 16, en = "Mighty Strikes", levels = { [1] = 1 } },

@@ -1,22 +1,21 @@
 local ui = {}
 
 local screen = require('lib/screen')
-local drag_setup = { draggable = false }
-local text_setup = { flags = { draggable = false } }
 
-ui.background = images.new(drag_setup)
-ui.hp_bar = images.new(drag_setup)
-ui.mp_bar = images.new(drag_setup)
-ui.tp_bar = images.new(drag_setup)
-ui.hp_text = texts.new(text_setup)
-ui.mp_text = texts.new(text_setup)
-ui.tp_text = texts.new(text_setup)
+ui.background = images.new({ draggable = false })
+ui.hp_bar = images.new({ draggable = false })
+ui.mp_bar = images.new({ draggable = false })
+ui.tp_bar = images.new({ draggable = false })
+ui.hp_text = texts.new({ flags = { draggable = false } })
+ui.mp_text = texts.new({ flags = { draggable = false } })
+ui.tp_text = texts.new({ flags = { draggable = false } })
 
-local function setup_image(image, path)
+local function setup_image(image, path, fit_to_texture)
+    if fit_to_texture then image:fit(true) end
     image:path(path)
     image:repeat_xy(1, 1)
     image:draggable(false)
-    image:fit(false)
+    if not fit_to_texture then image:fit(false) end
     image:show()
 end
 
@@ -34,7 +33,7 @@ local function setup_text(text, opts)
 end
 
 function ui:load(opts)
-    setup_image(self.background, opts.bar_background)
+    setup_image(self.background, opts.bar_background, true)
     setup_image(self.hp_bar, opts.bar_hp)
     setup_image(self.mp_bar, opts.bar_mp)
     setup_image(self.tp_bar, opts.bar_tp)

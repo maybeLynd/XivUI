@@ -28,8 +28,11 @@ RefCountText  = 0
 
 math.randomseed(os.time())
 
-local function isSolo()
-    return windower.ffxi.get_party().party1_leader == nil
+local PARTY_BOUND_ID = { [0] = 'xivparty_0', [1] = 'xivparty_1', [2] = 'xivparty_2', [3] = 'xivparty_3' }
+
+local function isSolo(party)
+    party = party or windower.ffxi.get_party()
+    return party.party1_leader == nil
 end
 
 local function setSetupEnabled(enabled)
@@ -111,13 +114,13 @@ function xivparty.dispose()
         setupModel = nil
         Settings   = nil
         isInitialized = false
-        for i = 0, 3 do ui_bounds.clear('xivparty_' .. i) end
+        for i = 0, 3 do ui_bounds.clear(PARTY_BOUND_ID[i]) end
     end
 end
 
 function xivparty.push_bounds()
     if not isInitialized or not view then
-        for i = 0, 3 do ui_bounds.clear('xivparty_' .. i) end
+        for i = 0, 3 do ui_bounds.clear(PARTY_BOUND_ID[i]) end
         return
     end
     for i = 0, 3 do
@@ -125,12 +128,12 @@ function xivparty.push_bounds()
         if pl and pl.isEnabled then
             local ax, ay, w, h = pl:get_screen_bounds()
             if ax and w and w > 0 and h and h > 0 then
-                ui_bounds.register('xivparty_' .. i, ax, ay, w, h)
+                ui_bounds.register(PARTY_BOUND_ID[i], ax, ay, w, h)
             else
-                ui_bounds.clear('xivparty_' .. i)
+                ui_bounds.clear(PARTY_BOUND_ID[i])
             end
         else
-            ui_bounds.clear('xivparty_' .. i)
+            ui_bounds.clear(PARTY_BOUND_ID[i])
         end
     end
 end
@@ -145,7 +148,7 @@ function xivparty.hide()
     if isInitialized then
         view:hide(const.visZoning)
     end
-    for i = 0, 3 do ui_bounds.clear('xivparty_' .. i) end
+    for i = 0, 3 do ui_bounds.clear(PARTY_BOUND_ID[i]) end
 end
 
 function xivparty.on_status_change(status)
@@ -165,13 +168,28 @@ function xivparty.on_prerender()
     if timeMsec - lastFrameTimeMsec < Settings.updateIntervalMsec then return end
     lastFrameTimeMsec = timeMsec
 
-    Settings:update()
-    model:updatePlayers()
-    model:updatePets()
-    model:updateFellow()
+    local party = windower.ffxi.get_party()
+    local target = windower.ffxi.get_mob_by_target('t')
+    local subtarget = windower.ffxi.get_mob_by_target('st') or windower.ffxi.get_mob_by_target('stpt') or windower.ffxi.get_mob_by_target('stal')
 
-    view:visible(isSetupEnabled or not Settings.hideSolo or not isSolo(), const.visSolo)
-    view:update()
+    local P = _G.XIVUI_PERF
+    if P and P.on then
+        local pc = P.clock
+        local t0 = pc(); Settings:update(); P.t['xp:settings'] = (P.t['xp:settings'] or 0) + (pc() - t0)
+        t0 = pc(); model:updatePlayers(party, target, subtarget); model:updatePets(party, target); model:updateFellow()
+        P.t['xp:model'] = (P.t['xp:model'] or 0) + (pc() - t0)
+        t0 = pc()
+        view:visible(isSetupEnabled or not Settings.hideSolo or not isSolo(party), const.visSolo)
+        view:update()
+        P.t['xp:view'] = (P.t['xp:view'] or 0) + (pc() - t0)
+    else
+        Settings:update()
+        model:updatePlayers(party, target, subtarget)
+        model:updatePets(party, target)
+        model:updateFellow()
+        view:visible(isSetupEnabled or not Settings.hideSolo or not isSolo(party), const.visSolo)
+        view:update()
+    end
     if hud_force_layout > 0 and isSetupEnabled then
         hud_force_layout = hud_force_layout - 1
         pcall(function()
@@ -448,6 +466,7 @@ local function getRange(arg)
 end
 
 function xivparty.handle_command(args)
+    if not Settings then (_G.xivui_echo or log)('xivparty: not loaded — log in / enable it first.'); return end
     local command = args[1] and string.lower(args[1]) or nil
 
     if command == 'setup' or command == 'move' or command == 'reposition' then

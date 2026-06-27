@@ -1,4 +1,3 @@
-
 local classes = require('components/xivparty/classes')
 local uiContainer = require('components/xivparty/uicontainer')
 local uiImage = require('components/xivparty/uiimage')
@@ -117,6 +116,16 @@ end
 
 function uiBuffIcons:update()
     if not self.isEnabled then return end
+
+    if _G.XIVUI_XP_NOBUFFS then
+        if next(self.currentBuffs) ~= nil then
+            for i = 1, self.maxBuffCount do
+                if self.buffImages[i] then self.buffImages[i]:hide(const.visFeature) end
+            end
+            self.currentBuffs = {}
+        end
+        return
+    end
 
     local buffs = self.player.filteredBuffs
     if not buffs or self.player.isOutsideZone then

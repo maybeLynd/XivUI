@@ -1,6 +1,6 @@
--- enemyweak: weakness icons just right of an enemy target's name on the targetbar HP bar. Weaknesses show weakest first. 
--- A gold X after them reveals the resistanced ordered by least resisted to most resisted, with immune then absorb last. 
--- Hovering any icon shows its value (exact % from SDT, or Weak/Resist/Immune/Absorb). 
+-- enemyweak: weakness icons just right of an enemy target's name on the targetbar HP bar. Weaknesses show weakest first.
+-- A gold X after them reveals the resistanced ordered by least resisted to most resisted, with immune then absorb last.
+-- Hovering any icon shows its value (exact % from SDT, or Weak/Resist/Immune/Absorb).
 -- Data = authoritative LandSandBoat server SQL, generated for each zone into weak/<zone>.lua; only the current zone.
 -- XivUI component. Maintainer: maybeLynd. Linked to the target bar.
 
@@ -406,6 +406,7 @@ end
 function enemyweak.handle_command(args)
     local cmd = args[1] and args[1]:lower() or ''
     local log = _G.xivui_echo or function(s) windower.add_to_chat(207, 'enemyweak: ' .. s) end
+    if not settings then log('enemyweak: not loaded — //xui enable weak, then log in.'); return end
     if cmd == 'always' then
         settings.always_show = want(args[2], settings.always_show); config.save(settings)
         log('enemyweak: always-expanded ' .. (settings.always_show and 'on' or 'off') .. '.')

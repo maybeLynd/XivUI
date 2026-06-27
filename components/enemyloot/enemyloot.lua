@@ -1,5 +1,5 @@
 -- enemyloot: a bag icon below an enemy target's HP bar; click it to see that enemy's possible drops, grouped into collapsible categories (drops / steal / despoil / etc) with % chances.
--- Data is split into zone files under loot/ (only the current zone is loaded at a time. loot/_zoneless.lua holds zone-less rows). 
+-- Data is split into zone files under loot/ (only the current zone is loaded at a time. loot/_zoneless.lua holds zone-less rows).
 -- 'XivUI component. Maintainer: maybeLynd. Linked to the targetbar.
 
 local config    = require('config')
@@ -670,6 +670,7 @@ end
 function enemyloot.handle_command(args)
   local cmd = args[1] and args[1]:lower() or ''
   local log = _G.xivui_echo or function(s) windower.add_to_chat(207, 'enemyloot: ' .. s) end
+  if not settings then log('enemyloot: not loaded — //xui enable loot, then log in.'); return end
   if cmd == 'pos' then
     local nx, ny = tonumber(args[2]), tonumber(args[3])
     if nx and ny then settings.pos.x = math.floor(nx); settings.pos.y = math.floor(ny); config.save(settings)

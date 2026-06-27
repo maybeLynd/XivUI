@@ -1,4 +1,3 @@
-
 local images = require('images')
 
 local classes = require('components/xivparty/classes')

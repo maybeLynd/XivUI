@@ -1,5 +1,5 @@
--- iconpicker: The XivUI Menu icon picker. 
--- Serves the folder grouped icon index and a persistent action icon override map that takes precedence over the hotbar's action_icons.lua. 
+-- iconpicker: The XivUI Menu icon picker.
+-- Serves the folder grouped icon index and a persistent action icon override map that takes precedence over the hotbar's action_icons.lua.
 -- Overrides are stored as a path relative to assets/components/hotbar/icons/custom/ (e.g. 'ffxiv/war/provoke'), keyed by "type|name".
 -- XivUI Menu component lib. Maintainer: maybeLynd.
 

@@ -1,4 +1,3 @@
-
 -- ws/ja/sp = weaponskill/job-ability/spell action id -> { debuff status ids } it applies.
 -- Fallback for debuffs the packet/resource never exposes. Do not edit by hand.
 return {

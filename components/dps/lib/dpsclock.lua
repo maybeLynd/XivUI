@@ -1,4 +1,3 @@
-
 local DPSClock = {}
 DPSClock.__index = DPSClock
 

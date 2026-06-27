@@ -1,4 +1,3 @@
-
 require('lists')
 
 local utils = require('components/xivparty/utils')

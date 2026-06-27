@@ -5,10 +5,11 @@
 local recast_cache = {}
 
 local PATH    = require('lib/cache').path('xivhotbar3', 'recast_cache.lua')
-local data    = {}
-local prev    = {}
-local inited  = false
-local dirty   = false
+local data      = {}
+local prev      = {}
+local inited    = false
+local dirty     = false
+local last_save = 0
 
 function recast_cache.load()
     local ok, t = pcall(function()
@@ -50,7 +51,10 @@ function recast_cache.observe_live(recasts)
         prev[id] = rem
     end
     inited = true
-    if dirty then recast_cache.save() end
+    if dirty and (os.clock() - last_save) >= 15 then
+        last_save = os.clock()
+        recast_cache.save()
+    end
 end
 
 return recast_cache

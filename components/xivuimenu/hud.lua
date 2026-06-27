@@ -1,7 +1,7 @@
--- hud.lua: FFXIV style HUD Layout editor for XivUI. 
+-- hud.lua: FFXIV style HUD Layout editor for XivUI.
 -- Dims the screen, lays a fine reference grid over it, and draws a box for every component.
--- Components that aren't visible are read from their settings and drawn greyed out so they can still be grabbed. 
--- Left click a box to focus it, drag to move, scroll-wheel to scale. 
+-- Components that aren't visible are read from their settings and drawn greyed out so they can still be grabbed.
+-- Left click a box to focus it, drag to move, scroll-wheel to scale.
 -- Moves persist through each component's `pos` command; scale persists only where the component supports it.
 -- XivUI Menu component lib. Maintainer: maybeLynd.
 
@@ -252,6 +252,8 @@ local function is_enabled(name)
 end
 
 local function set_previews(on)
+    if _G.xivui_dbg then _G.xivui_dbg('menu', 'HUD preview ' .. (on and 'ON — force-enabling components for preview' or 'OFF — restoring disabled components')) end
+    _G.XIVUI_FORCING = true
     if on then
         for _, name in ipairs(PREVIEW_COMPONENTS) do
             if not is_enabled(name) and _G.XIVUI_STATE and _G.XIVUI_STATE.set_enabled then
@@ -269,6 +271,7 @@ local function set_previews(on)
             end
         end
     end
+    _G.XIVUI_FORCING = false
 end
 
 local function clamp_box(b, rx, ry)
@@ -695,6 +698,7 @@ end
 
 local applied_names = nil
 local default_tries = 0
+local maybe_tick = 0
 local MARKER = windower.addon_path .. 'data/xivuimenu/hud_defaults.lua'
 
 local function load_marker()
@@ -799,6 +803,8 @@ end
 
 function M.maybe_apply_defaults()
     if M.open then return end
+    maybe_tick = (maybe_tick + 1) % 20
+    if maybe_tick ~= 0 then return end
     local info = windower.ffxi.get_info()
     if not info or not info.logged_in then return end
     local p = windower.ffxi.get_player()
@@ -1006,6 +1012,7 @@ function M.apply_layout(data)
     local cap_rx = (data.res and tonumber(data.res.x)) or rx
     if not cap_rx or cap_rx <= 0 then cap_rx = rx end
     local ratio = rx / cap_rx
+    if _G.xivui_dbg then _G.xivui_dbg('menu', ('apply_layout: this res %dx%d, captured at %d, scale ratio %.3f'):format(rx, ry, cap_rx, ratio)) end
     for _, d in ipairs(DESC) do
         local f = data[d.id]
         if f and f.fx then
@@ -1018,6 +1025,7 @@ function M.apply_layout(data)
         local g = data['hotbar_global']
         if g and g.sc and hb.hud_set_scale then pcall(hb.hud_set_scale, g.sc * ratio) end
         if hb.hud_bars and hb.hud_move_bar then
+            if hb.hud_default_apply then pcall(hb.hud_default_apply, true) end
             local bok, bars = pcall(hb.hud_bars)
             if bok and type(bars) == 'table' then
                 for _, b in ipairs(bars) do
@@ -1028,6 +1036,7 @@ function M.apply_layout(data)
                     end
                 end
             end
+            if hb.hud_default_apply then pcall(hb.hud_default_apply, false) end
         end
         for _, e in ipairs(HB_SUB) do
             local f = data[e[1]]
