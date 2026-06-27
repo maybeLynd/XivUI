@@ -538,8 +538,9 @@ After spending most of the day tracing the issues caused by the design flaws lik
 - It was fetching the same game data several times per update. `updatePlayers`, `updatePets`, and the solo check each independently grabbed the party + target tables every tick. Now one snapshot is fetched and shared cutting a big chunk of memory churn.
 
 **Misc**
--  Mouse move events fired far faster than frames and every one was being handed to every component and a separate handler for each party member and the hotbar's slot hover. Those are now combined to about once per frame. 
+- Mouse move events fired far faster than frames and every one was being handed to every component and a separate handler for each party member and the hotbar's slot hover. Those are now combined to about once per frame. 
 - Stopped rebuilding small tables every single frame in the shared UI bounds and the hotbar's bounds cache.
+- Also not sure how this happened but the previous version/s were older development builds so I replaced it with my live version I use for testing so it would be more up to date and require me to cross-reference what changes the repo version was missing and started from there so if you notice anything weird, let me know.  
 
 ### v0.1.3
 - After noticing the last lua errors caused when hotbar component disabled, I found more issues caused by having certain things off. 
