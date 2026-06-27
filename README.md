@@ -506,10 +506,14 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 - Saving layout after editing HUD layout can causes crashes for some users (still needing to gather more information since I haven't been able to replicate this)
 - ALT+R is broken when addon loaded (I looked into it but couldn't find the origin of the problem, ALT+R worked in every scenario on both my main pc and laptop)
 - The hotbars and the party bar also glitch out in Party from time to time, they would change sizes and dissapear. (I wasn't able to reproduce this but hopefully the latest patch solves the issue)
-- Statusbar fill textures not scaling to fit in the borders when scaled in HUD layout
 
 <a id="patch-notes"></a>
 ## Patch Notes
+
+### v0.2.1
+
+**Statusbar** 
+- Statusbar fill textures now scale along with their backgrounds
 
 ### v0.2.0
 After spending most of the day tracing the issues caused by the design flaws like having the hotbar being the main driving force in the addon and using addons that were never meant to be disabled and re-enabled outside of lua loading/reloading/unloading, I compiled a list of issues I found (which kept growing the deeper in I looked). I've tried knocking out what I could find (this was a lot of repetitive testing of the exact same things in different scenarios) and one all nighter later:

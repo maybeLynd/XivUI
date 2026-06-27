@@ -5,6 +5,7 @@ theme.apply = function(settings, base_path)
 
     options.total_height = 8
     options.total_width = 472
+    options.bg_height = 24
     options.offset_x = settings.Bars.OffsetX
     options.offset_y = settings.Bars.OffsetY
 
@@ -69,6 +70,7 @@ theme.apply = function(settings, base_path)
     if sc ~= 1 then
         options.total_width = options.total_width * sc
         options.total_height = options.total_height * sc
+        options.bg_height = options.bg_height * sc
         options.bar_width = options.bar_width * sc
         options.fill_width = options.fill_width * sc
         options.fill_offset_y = options.fill_offset_y * sc

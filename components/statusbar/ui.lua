@@ -33,7 +33,7 @@ local function setup_text(text, opts)
 end
 
 function ui:load(opts)
-    setup_image(self.background, opts.bar_background, true)
+    setup_image(self.background, opts.bar_background)
     setup_image(self.hp_bar, opts.bar_hp)
     setup_image(self.mp_bar, opts.bar_mp)
     setup_image(self.tp_bar, opts.bar_tp)
@@ -45,20 +45,23 @@ end
 
 function ui:position(opts)
     local sw, sh = screen.size()
+    local sc = opts.scale or 1
     local x = sw / 2 - (opts.total_width / 2) + opts.offset_x
     local y = sh - 60 + opts.offset_y
 
-    local fy = opts.fill_offset_y or 2
+    local fy = opts.fill_offset_y or (2 * sc)
+    local ty = 2 * sc
+    self.background:size(opts.total_width, opts.bg_height)
     self.background:pos(x, y)
-    self.hp_bar:pos(x + 15 + opts.bar_offset, y + fy)
-    self.mp_bar:pos(x + 25 + opts.bar_offset + opts.bar_width + opts.bar_spacing, y + fy)
-    self.tp_bar:pos(x + 35 + opts.bar_offset + (opts.bar_width * 2) + (opts.bar_spacing * 2), y + fy)
+    self.hp_bar:pos(x + 15 * sc + opts.bar_offset, y + fy)
+    self.mp_bar:pos(x + 25 * sc + opts.bar_offset + opts.bar_width + opts.bar_spacing, y + fy)
+    self.tp_bar:pos(x + 35 * sc + opts.bar_offset + (opts.bar_width * 2) + (opts.bar_spacing * 2), y + fy)
     self.hp_bar:width(0)
     self.mp_bar:width(0)
     self.tp_bar:width(0)
-    self.hp_text:pos(x + 65 + opts.text_offset, y + 2)
-    self.mp_text:pos(x + 80 + opts.text_offset + opts.bar_width + opts.bar_spacing, y + 2)
-    self.tp_text:pos(x + 90 + opts.text_offset + (opts.bar_width * 2) + (opts.bar_spacing * 2), y + 2)
+    self.hp_text:pos(x + 65 * sc + opts.text_offset, y + ty)
+    self.mp_text:pos(x + 80 * sc + opts.text_offset + opts.bar_width + opts.bar_spacing, y + ty)
+    self.tp_text:pos(x + 90 * sc + opts.text_offset + (opts.bar_width * 2) + (opts.bar_spacing * 2), y + ty)
 end
 
 function ui:hide()
