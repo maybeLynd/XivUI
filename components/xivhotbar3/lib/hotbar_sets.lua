@@ -224,12 +224,42 @@ local function node_xy(i)
   return base_x + col * sp, base_y + row * sp
 end
 
+local function panel_offsets()
+  return math.floor(12 * dot_scale), math.floor(48 * dot_scale)
+end
+
 function hotbar_sets:grid_bounds()
   local ds = dot_size()
   local sp = eff_spacing()
   local w = (COLS - 1) * sp + ds
   local h = (ROWS - 1) * sp + ds
   return base_x, base_y, w, h
+end
+
+function hotbar_sets:panel_bounds()
+  local _, _, gw, gh = self:grid_bounds()
+  local pad, head = panel_offsets()
+  return base_x - pad, base_y - head, gw + 2 * pad, gh + head + math.floor(12 * dot_scale)
+end
+
+function hotbar_sets:get_scale()
+  return dot_scale
+end
+
+function hotbar_sets:set_scale(s)
+  s = tonumber(s) or dot_scale
+  if s < 0.5 then s = 0.5 elseif s > 2.5 then s = 2.5 end
+  local old_pad, old_head = panel_offsets()
+  dot_scale = s
+  local new_pad, new_head = panel_offsets()
+  base_x = base_x + (new_pad - old_pad)
+  base_y = base_y + (new_head - old_head)
+  self:update_positions()
+end
+
+function hotbar_sets:move_panel_to(x, y)
+  local pad, head = panel_offsets()
+  self:move_to(x + pad, y + head)
 end
 
 function hotbar_sets:setup(theme_options)
@@ -300,8 +330,7 @@ function hotbar_sets:update_positions()
   local ds = dot_size()
   local gw = (COLS - 1) * eff_spacing() + ds
   local gh = (ROWS - 1) * eff_spacing() + ds
-  local PAD = math.floor(12 * dot_scale)
-  local head = math.floor(48 * dot_scale)
+  local PAD, head = panel_offsets()
   if panel_bg then
     panel_bg:pos(base_x - PAD, base_y - head)
     panel_bg:size(gw + 2 * PAD, gh + head + math.floor(12 * dot_scale))

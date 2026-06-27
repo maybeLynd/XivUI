@@ -3941,7 +3941,7 @@ end
 
 local function push_sets_grid_bounds()
     if state.ready and hotbar_sets:is_visible() and not (ui.hotbar and ui.hotbar.hide_hotbars) then
-        local gx, gy, gw, gh = hotbar_sets:grid_bounds()
+        local gx, gy, gw, gh = hotbar_sets:panel_bounds()
         ui_bounds.register('xivhotbar3_sets', gx, gy, gw, gh)
     else
         ui_bounds.clear('xivhotbar3_sets')
@@ -4811,20 +4811,38 @@ function xivhotbar3_component.hud_set_sets_visible(v)
 end
 
 function xivhotbar3_component.hud_sets_rect()
-  local x, y, w, h = hotbar_sets:grid_bounds()
+  local x, y, w, h = hotbar_sets:panel_bounds()
   if not x then return nil end
-  return { x = x, y = y, w = w, h = h, visible = hotbar_sets:is_visible() }
+  return { x = x, y = y, w = w, h = h, scale = hotbar_sets:get_scale(), visible = hotbar_sets:is_visible() }
+end
+
+function xivhotbar3_component.hud_get_sets_scale()
+  return hotbar_sets:get_scale()
+end
+
+function xivhotbar3_component.hud_set_sets_scale(f)
+  hotbar_sets:set_scale(f)
+  if settings and settings.HotbarSets then
+    settings.HotbarSets.DotScale = hotbar_sets:get_scale()
+    local gx, gy = hotbar_sets:get_pos()
+    if settings.HotbarSets.Pos then
+      settings.HotbarSets.Pos.X = math.floor(gx)
+      settings.HotbarSets.Pos.Y = math.floor(gy)
+    end
+    config.save(settings)
+  end
 end
 
 function xivhotbar3_component.hud_move_sets_live(x, y)
-  hotbar_sets:move_to(x, y)
+  hotbar_sets:move_panel_to(x, y)
 end
 
 function xivhotbar3_component.hud_move_sets(x, y)
-  hotbar_sets:move_to(x, y)
+  hotbar_sets:move_panel_to(x, y)
+  local gx, gy = hotbar_sets:get_pos()
   if settings and settings.HotbarSets and settings.HotbarSets.Pos then
-    settings.HotbarSets.Pos.X = math.floor(x)
-    settings.HotbarSets.Pos.Y = math.floor(y)
+    settings.HotbarSets.Pos.X = math.floor(gx)
+    settings.HotbarSets.Pos.Y = math.floor(gy)
     config.save(settings)
   end
 end

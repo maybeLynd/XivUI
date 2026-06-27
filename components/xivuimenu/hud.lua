@@ -334,8 +334,9 @@ local function snapshot()
             boxes[#boxes + 1] = { id = 'hotbar_inv', kind = 'hotbar_inv', label = 'Inventory Count',
             x = iv.x, y = iv.y, w = iv.w, h = iv.h, bw = iv.w / isc, bh = iv.h / isc, scale = isc, live = true } end
         local sr = hotbar.hud_sets_rect and hotbar.hud_sets_rect()
-        if sr then boxes[#boxes + 1] = { id = 'hotbar_sets', kind = 'hotbar_sets', label = 'Hotbar Sets',
-            x = sr.x, y = sr.y, w = sr.w, h = sr.h, bw = sr.w, bh = sr.h, scale = 1, live = sr.visible } end
+        if sr then local ssc = sr.scale or 1; if ssc <= 0 then ssc = 1 end
+            boxes[#boxes + 1] = { id = 'hotbar_sets', kind = 'hotbar_sets', label = 'Hotbar Sets',
+            x = sr.x, y = sr.y, w = sr.w, h = sr.h, bw = sr.w / ssc, bh = sr.h / ssc, scale = ssc, live = sr.visible } end
         local at = hotbar.hud_action_tip_rect and hotbar.hud_action_tip_rect()
         local atsc = (hotbar.hud_get_action_tip_scale and hotbar.hud_get_action_tip_scale()) or 1
         if atsc <= 0 then atsc = 1 end
@@ -679,6 +680,9 @@ function commit_scale(b)
     elseif b.kind == 'hotbar_inv' then
         local ok, hotbar = pcall(require, 'components/xivhotbar3/xivhotbar3')
         if ok and hotbar.hud_set_inv_text_scale then pcall(hotbar.hud_set_inv_text_scale, b.scale) end
+    elseif b.kind == 'hotbar_sets' then
+        local ok, hotbar = pcall(require, 'components/xivhotbar3/xivhotbar3')
+        if ok and hotbar.hud_set_sets_scale then pcall(hotbar.hud_set_sets_scale, b.scale) end
     elseif b.kind == 'hotbar_tip' then
         local ok, hotbar = pcall(require, 'components/xivhotbar3/xivhotbar3')
         if ok and hotbar.hud_set_action_tip_scale then pcall(hotbar.hud_set_action_tip_scale, b.scale) end
