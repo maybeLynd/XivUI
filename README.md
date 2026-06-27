@@ -501,6 +501,9 @@ Hotbar sets enabled displays a 3x3 grid with circles that can be pressed and hel
 <a id="known-issues"></a>
 ## Known Issues
 
+- Hotbar sets not scaling with scroll
+- Moving UI elements in HUD layout with arrow keys is moving camera
+- Saving layout after editing HUD layout can causes crashes for some users
 - ALT+R is broken when addon loaded (I looked into it but couldn't find the origin of the problem, ALT+R worked in every scenario on both my main pc and laptop)
 - The hotbars and the party bar also glitch out in Party from time to time, they would change sizes and dissapear. (I wasn't able to reproduce this but hopefully the latest patch solves the issue)
 
