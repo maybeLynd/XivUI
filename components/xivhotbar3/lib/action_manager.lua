@@ -1111,7 +1111,9 @@ function meets_spell_level_req(spell_name_en)
 
     return sub_job_level >= sub_job_spell_level
   else
-    return main_job_level >= main_job_spell_level
+    if main_job_level >= main_job_spell_level then return true end
+    if main_job_spell_level > 99 and is_spell_learned(spell_name_en) then return true end
+    return false
   end
 end
 
@@ -1161,7 +1163,9 @@ function meets_ability_level_req(ability_name_en)
 
     return sub_job_level >= sub_job_ability_level
   else
-    return main_job_level >= main_job_ability_level
+    if main_job_level >= main_job_ability_level then return true end
+    if main_job_ability_level > 99 and learned_abilities_id[ability_id] == true then return true end
+    return false
   end
 end
 
@@ -1230,7 +1234,9 @@ function meets_weaponskill_level_req(weaponskill_name_en)
   local player_skill = skills[skill_name] or 0
 
   if min_skill and player_skill < min_skill then
-    return false
+    if not (weaponskill_id and learned_ws_id[weaponskill_id] == true) then
+      return false
+    end
   end
 
   return true
@@ -1295,7 +1301,8 @@ function is_spell_usable_by_a_job(spell, player)
 
   local function can_cast(job_id, job_level)
     local spell_level = spell['levels'][job_id]
-    if spell_level and job_level >= spell_level then
+    local post99_learned = spell_level ~= nil and spell_level > 99 and job_level >= 99 and is_spell_learned(spell['en'])
+    if spell_level and (job_level >= spell_level or post99_learned) then
       if job_id ~= 20 then
         return true
       else

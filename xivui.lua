@@ -1,6 +1,6 @@
 _addon.name = 'XivUI'
 _addon.author = 'maybeLynd'
-_addon.version = '0.2.1'
+_addon.version = '0.2.2'
 _addon.commands = {'xivui', 'xui', 'htb'}
 
 config = require('config')
@@ -491,6 +491,8 @@ end)
 
 windower.register_event('unload', function()
     dbg('event', 'unload')
+    release_ui_shift()
+    windower.send_command('setkey enter up; setkey lshift up; setkey lalt up; setkey lctrl up')
     dispose_all()
     local st = windower.text and windower.text.saved_texts
     if st then for i = #st, 1, -1 do if st[i] then pcall(texts.destroy, st[i]) end end end

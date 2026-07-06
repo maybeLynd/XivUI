@@ -458,11 +458,15 @@ function player:execute_action_object(action, exact_action)
       parts[#parts+1] = k
     end
     local main = parts[#parts]
-    for i = 1, #parts - 1 do windower.send_command('setkey ' .. parts[i] .. ' down') end
-    windower.send_command('setkey ' .. main .. ' down')
-    coroutine.sleep(0.05)
-    windower.send_command('setkey ' .. main .. ' up')
-    for i = #parts - 1, 1, -1 do windower.send_command('setkey ' .. parts[i] .. ' up') end
+    if main then
+      local cmds = {}
+      for i = 1, #parts - 1 do cmds[#cmds+1] = 'setkey ' .. parts[i] .. ' down' end
+      cmds[#cmds+1] = 'setkey ' .. main .. ' down'
+      cmds[#cmds+1] = 'wait 0.05'
+      cmds[#cmds+1] = 'setkey ' .. main .. ' up'
+      for i = #parts - 1, 1, -1 do cmds[#cmds+1] = 'setkey ' .. parts[i] .. ' up' end
+      windower.send_command(table.concat(cmds, '; '))
+    end
   elseif action_type == 'use_equip' then
     local slot_cmd  = tostring(action.target or '')
     local item_name = tostring(action.action or '')
@@ -544,9 +548,7 @@ function player:execute_action_object(action, exact_action)
     if action_manager.theme_options.confirm_subtarget_if_necessary then
       local st = windower.ffxi.get_mob_by_target('st')
       if st then
-        windower.send_command('setkey enter down')
-        coroutine.sleep(0.1)
-        windower.send_command('setkey enter up')
+        windower.send_command('setkey enter down; wait 0.1; setkey enter up')
         confirmed_st = true
       end
     end
